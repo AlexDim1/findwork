@@ -25,6 +25,9 @@ public class JobOffer {
     @Enumerated
     private JobLevel jobLevel;
 
+    @ManyToOne
+    private UserCompany company;
+
     public JobOffer() {
     }
 
