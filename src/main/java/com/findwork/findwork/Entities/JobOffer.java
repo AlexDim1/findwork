@@ -1,9 +1,12 @@
 package com.findwork.findwork.Entities;
 
+import com.findwork.findwork.Entities.Users.UserCompany;
+import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.JobLevel;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +18,7 @@ public class JobOffer {
 
     private String title;
 
-    @Column(columnDefinition = "TEXT", length = 2000)
+    @Column(columnDefinition = "TEXT", length = 4000)
     private String description;
 
     private String location;
@@ -27,6 +30,9 @@ public class JobOffer {
 
     @ManyToOne
     private UserCompany company;
+
+    @ManyToMany(mappedBy = "applications")
+    private List<UserPerson> applicants;
 
     public JobOffer() {
     }

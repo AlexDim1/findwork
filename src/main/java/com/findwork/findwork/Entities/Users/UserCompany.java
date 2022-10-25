@@ -1,5 +1,6 @@
-package com.findwork.findwork.Entities;
+package com.findwork.findwork.Entities.Users;
 
+import com.findwork.findwork.Entities.JobOffer;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,18 +18,41 @@ public class UserCompany implements UserDetails {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")
     private UUID id;
+
     private String username;
+
     private String password;
+
     private String name;
+
+    @Column(columnDefinition = "TEXT", length = 2000)
     private String description;
+
     private int employeeCount;
+
     private int foundingYear;
+
     private String address;
 
     @OneToMany(mappedBy = "company")
     private List<JobOffer> offers;
 
     public UserCompany() {
+    }
+
+    public UserCompany(String username, String password, String name, String description, int employeeCount,
+                       int foundingYear, String address) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.description = description;
+        this.employeeCount = employeeCount;
+        this.foundingYear = foundingYear;
+        this.address = address;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getName() {
