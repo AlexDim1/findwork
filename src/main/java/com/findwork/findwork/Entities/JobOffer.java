@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "job_offers")
 public class JobOffer {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -31,8 +32,8 @@ public class JobOffer {
     @ManyToOne
     private UserCompany company;
 
-    @ManyToMany(mappedBy = "applications")
-    private List<UserPerson> applicants;
+    @OneToMany(mappedBy = "offer")
+    private List<Application> applications;
 
     public JobOffer() {
     }
