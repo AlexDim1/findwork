@@ -1,7 +1,6 @@
 package com.findwork.findwork.Entities.Users;
 
-import com.findwork.findwork.Entities.Application;
-import com.findwork.findwork.Entities.JobOffer;
+import com.findwork.findwork.Entities.JobApplication;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +30,7 @@ public class UserPerson implements UserDetails {
     private int age;
 
     @OneToMany(mappedBy = "applicant")
-    private List<Application> applications;
+    private List<JobApplication> jobApplications;
 
     public UserPerson() {
     }

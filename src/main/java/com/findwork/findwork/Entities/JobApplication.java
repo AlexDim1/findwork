@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "applications")
-public class Application {
+@Table(name = "job_applications")
+public class JobApplication {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")
@@ -23,10 +23,10 @@ public class Application {
 
     private Date date;
 
-    public Application() {
+    public JobApplication() {
     }
 
-    public Application(UserPerson applicant, JobOffer offer, Date date) {
+    public JobApplication(UserPerson applicant, JobOffer offer, Date date) {
         this.applicant = applicant;
         this.offer = offer;
         this.date = date;

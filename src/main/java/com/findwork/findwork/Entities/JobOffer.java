@@ -1,7 +1,6 @@
 package com.findwork.findwork.Entities;
 
 import com.findwork.findwork.Entities.Users.UserCompany;
-import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.JobLevel;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,7 +32,7 @@ public class JobOffer {
     private UserCompany company;
 
     @OneToMany(mappedBy = "offer")
-    private List<Application> applications;
+    private List<JobApplication> jobApplications;
 
     public JobOffer() {
     }
