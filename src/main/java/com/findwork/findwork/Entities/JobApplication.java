@@ -1,14 +1,19 @@
 package com.findwork.findwork.Entities;
 
 import com.findwork.findwork.Entities.Users.UserPerson;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "job_applications")
+@Getter
+@Setter
 public class JobApplication {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -26,37 +31,9 @@ public class JobApplication {
     public JobApplication() {
     }
 
-    public JobApplication(UserPerson applicant, JobOffer offer, Date date) {
+    public JobApplication(UserPerson applicant, JobOffer offer) {
         this.applicant = applicant;
         this.offer = offer;
-        this.date = date;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public UserPerson getApplicant() {
-        return applicant;
-    }
-
-    public void setApplicant(UserPerson applicant) {
-        this.applicant = applicant;
-    }
-
-    public JobOffer getOffer() {
-        return offer;
-    }
-
-    public void setOffer(JobOffer offer) {
-        this.offer = offer;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+        this.date = Date.from(Instant.now());
     }
 }

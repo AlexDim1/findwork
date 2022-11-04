@@ -1,7 +1,10 @@
 package com.findwork.findwork.Entities;
 
 import com.findwork.findwork.Entities.Users.UserCompany;
+import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "job_offers")
+@Getter
+@Setter
 public class JobOffer {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -21,12 +26,26 @@ public class JobOffer {
     @Column(columnDefinition = "TEXT", length = 4000)
     private String description;
 
+    @Column(columnDefinition = "TEXT", length = 2000)
+    private String requirements;
+
+    @Column(columnDefinition = "TEXT", length = 2000)
+    private String niceToHave;
+
+    @Column(columnDefinition = "TEXT", length = 2000)
+    private String benefits;
+
     private String location;
 
     private String salary;
 
+    private int viewCount;
+
     @Enumerated
     private JobLevel jobLevel;
+
+    @Enumerated
+    private Category jobCategory;
 
     @ManyToOne
     private UserCompany company;
@@ -37,55 +56,17 @@ public class JobOffer {
     public JobOffer() {
     }
 
-    public JobOffer(String title, String description, String location, String salary, JobLevel jobLevel) {
+    public JobOffer(String title, String description, String requirements, String niceToHave,
+                    String benefits, String location, String salary, int viewCount, JobLevel jobLevel, UserCompany company) {
         this.title = title;
         this.description = description;
+        this.requirements = requirements;
+        this.niceToHave = niceToHave;
+        this.benefits = benefits;
         this.location = location;
         this.salary = salary;
+        this.viewCount = viewCount;
         this.jobLevel = jobLevel;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
-    }
-
-    public JobLevel getLevel() {
-        return jobLevel;
-    }
-
-    public void setLevel(JobLevel jobLevel) {
-        this.jobLevel = jobLevel;
+        this.company = company;
     }
 }
