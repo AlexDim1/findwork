@@ -4,6 +4,8 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Repositories.UserPersonRepository;
+import com.findwork.findwork.Requests.RegisterCompanyRequest;
+import com.findwork.findwork.Requests.RegisterPersonRequest;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +32,14 @@ public class UserService implements UserDetailsService {
             return foundPerson;
 
         return foundCompany;
+    }
+
+    public String registerPerson(RegisterPersonRequest request) {
+        return "works";
+    }
+
+    public String registerCompany(RegisterCompanyRequest request) {
+        return "works";
     }
 
     public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo) {
