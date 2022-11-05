@@ -1,9 +1,13 @@
 package com.findwork.findwork.Requests;
 
 public class RegisterPersonRequest {
+
     private String email;
+
     private String password;
+
     private String firstName;
+
     private String lastName;
 
     public RegisterPersonRequest(String email, String password, String firstName, String lastName) {

@@ -6,18 +6,17 @@ import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Repositories.UserPersonRepository;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
     private final UserCompanyRepository companyRepo;
     private final UserPersonRepository personRepo;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,16 +33,25 @@ public class UserService implements UserDetailsService {
         return foundCompany;
     }
 
-    public String registerPerson(RegisterPersonRequest request) {
-        return "works";
+    public void registerPerson(RegisterPersonRequest r) throws Exception {
+        if(personRepo.findUserPersonByUsername(r.getEmail()) != null
+        || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
+            throw new Exception("An account with this email already exists");
+        UserPerson registered = new UserPerson(r.getEmail(), encoder.encode(r.getPassword()), r.getFirstName(),r.getLastName());
+        personRepo.save(registered);
     }
 
-    public String registerCompany(RegisterCompanyRequest request) {
-        return "works";
+    public void registerCompany(RegisterCompanyRequest r) throws Exception {
+        if(personRepo.findUserPersonByUsername(r.getEmail()) != null
+                || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
+            throw new Exception("An account with this email already exists");
+        UserCompany registered = new UserCompany(r.getEmail(), encoder.encode(r.getPassword()), r.getName());
+        companyRepo.save(registered);
     }
 
-    public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo) {
+    public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo, BCryptPasswordEncoder encoder) {
         this.companyRepo = companyRepo;
         this.personRepo = personRepo;
+        this.encoder = encoder;
     }
 }

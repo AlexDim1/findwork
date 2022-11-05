@@ -1,18 +1,25 @@
 package com.findwork.findwork.Controllers;
 
+import com.findwork.findwork.Requests.LoginRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
 import com.findwork.findwork.Services.UserService;
+import com.findwork.findwork.Services.ValidationService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final ValidationService validationService;
+    private final BCryptPasswordEncoder encoder;
 
     @GetMapping("/register")
     public String getRegistrationPage() {
@@ -24,17 +31,71 @@ public class UserController {
         return "login";
     }
 
+    @PostMapping("/login")
+    public ModelAndView login(@RequestBody LoginRequest request) {
+        ModelAndView view = new ModelAndView();
+        if(!validationService.validateLoginRequest(request)) {
+            view.setViewName("login");
+            view.addObject("error", "Invalid data");
+            return view;
+        }
+
+        UserDetails user = userService.loadUserByUsername(request.getEmail());
+        if(!encoder.matches(request.getPassword(), user.getPassword())) {
+            view.setViewName("login");
+            view.addObject("error", "Wrong password");
+            return view;
+        }
+
+        view.setViewName("homepage");
+        return view;
+    }
+
     @PostMapping("/register/person")
-    public String registerPerson(@RequestBody RegisterPersonRequest request) {
-        return userService.registerPerson(request);
+    public ModelAndView registerPerson(@RequestBody RegisterPersonRequest request) {
+        ModelAndView view = new ModelAndView();
+        if(!validationService.validateRegisterPersonRequest(request)) {
+            view.setViewName("register");
+            view.addObject("error", "Invalid data");
+            return view;
+        }
+
+        try {
+            userService.registerPerson(request);
+        } catch (Exception e) {
+            view.setViewName("register");
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+
+        view.setViewName("editInfo");
+        return view;
     }
 
     @PostMapping("/register/company")
-    public String registerCompany(@RequestBody RegisterCompanyRequest request) {
-        return userService.registerCompany(request);
+    public ModelAndView registerCompany(@RequestBody RegisterCompanyRequest request) {
+        ModelAndView view = new ModelAndView();
+        if(!validationService.validateRegisterCompanyRequest(request)) {
+            view.setViewName("register");
+            view.addObject("error", "Invalid data");
+            return view;
+        }
+
+        try {
+            userService.registerCompany(request);
+        } catch (Exception e) {
+            view.setViewName("register");
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+
+        view.setViewName("editInfo");
+        return view;
     }
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ValidationService validationService, BCryptPasswordEncoder encoder) {
         this.userService = userService;
+        this.validationService = validationService;
+        this.encoder = encoder;
     }
 }

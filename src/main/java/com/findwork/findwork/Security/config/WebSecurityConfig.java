@@ -1,6 +1,5 @@
 package com.findwork.findwork.Security.config;
 
-import com.findwork.findwork.Security.PasswordEncoder;
 import com.findwork.findwork.Services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +19,14 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests().anyRequest().permitAll();
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/user/**")
+                .permitAll()
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/login");
 
         return http.build();
     }
