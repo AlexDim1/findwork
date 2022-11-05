@@ -21,9 +21,18 @@ public class UserController {
     private final ValidationService validationService;
     private final BCryptPasswordEncoder encoder;
 
-    @GetMapping("/register")
-    public String getRegistrationPage() {
-        return "register";
+    @GetMapping("/register/company")
+    public ModelAndView getRegistrationPageCompany() {
+        ModelAndView view = new ModelAndView("register");
+        view.addObject("company");
+        return view;
+    }
+
+    @GetMapping("/register/person")
+    public ModelAndView getRegistrationPagePerson() {
+        ModelAndView view = new ModelAndView("register");
+        view.addObject("person");
+        return view;
     }
 
     @GetMapping("/login")
