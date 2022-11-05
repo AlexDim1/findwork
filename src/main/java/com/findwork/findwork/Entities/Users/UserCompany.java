@@ -44,15 +44,10 @@ public class UserCompany implements UserDetails {
     public UserCompany() {
     }
 
-    public UserCompany(String username, String password, String name, String description, int employeeCount,
-                       int foundingYear, String address) {
+    public UserCompany(String username, String password, String name) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.description = description;
-        this.employeeCount = employeeCount;
-        this.foundingYear = foundingYear;
-        this.address = address;
     }
 
     @Override
