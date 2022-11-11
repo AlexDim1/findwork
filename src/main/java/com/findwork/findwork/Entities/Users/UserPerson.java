@@ -1,6 +1,7 @@
 package com.findwork.findwork.Entities.Users;
 
 import com.findwork.findwork.Entities.JobApplication;
+import com.findwork.findwork.Entities.JobOffer;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -43,16 +41,10 @@ public class UserPerson implements UserDetails {
     @OneToMany(mappedBy = "applicant")
     private List<JobApplication> jobApplications;
 
-    public UserPerson() {
-    }
+    @ManyToMany
+    private List<JobOffer> savedOffers;
 
-    public UserPerson(String username, String password, String firstName, String lastName,
-                      int age, String education, String skills) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
+    public UserPerson() {
     }
 
     public UserPerson(String username, String password, String firstName, String lastName) {
@@ -60,36 +52,6 @@ public class UserPerson implements UserDetails {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-        this.education = education;
-        this.skills = skills;
     }
 
     @Override
