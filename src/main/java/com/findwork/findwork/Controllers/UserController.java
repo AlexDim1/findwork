@@ -1,9 +1,6 @@
 package com.findwork.findwork.Controllers;
 
-import com.findwork.findwork.Requests.EditPersonRequest;
-import com.findwork.findwork.Requests.LoginRequest;
-import com.findwork.findwork.Requests.RegisterCompanyRequest;
-import com.findwork.findwork.Requests.RegisterPersonRequest;
+import com.findwork.findwork.Requests.*;
 import com.findwork.findwork.Services.UserService;
 import com.findwork.findwork.Services.ValidationService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -127,10 +124,26 @@ public class UserController {
         return view;
         }
 
-    @PostMapping("/edit/company")                                                                              //TODO
-    public ModelAndView editCompany(@RequestBody RegisterCompanyRequest request) {
+    @PostMapping("/edit/company")
+    public ModelAndView editCompany(@RequestBody EditCompanyRequest request) throws Exception {
         ModelAndView view = new ModelAndView();
         view.setViewName("editInfo");
+        try {validationService.validateEditCompanyRequest(request);}
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        try
+        {
+            userService.editCompany(request);
+        }
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        view.addObject("success", "Profile changed successfully!");
         return view;
     }
 

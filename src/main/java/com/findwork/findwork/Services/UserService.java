@@ -4,6 +4,7 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Repositories.UserPersonRepository;
+import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
@@ -73,6 +74,29 @@ public class UserService implements UserDetailsService {
             questionablePerson.setSkills(r.getSkills());
 
         personRepo.save(questionablePerson);
+    }
+
+    public void editCompany(EditCompanyRequest r) throws Exception {
+        UserCompany questionableCompany = companyRepo.findUserCompanyByUsername((r.getOldEmail()));
+        if(r.getEmail() != null) {
+            if (personRepo.findUserPersonByUsername(r.getEmail()) != null
+                    || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
+                throw new Exception("An account with this email already exists");
+            else questionableCompany.setUsername(r.getEmail());
+        }
+        if(r.getPassword() != null)                                                                               //TODO
+            questionableCompany.setPassword(encoder.encode((r.getPassword())));
+        if(r.getName() != null)
+            questionableCompany.setName(r.getName());
+        if(r.getDescription() != null)
+            questionableCompany.setDescription(r.getDescription());
+        if(r.getEmployeeCount() != 0)
+            questionableCompany.setEmployeeCount(r.getEmployeeCount());
+        if(r.getFoundingYear() != 0)
+            questionableCompany.setFoundingYear(r.getFoundingYear());
+        if(r.getAddress() != null)
+            questionableCompany.setAddress(r.getAddress());
+        companyRepo.save(questionableCompany);
     }
 
     public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo, BCryptPasswordEncoder encoder) {

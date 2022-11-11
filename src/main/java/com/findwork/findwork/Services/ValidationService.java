@@ -1,9 +1,6 @@
 package com.findwork.findwork.Services;
 
-import com.findwork.findwork.Requests.EditPersonRequest;
-import com.findwork.findwork.Requests.LoginRequest;
-import com.findwork.findwork.Requests.RegisterCompanyRequest;
-import com.findwork.findwork.Requests.RegisterPersonRequest;
+import com.findwork.findwork.Requests.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,7 +44,6 @@ public class ValidationService {
 
         if(!validatePassword(r.getPassword()))
             return false;
-
         return validateEmail(r.getEmail());
     }
 
@@ -70,6 +66,31 @@ public class ValidationService {
         if(r.getAge() != 0)
             if(r.getAge() < 16) //????????????
                 return false;
+
+        return true;
+    }
+    public boolean validateEditCompanyRequest(EditCompanyRequest r) throws Exception {
+        String badDataFields = "";
+
+        if(r.getEmail() != null)
+            if(!validateEmail(r.getEmail()))
+                badDataFields += "invalid email, ";
+
+        if(r.getPassword() != null)
+            if(!validatePassword(r.getPassword()))
+                badDataFields += "invalid password, ";
+        if(r.getDescription() != null)
+            if(r.getDescription().length() < 10) //????????????
+                badDataFields += "invalid description, ";
+        if(r.getEmployeeCount() != 0)
+            if(r.getEmployeeCount() < 0)
+                badDataFields += "invalid employee count, ";
+        if(r.getFoundingYear() != 0)
+            if(r.getFoundingYear() < 1900)
+                badDataFields += "invalid founding year, ";
+
+        if(badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
 
         return true;
     }

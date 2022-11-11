@@ -56,6 +56,54 @@ public class UserCompany implements UserDetails {
         return Collections.singletonList(authority);
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getEmployeeCount() {
+        return employeeCount;
+    }
+
+    public void setEmployeeCount(int employeeCount) {
+        this.employeeCount = employeeCount;
+    }
+
+    public int getFoundingYear() {
+        return foundingYear;
+    }
+
+    public void setFoundingYear(int foundingYear) {
+        this.foundingYear = foundingYear;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -85,4 +133,6 @@ public class UserCompany implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
