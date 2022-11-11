@@ -22,10 +22,11 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/user/**")
+                .antMatchers("/**")
                 .permitAll()
                 .and()
                 .formLogin()
+                .loginPage("/login")
                 .loginProcessingUrl("/login");
 
         return http.build();
