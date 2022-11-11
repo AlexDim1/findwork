@@ -4,6 +4,7 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Repositories.UserPersonRepository;
+import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,6 +48,31 @@ public class UserService implements UserDetailsService {
             throw new Exception("An account with this email already exists");
         UserCompany registered = new UserCompany(r.getEmail(), encoder.encode(r.getPassword()), r.getName());
         companyRepo.save(registered);
+    }
+
+    public void editPerson(EditPersonRequest r) throws Exception {
+        UserPerson questionablePerson = personRepo.findUserPersonByUsername(r.getOldEmail());
+        if(r.getEmail() != null)
+        {
+            if(personRepo.findUserPersonByUsername(r.getEmail()) != null
+                    || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
+                throw new Exception("An account with this email already exists");
+            else questionablePerson.setUsername(r.getEmail());
+        }
+        if(r.getPassword() != null)                                                                               //TODO
+            questionablePerson.setPassword(encoder.encode((r.getPassword())));
+        if(r.getFirstName() != null)
+            questionablePerson.setFirstName(r.getFirstName());
+        if(r.getLastName() != null)
+            questionablePerson.setLastName(r.getLastName());
+        if(r.getAge() != 0) //??????
+            questionablePerson.setAge(r.getAge());
+        if(r.getEducation() != null)
+            questionablePerson.setEducation(r.getEducation());
+        if(r.getSkills() != null)
+            questionablePerson.setSkills(r.getSkills());
+
+        personRepo.save(questionablePerson);
     }
 
     public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo, BCryptPasswordEncoder encoder) {

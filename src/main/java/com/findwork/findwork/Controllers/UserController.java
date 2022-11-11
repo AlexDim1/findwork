@@ -1,5 +1,6 @@
 package com.findwork.findwork.Controllers;
 
+import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.LoginRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
@@ -78,6 +79,7 @@ public class UserController {
         }
 
         view.setViewName("editInfo");
+        view.addObject("success", "Bravo, pich - registrira se!");
         return view;
     }
 
@@ -98,6 +100,36 @@ public class UserController {
             return view;
         }
 
+        view.setViewName("editInfo");
+        view.addObject("success", "Bravo, pich - registrira se!");
+        return view;
+    }
+
+    @PostMapping("/edit/person")
+    public ModelAndView editPerson(@RequestBody EditPersonRequest request) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("editInfo");
+        if (!validationService.validateEditPersonRequest(request))
+        {
+            view.addObject("error", "Invalid data");
+            return view;
+        }
+        try
+        {
+            userService.editPerson(request);
+        }
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        view.addObject("success", "Profile changed successfully!");
+        return view;
+        }
+
+    @PostMapping("/edit/company")                                                                              //TODO
+    public ModelAndView editCompany(@RequestBody RegisterCompanyRequest request) {
+        ModelAndView view = new ModelAndView();
         view.setViewName("editInfo");
         return view;
     }

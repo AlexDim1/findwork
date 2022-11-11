@@ -1,5 +1,6 @@
 package com.findwork.findwork.Services;
 
+import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.LoginRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
@@ -27,7 +28,7 @@ public class ValidationService {
         || r.getLastName().isEmpty())
             return false;
 
-        if(validatePassword(r.getPassword()))
+        if(!validatePassword(r.getPassword()))
             return false;
 
         return (validateEmail(r.getEmail()) && validatePassword(r.getPassword()));
@@ -57,4 +58,20 @@ public class ValidationService {
     private boolean validateEmail(String email) {
         return email.matches("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
     }
+
+    public boolean validateEditPersonRequest(EditPersonRequest r) {
+        if(r.getEmail() != null)
+            if(validateEmail(r.getEmail()))
+                return false;
+
+        if(r.getPassword() != null)
+            if(!validatePassword(r.getPassword()))
+                return false;
+        if(r.getAge() != 0)
+            if(r.getAge() < 16) //????????????
+                return false;
+
+        return true;
+    }
+
 }

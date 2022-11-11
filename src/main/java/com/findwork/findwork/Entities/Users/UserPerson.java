@@ -62,6 +62,22 @@ public class UserPerson implements UserDetails {
         this.lastName = lastName;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
     public UUID getId() {
         return id;
     }
