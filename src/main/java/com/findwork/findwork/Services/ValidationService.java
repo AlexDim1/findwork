@@ -55,17 +55,22 @@ public class ValidationService {
         return email.matches("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
     }
 
-    public boolean validateEditPersonRequest(EditPersonRequest r) {
+    public boolean validateEditPersonRequest(EditPersonRequest r) throws Exception {
+        String badDataFields = "";
+
         if(r.getEmail() != null)
             if(validateEmail(r.getEmail()))
-                return false;
+                badDataFields += "invalid email format, ";
 
         if(r.getPassword() != null)
             if(!validatePassword(r.getPassword()))
-                return false;
+                badDataFields += "invalid password - should be 8+ symbols, ";
         if(r.getAge() != 0)
             if(r.getAge() < 16) //????????????
-                return false;
+                badDataFields += "invalid age - should be >15, ";
+
+        if(badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
 
         return true;
     }
@@ -74,20 +79,20 @@ public class ValidationService {
 
         if(r.getEmail() != null)
             if(!validateEmail(r.getEmail()))
-                badDataFields += "invalid email, ";
+                badDataFields += "invalid email format, ";
 
         if(r.getPassword() != null)
             if(!validatePassword(r.getPassword()))
-                badDataFields += "invalid password, ";
+                badDataFields += "invalid password - should be 8+ symbols, ";
         if(r.getDescription() != null)
             if(r.getDescription().length() < 10) //????????????
-                badDataFields += "invalid description, ";
+                badDataFields += "invalid description - should be 10+ symbols, ";
         if(r.getEmployeeCount() != 0)
             if(r.getEmployeeCount() < 0)
-                badDataFields += "invalid employee count, ";
+                badDataFields += "invalid employee count - should be >0, ";
         if(r.getFoundingYear() != 0)
             if(r.getFoundingYear() < 1900)
-                badDataFields += "invalid founding year, ";
+                badDataFields += "invalid founding year - should be 1900+, ";
 
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
@@ -95,4 +100,22 @@ public class ValidationService {
         return true;
     }
 
+    public Boolean validateCreateJobOfferRequest(CreateJobOfferRequest r) {
+        if(r.getTitle() == null
+                || r.getRequirements() == null
+                || r.getLocation() == null
+                || r.getSalary() == null
+                || r.getJobLevel() == null
+                || r.getJobCategory() == null
+                || r.getCompany() == null)
+            return false;
+
+        if(r.getTitle().isEmpty()
+                || r.getRequirements().isEmpty()
+                || r.getLocation().isEmpty()
+                || r.getSalary().isEmpty())
+            return false;
+
+        return true;
+    }
 }

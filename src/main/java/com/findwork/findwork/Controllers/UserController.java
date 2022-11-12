@@ -1,5 +1,6 @@
 package com.findwork.findwork.Controllers;
 
+import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Requests.*;
 import com.findwork.findwork.Services.UserService;
 import com.findwork.findwork.Services.ValidationService;
@@ -104,9 +105,10 @@ public class UserController {
     public ModelAndView editPerson(@RequestBody EditPersonRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("editInfo");
-        if (!validationService.validateEditPersonRequest(request))
+        try {validationService.validateEditPersonRequest(request);}
+        catch (Exception e)
         {
-            view.addObject("error", "Invalid data");
+            view.addObject("error", e.getMessage());
             return view;
         }
         try

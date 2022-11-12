@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
                 throw new Exception("An account with this email already exists");
             else questionablePerson.setUsername(r.getEmail());
         }
-        if(r.getPassword() != null)                                                                               //TODO
+        if(r.getPassword() != null)
             questionablePerson.setPassword(encoder.encode((r.getPassword())));
         if(r.getFirstName() != null)
             questionablePerson.setFirstName(r.getFirstName());
@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
                 throw new Exception("An account with this email already exists");
             else questionableCompany.setUsername(r.getEmail());
         }
-        if(r.getPassword() != null)                                                                               //TODO
+        if(r.getPassword() != null)
             questionableCompany.setPassword(encoder.encode((r.getPassword())));
         if(r.getName() != null)
             questionableCompany.setName(r.getName());
