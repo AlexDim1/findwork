@@ -1,53 +1,47 @@
 package com.findwork.findwork.Services;
 
-import com.findwork.findwork.Requests.LoginRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ValidationService {
-    public boolean validateLoginRequest(LoginRequest r) {
-        if(r.getEmail() == null || r.getPassword() == null)
-            return false;
+    public void validateRegisterPersonRequest(RegisterPersonRequest r) throws Exception {
+        if (r.getEmail() == null
+                || r.getPassword() == null
+                || r.getFirstName() == null
+                || r.getLastName() == null)
+            throw new Exception("Email, names and password are required!");
 
-        return !r.getEmail().isEmpty() && !r.getPassword().isEmpty();
+        if (r.getEmail().isEmpty()
+                || r.getPassword().isEmpty()
+                || r.getFirstName().isEmpty()
+                || r.getLastName().isEmpty())
+            throw new Exception("Email, names and password are required!");
+
+        if (!validatePassword(r.getPassword()))
+            throw new Exception("Password should be at least 8 characters long!");
+
+        if (!validateEmail(r.getEmail()))
+            throw new Exception("Invalid email address!");
     }
 
-    public boolean validateRegisterPersonRequest(RegisterPersonRequest r) {
-        if(r.getEmail() == null
-        || r.getPassword() == null
-        || r.getFirstName() == null
-        || r.getLastName() == null)
-            return false;
-
-        if(r.getEmail().isEmpty()
-        || r.getPassword().isEmpty()
-        || r.getFirstName().isEmpty()
-        || r.getLastName().isEmpty())
-            return false;
-
-        if(validatePassword(r.getPassword()))
-            return false;
-
-        return (validateEmail(r.getEmail()) && validatePassword(r.getPassword()));
-    }
-
-    public boolean validateRegisterCompanyRequest(RegisterCompanyRequest r) {
-        if(r.getEmail() == null
+    public void validateRegisterCompanyRequest(RegisterCompanyRequest r) throws Exception {
+        if (r.getEmail() == null
                 || r.getPassword() == null
                 || r.getName() == null)
-            return false;
+            throw new Exception("Email, name and password are required!");
 
-        if(r.getEmail().isEmpty()
+        if (r.getEmail().isEmpty()
                 || r.getPassword().isEmpty()
                 || r.getName().isEmpty())
-            return false;
+            throw new Exception("Email, name and password are required!");
 
-        if(!validatePassword(r.getPassword()))
-            return false;
+        if (!validatePassword(r.getPassword()))
+            throw new Exception("Password should be at least 8 characters long!");
 
-        return validateEmail(r.getEmail());
+        if (!validateEmail(r.getEmail()))
+            throw new Exception("Invalid email address!");
     }
 
     private boolean validatePassword(String password) {
