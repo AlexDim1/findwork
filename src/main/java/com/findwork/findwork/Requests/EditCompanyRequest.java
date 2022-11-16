@@ -24,4 +24,6 @@ public class EditCompanyRequest {
 
     private String address;
 
+    public EditCompanyRequest() {
+    }
 }

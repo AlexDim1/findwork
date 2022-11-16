@@ -47,6 +47,8 @@ public class UserService implements UserDetailsService {
         if(personRepo.findUserPersonByUsername(r.getEmail()) != null
                 || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
             throw new Exception("An account with this email already exists");
+        if(companyRepo.findUserCompanyByName(r.getName()) != null)
+            throw new Exception("A company with this name already exists");
         UserCompany registered = new UserCompany(r.getEmail(), encoder.encode(r.getPassword()), r.getName());
         companyRepo.save(registered);
     }

@@ -1,5 +1,7 @@
 package com.findwork.findwork.Controllers;
 
+import com.findwork.findwork.Entities.JobOffer;
+import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Services.OfferService;
 import com.findwork.findwork.Services.ValidationService;
@@ -9,6 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/offer")
@@ -23,22 +29,33 @@ public class JobOfferController {
 
     @GetMapping("/fetchAll")
     public ModelAndView fetchOffers() {
-        ModelAndView view = new ModelAndView("fetchOffers");
+        ModelAndView view = new ModelAndView("homepage");
+        List<JobOffer> offers = offerService.getAllOffers();
+        view.addObject("offers", offers);
         return view;
     }
 
     @GetMapping("/fetchCompany")
-    public ModelAndView fetchCompanyOffers() {
+    public ModelAndView fetchCompanyOffers(String companyUsername) {
         ModelAndView view = new ModelAndView("fetchCompanyOffers");
+        List<JobOffer> offers = new ArrayList<>();
+        try {offers = offerService.getCompanyOffers(companyUsername);}
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        view.addObject("offers", offers);
         return view;
     }
 
     @PostMapping("/create")
     public ModelAndView createOffer(@RequestBody CreateJobOfferRequest request) {
         ModelAndView view = new ModelAndView("createOffer");
-        if(!validationService.validateCreateJobOfferRequest(request))
+        try{validationService.validateCreateJobOfferRequest(request);}
+        catch (Exception e)
         {
-            view.addObject("error", "Invalid data");
+            view.addObject("error", e.getMessage());
             return view;
         }
         try {
@@ -48,7 +65,6 @@ public class JobOfferController {
             view.addObject("error", e.getMessage());
             return view;
         }
-
         view.setViewName("editOffer");
         view.addObject("success", "Bravo, pich - Suzdade obqva!");
         return view;
@@ -65,4 +81,5 @@ public class JobOfferController {
         ModelAndView view = new ModelAndView("editOffer");
         return view;
     }
+
 }

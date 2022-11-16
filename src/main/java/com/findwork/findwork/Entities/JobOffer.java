@@ -5,6 +5,7 @@ import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -47,10 +48,10 @@ public class JobOffer {
     @Enumerated
     private Category jobCategory;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private UserCompany company;
 
-    @OneToMany(mappedBy = "offer")
+    @OneToMany(mappedBy = "offer", cascade = {CascadeType.ALL})
     private List<JobApplication> jobApplications;
 
     public JobOffer() {

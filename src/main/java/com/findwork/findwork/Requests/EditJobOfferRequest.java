@@ -31,4 +31,7 @@ public class EditJobOfferRequest {
     private JobLevel jobLevel;
 
     private Category jobCategory;
+
+    public EditJobOfferRequest() {
+    }
 }

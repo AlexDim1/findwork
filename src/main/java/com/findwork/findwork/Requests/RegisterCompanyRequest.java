@@ -11,4 +11,7 @@ public class RegisterCompanyRequest {
     private String name;
     private String email;
     private String password;
+
+    public RegisterCompanyRequest() {
+    }
 }

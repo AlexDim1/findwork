@@ -1,10 +1,17 @@
 package com.findwork.findwork.Services;
 
+import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ValidationService {
+    private final UserCompanyRepository companyRepo;
+
+    public ValidationService(UserCompanyRepository companyRepo) {
+        this.companyRepo = companyRepo;
+    }
+
     public boolean validateLoginRequest(LoginRequest r) {
         if(r.getEmail() == null || r.getPassword() == null)
             return false;
@@ -100,21 +107,30 @@ public class ValidationService {
         return true;
     }
 
-    public Boolean validateCreateJobOfferRequest(CreateJobOfferRequest r) {
-        if(r.getTitle() == null
-                || r.getRequirements() == null
-                || r.getLocation() == null
-                || r.getSalary() == null
-                || r.getJobLevel() == null
-                || r.getJobCategory() == null
-                || r.getCompany() == null)
-            return false;
-
-        if(r.getTitle().isEmpty()
-                || r.getRequirements().isEmpty()
-                || r.getLocation().isEmpty()
-                || r.getSalary().isEmpty())
-            return false;
+    public Boolean validateCreateJobOfferRequest(CreateJobOfferRequest r) throws Exception {
+        String badDataFields = "";
+        if(r.getTitle() != null)
+            if(r.getTitle().length() < 4)
+                badDataFields += "invalid title - should be 4+ symbols, ";
+        if(r.getRequirements() != null)
+            if(r.getRequirements().length() < 10)
+                badDataFields += "invalid requirements - should be 10+ symbols, ";
+        if(r.getLocation() != null)
+            if(r.getLocation().length() < 3)
+                badDataFields += "invalid location - should be 3+ symbols, ";
+        if(r.getSalary() != null)
+            if(r.getSalary().length() < 3)
+                badDataFields += "invalid salary - should be 3+ symbols, ";
+        if(r.getJobLevel() != null)
+            if(r.getJobLevel().ordinal() < 0 && r.getJobLevel().ordinal() > 3)
+                badDataFields += "invalid job level, ";
+        if(r.getJobCategory() != null)
+            if(r.getJobCategory().ordinal() < 0 && r.getJobCategory().ordinal() > 16)
+                badDataFields += "invalid job category, ";
+        if(companyRepo.findUserCompanyByUsername(r.getCompanyUsername()) == null) // В заявката се пише "company": {"username":"rabota@gmail.com"}
+            badDataFields += "invalid company, ";
+        if(badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
 
         return true;
     }

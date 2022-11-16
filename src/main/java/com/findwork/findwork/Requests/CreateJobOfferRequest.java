@@ -25,4 +25,9 @@ public class CreateJobOfferRequest {
     private Category jobCategory;
 
     private UserCompany company;
+
+    public CreateJobOfferRequest() {
+    }
+
+    public String getCompanyUsername() {return company.getUsername();}
 }

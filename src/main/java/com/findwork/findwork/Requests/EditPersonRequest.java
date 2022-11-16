@@ -23,4 +23,7 @@ public class EditPersonRequest {
     private String education;
 
     private String skills;
+
+    public EditPersonRequest() {
+    }
 }
