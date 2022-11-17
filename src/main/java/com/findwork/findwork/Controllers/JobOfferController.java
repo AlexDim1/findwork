@@ -3,13 +3,12 @@ package com.findwork.findwork.Controllers;
 import com.findwork.findwork.Entities.JobOffer;
 import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
+import com.findwork.findwork.Requests.EditCompanyRequest;
+import com.findwork.findwork.Requests.EditJobOfferRequest;
 import com.findwork.findwork.Services.OfferService;
 import com.findwork.findwork.Services.ValidationService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class JobOfferController {
     }
 
     @GetMapping("/fetchCompany")
-    public ModelAndView fetchCompanyOffers(String companyUsername) {
+    public ModelAndView fetchCompanyOffers(@RequestParam(required = true) String companyUsername) {
         ModelAndView view = new ModelAndView("fetchCompanyOffers");
         List<JobOffer> offers = new ArrayList<>();
         try {offers = offerService.getCompanyOffers(companyUsername);}
@@ -71,14 +70,38 @@ public class JobOfferController {
     }
 
     @PostMapping("/remove")
-    public ModelAndView removeOffer() {
-        ModelAndView view = new ModelAndView("removeOffer");
+    public ModelAndView removeOffer(@RequestParam(required = true) String title) {
+        ModelAndView view = new ModelAndView("editOffer");
+        try {
+            offerService.removeOffer(title);
+        }
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        view.addObject("success", "Bravo, pich - Iztri obqva!");
         return view;
     }
 
     @PostMapping("/edit")
-    public ModelAndView editOffer() {
+    public ModelAndView editOffer(EditJobOfferRequest request) {
         ModelAndView view = new ModelAndView("editOffer");
+        try{validationService.validateEditJobOfferRequest(request);}
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        try {
+            offerService.editOffer(request);}
+        catch (Exception e)
+        {
+            view.addObject("error", e.getMessage());
+            return view;
+        }
+        view.setViewName("editOffer");
+        view.addObject("success", "Bravo, pich - Suzdade obqva!");
         return view;
     }
 

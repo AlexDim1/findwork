@@ -48,10 +48,10 @@ public class JobOffer {
     @Enumerated
     private Category jobCategory;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     private UserCompany company;
 
-    @OneToMany(mappedBy = "offer", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "offer", cascade = {CascadeType.REFRESH})
     private List<JobApplication> jobApplications;
 
     public JobOffer() {

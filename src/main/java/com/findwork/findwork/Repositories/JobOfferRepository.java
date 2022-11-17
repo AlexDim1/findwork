@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface JobOfferRepository extends JpaRepository<JobOffer, UUID> {
-    JobOffer findJobOffersByTitle(String title);
+    JobOffer findJobOfferByTitle(String title);
 
     List<JobOffer> findJobOfferByCompany(UserCompany company);
 }

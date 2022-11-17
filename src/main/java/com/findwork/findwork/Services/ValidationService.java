@@ -134,4 +134,38 @@ public class ValidationService {
 
         return true;
     }
+
+    public Boolean validateEditJobOfferRequest(EditJobOfferRequest r) throws Exception {
+        String badDataFields = "";
+        if(r.getTitle() != null)
+            if(r.getTitle().length() < 4)
+                badDataFields += "invalid title - should be 4+ symbols, ";
+        if(r.getDescription() != null)
+            if(r.getDescription().length() < 10)
+                badDataFields += "invalid description - should be 10+ symbols, ";
+        if(r.getRequirements() != null)
+            if(r.getRequirements().length() < 10)
+                badDataFields += "invalid requirements - should be 10+ symbols, ";
+        if(r.getNiceToHave() != null)
+            if(r.getNiceToHave().length() < 4)
+                badDataFields += "invalid nice to have field - should be 4+ symbols, ";
+        if(r.getBenefits() != null)
+            if(r.getBenefits().length() < 4)
+                badDataFields += "invalid benefits field - should be 4+ symbols, ";
+        if(r.getLocation() != null)
+            if(r.getLocation().length() < 3)
+                badDataFields += "invalid location - should be 3+ symbols, ";
+        if(r.getSalary() != null)
+            if(r.getSalary().length() < 3)
+                badDataFields += "invalid salary - should be 3+ symbols, ";
+        if(r.getJobLevel() != null)
+            if(r.getJobLevel().ordinal() < 0 && r.getJobLevel().ordinal() > 3)
+                badDataFields += "invalid job level, ";
+        if(r.getJobCategory() != null)
+            if(r.getJobCategory().ordinal() < 0 && r.getJobCategory().ordinal() > 16)
+                badDataFields += "invalid job category, ";
+        if(badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
+        return true;
+    }
 }

@@ -38,7 +38,7 @@ public class UserCompany implements UserDetails {
 
     private String address;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = {CascadeType.ALL})
     private List<JobOffer> offers;
 
     public UserCompany() {
