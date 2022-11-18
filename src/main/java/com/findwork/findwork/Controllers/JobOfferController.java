@@ -85,7 +85,7 @@ public class JobOfferController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView editOffer(EditJobOfferRequest request) {
+    public ModelAndView editOffer(@RequestBody EditJobOfferRequest request) {
         ModelAndView view = new ModelAndView("editOffer");
         try{validationService.validateEditJobOfferRequest(request);}
         catch (Exception e)
@@ -94,6 +94,7 @@ public class JobOfferController {
             return view;
         }
         try {
+            System.out.println(request.getOldTitle());
             offerService.editOffer(request);}
         catch (Exception e)
         {
@@ -101,7 +102,7 @@ public class JobOfferController {
             return view;
         }
         view.setViewName("editOffer");
-        view.addObject("success", "Bravo, pich - Suzdade obqva!");
+        view.addObject("success", "Bravo, pich - Promeni obqvata!");
         return view;
     }
 

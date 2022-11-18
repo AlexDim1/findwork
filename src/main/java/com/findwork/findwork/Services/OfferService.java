@@ -51,7 +51,6 @@ public class OfferService{
     }
 
     public void editOffer(EditJobOfferRequest r) throws Exception {
-        System.out.println(r.getOldTitle()); ////// WTF??????????????????????????????????
         JobOffer questionableOffer = jobRepo.findJobOfferByTitle(r.getOldTitle());
         if(questionableOffer == null)
             throw new Exception("The job offer you are refering to is not existent.");
