@@ -1,8 +1,7 @@
 package com.findwork.findwork.Services;
 
 import com.findwork.findwork.Repositories.UserCompanyRepository;
-import com.findwork.findwork.Requests.RegisterCompanyRequest;
-import com.findwork.findwork.Requests.RegisterPersonRequest;
+import com.findwork.findwork.Requests.*;
 import org.springframework.stereotype.Service;
 
 @Service

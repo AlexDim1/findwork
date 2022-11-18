@@ -102,10 +102,4 @@ public class UserService implements UserDetailsService {
             questionableCompany.setAddress(r.getAddress());
         companyRepo.save(questionableCompany);
     }
-
-    public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo, BCryptPasswordEncoder encoder) {
-        this.companyRepo = companyRepo;
-        this.personRepo = personRepo;
-        this.encoder = encoder;
-    }
 }

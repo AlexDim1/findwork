@@ -1,9 +1,7 @@
 package com.findwork.findwork.Controllers;
 
 import com.findwork.findwork.Entities.JobOffer;
-import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
-import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import com.findwork.findwork.Services.OfferService;
 import com.findwork.findwork.Services.ValidationService;
@@ -13,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/offer")

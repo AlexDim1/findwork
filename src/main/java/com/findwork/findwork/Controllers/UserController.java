@@ -1,8 +1,6 @@
 package com.findwork.findwork.Controllers;
 
-import com.findwork.findwork.Requests.LoginRequest;
-import com.findwork.findwork.Requests.RegisterCompanyRequest;
-import com.findwork.findwork.Requests.RegisterPersonRequest;
+import com.findwork.findwork.Requests.*;
 import com.findwork.findwork.Services.UserService;
 import com.findwork.findwork.Services.ValidationService;
 import lombok.AllArgsConstructor;
@@ -15,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,26 +43,6 @@ public class UserController {
     @GetMapping("/login")
     public String getLoginPage() {
         return "login";
-    }
-
-    @PostMapping("/login")
-    public ModelAndView login(@RequestBody LoginRequest request) {
-        ModelAndView view = new ModelAndView();
-        if(!validationService.validateLoginRequest(request)) {
-            view.setViewName("login");
-            view.addObject("error", "Invalid data");
-            return view;
-        }
-
-        UserDetails user = userService.loadUserByUsername(request.getEmail());
-        if(!encoder.matches(request.getPassword(), user.getPassword())) {
-            view.setViewName("login");
-            view.addObject("error", "Wrong password");
-            return view;
-        }
-
-        view.setViewName("homepage");
-        return view;
     }
 
     @PostMapping("/register/person")

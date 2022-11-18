@@ -5,7 +5,6 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Repositories.JobOfferRepository;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
-import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import org.springframework.stereotype.Service;
 
