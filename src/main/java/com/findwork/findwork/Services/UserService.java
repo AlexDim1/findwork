@@ -8,6 +8,7 @@ import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserCompanyRepository companyRepo;
     private final UserPersonRepository personRepo;
@@ -25,26 +27,26 @@ public class UserService implements UserDetailsService {
         UserPerson foundPerson = personRepo.findUserPersonByUsername(username);
         UserCompany foundCompany = companyRepo.findUserCompanyByUsername(username);
 
-        if(foundCompany == null && foundPerson == null) {
+        if (foundCompany == null && foundPerson == null) {
             throw new UsernameNotFoundException("No user found");
         }
 
-        if(foundPerson != null)
+        if (foundPerson != null)
             return foundPerson;
 
         return foundCompany;
     }
 
     public void registerPerson(RegisterPersonRequest r) throws Exception {
-        if(personRepo.findUserPersonByUsername(r.getEmail()) != null
-        || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
-            throw new Exception("An account with this email already exists");
-        UserPerson registered = new UserPerson(r.getEmail(), encoder.encode(r.getPassword()), r.getFirstName(),r.getLastName());
+        if (personRepo.findUserPersonByUsername(r.getEmail()) != null
+                || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
+            throw new Exception(String.format("An account with the email address %s already exists", r.getEmail()));
+        UserPerson registered = new UserPerson(r.getEmail(), encoder.encode(r.getPassword()), r.getFirstName(), r.getLastName());
         personRepo.save(registered);
     }
 
     public void registerCompany(RegisterCompanyRequest r) throws Exception {
-        if(personRepo.findUserPersonByUsername(r.getEmail()) != null
+        if (personRepo.findUserPersonByUsername(r.getEmail()) != null
                 || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
             throw new Exception("An account with this email already exists");
         if(companyRepo.findUserCompanyByName(r.getName()) != null)
