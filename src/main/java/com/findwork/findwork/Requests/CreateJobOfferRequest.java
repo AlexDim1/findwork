@@ -1,6 +1,5 @@
 package com.findwork.findwork.Requests;
 
-import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import lombok.AllArgsConstructor;
