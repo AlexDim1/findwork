@@ -1,6 +1,5 @@
 package com.findwork.findwork.Requests;
 
-import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import lombok.AllArgsConstructor;
@@ -13,6 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditJobOfferRequest {
+
+    private String oldTitle;
 
     private String title;
 
@@ -27,8 +28,6 @@ public class EditJobOfferRequest {
     private String location;
 
     private String salary;
-
-    private int viewCount;
 
     private JobLevel jobLevel;
 

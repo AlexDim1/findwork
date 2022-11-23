@@ -1,35 +1,43 @@
 package com.findwork.findwork.Controllers;
 
-import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Requests.*;
 import com.findwork.findwork.Services.UserService;
 import com.findwork.findwork.Services.ValidationService;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
     private final ValidationService validationService;
-    private final BCryptPasswordEncoder encoder;
+    private final AuthenticationManager authenticationManager;
+
+    @GetMapping("/")
+    public String getHomepage() {
+        return "homepage";
+    }
 
     @GetMapping("/register/company")
-    public ModelAndView getRegistrationPageCompany() {
-        ModelAndView view = new ModelAndView("register");
-        view.addObject("company");
-        return view;
+    public String getRegistrationPageCompany() {
+        return "registerCompany";
     }
 
     @GetMapping("/register/person")
-    public ModelAndView getRegistrationPagePerson() {
-        ModelAndView view = new ModelAndView("register");
-        view.addObject("person");
-        return view;
+    public String getRegistrationPagePerson() {
+        return "registerPerson";
     }
 
     @GetMapping("/login")
@@ -37,68 +45,32 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public ModelAndView login(@RequestBody LoginRequest request) {
-        ModelAndView view = new ModelAndView();
-        if(!validationService.validateLoginRequest(request)) {
-            view.setViewName("login");
-            view.addObject("error", "Invalid data");
-            return view;
-        }
-
-        UserDetails user = userService.loadUserByUsername(request.getEmail());
-        if(!encoder.matches(request.getPassword(), user.getPassword())) {
-            view.setViewName("login");
-            view.addObject("error", "Wrong password");
-            return view;
-        }
-
-        view.setViewName("homepage");
-        return view;
-    }
-
     @PostMapping("/register/person")
-    public ModelAndView registerPerson(@RequestBody RegisterPersonRequest request) {
-        ModelAndView view = new ModelAndView();
-        if(!validationService.validateRegisterPersonRequest(request)) {
-            view.setViewName("register");
-            view.addObject("error", "Invalid data");
-            return view;
-        }
-
+    public String registerPerson(RegisterPersonRequest request, Model model, HttpServletRequest sReq) {
         try {
+            validationService.validateRegisterPersonRequest(request);
             userService.registerPerson(request);
         } catch (Exception e) {
-            view.setViewName("register");
-            view.addObject("error", e.getMessage());
-            return view;
+            model.addAttribute("error", e.getMessage());
+            return "registerPerson";
         }
 
-        view.setViewName("editInfo");
-        view.addObject("success", "Bravo, pich - registrira se!");
-        return view;
+        authAfterRegistration(sReq, request.getEmail(), request.getPassword());
+        return "redirect:/";
     }
 
     @PostMapping("/register/company")
-    public ModelAndView registerCompany(@RequestBody RegisterCompanyRequest request) {
-        ModelAndView view = new ModelAndView();
-        if(!validationService.validateRegisterCompanyRequest(request)) {
-            view.setViewName("register");
-            view.addObject("error", "Invalid data");
-            return view;
-        }
-
+    public String registerCompany(RegisterCompanyRequest request, Model model, HttpServletRequest sReq) {
         try {
+            validationService.validateRegisterCompanyRequest(request);
             userService.registerCompany(request);
         } catch (Exception e) {
-            view.setViewName("register");
-            view.addObject("error", e.getMessage());
-            return view;
+            model.addAttribute("error", e.getMessage());
+            return "registerCompany";
         }
 
-        view.setViewName("editInfo");
-        view.addObject("success", "Bravo, pich - registrira se!");
-        return view;
+        authAfterRegistration(sReq, request.getEmail(), request.getPassword());
+        return "redirect:/";
     }
 
     @PostMapping("/edit/person")
@@ -147,9 +119,12 @@ public class UserController {
         return view;
     }
 
-    public UserController(UserService userService, ValidationService validationService, BCryptPasswordEncoder encoder) {
-        this.userService = userService;
-        this.validationService = validationService;
-        this.encoder = encoder;
+    public void authAfterRegistration(HttpServletRequest request, String username, String password) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+        authToken.setDetails(new WebAuthenticationDetails(request));
+
+        Authentication authentication = authenticationManager.authenticate(authToken);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
