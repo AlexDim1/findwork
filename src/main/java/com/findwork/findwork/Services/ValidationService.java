@@ -4,6 +4,9 @@ import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 @Service
 public class ValidationService {
     private final UserCompanyRepository companyRepo;
@@ -12,46 +15,42 @@ public class ValidationService {
         this.companyRepo = companyRepo;
     }
 
-    public boolean validateLoginRequest(LoginRequest r) {
-        if(r.getEmail() == null || r.getPassword() == null)
-            return false;
+    public void validateRegisterPersonRequest(RegisterPersonRequest r) throws Exception {
+        if (r.getEmail() == null
+                || r.getPassword() == null
+                || r.getFirstName() == null
+                || r.getLastName() == null)
+            throw new Exception("Email, names and password are required!");
 
-        return !r.getEmail().isEmpty() && !r.getPassword().isEmpty();
+        if (r.getEmail().isEmpty()
+                || r.getPassword().isEmpty()
+                || r.getFirstName().isEmpty()
+                || r.getLastName().isEmpty())
+            throw new Exception("Email, names and password are required!");
+
+        if (!validatePassword(r.getPassword()))
+            throw new Exception("Password should be at least 8 characters long!");
+
+        if (!validateEmail(r.getEmail()))
+            throw new Exception("Invalid email address!");
     }
 
-    public boolean validateRegisterPersonRequest(RegisterPersonRequest r) {
-        if(r.getEmail() == null
-        || r.getPassword() == null
-        || r.getFirstName() == null
-        || r.getLastName() == null)
-            return false;
-
-        if(r.getEmail().isEmpty()
-        || r.getPassword().isEmpty()
-        || r.getFirstName().isEmpty()
-        || r.getLastName().isEmpty())
-            return false;
-
-        if(!validatePassword(r.getPassword()))
-            return false;
-
-        return (validateEmail(r.getEmail()) && validatePassword(r.getPassword()));
-    }
-
-    public boolean validateRegisterCompanyRequest(RegisterCompanyRequest r) {
-        if(r.getEmail() == null
+    public void validateRegisterCompanyRequest(RegisterCompanyRequest r) throws Exception {
+        if (r.getEmail() == null
                 || r.getPassword() == null
                 || r.getName() == null)
-            return false;
+            throw new Exception("Email, name and password are required!");
 
-        if(r.getEmail().isEmpty()
+        if (r.getEmail().isEmpty()
                 || r.getPassword().isEmpty()
                 || r.getName().isEmpty())
-            return false;
+            throw new Exception("Email, name and password are required!");
 
-        if(!validatePassword(r.getPassword()))
-            return false;
-        return validateEmail(r.getEmail());
+        if (!validatePassword(r.getPassword()))
+            throw new Exception("Password should be at least 8 characters long!");
+
+        if (!validateEmail(r.getEmail()))
+            throw new Exception("Invalid email address!");
     }
 
     private boolean validatePassword(String password) {
@@ -72,9 +71,9 @@ public class ValidationService {
         if(r.getPassword() != null)
             if(!validatePassword(r.getPassword()))
                 badDataFields += "invalid password - should be 8+ symbols, ";
-        if(r.getAge() != 0)
-            if(r.getAge() < 16) //????????????
-                badDataFields += "invalid age - should be >15, ";
+        if(r.getBirthDate() != null)
+            if(r.getBirthDate().compareTo(LocalDate.parse("1920-01-01")) < 1)
+                badDataFields += "invalid age - should be 1920+ year, ";
 
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
@@ -92,13 +91,13 @@ public class ValidationService {
             if(!validatePassword(r.getPassword()))
                 badDataFields += "invalid password - should be 8+ symbols, ";
         if(r.getDescription() != null)
-            if(r.getDescription().length() < 10) //????????????
+            if(r.getDescription().length() < 10)
                 badDataFields += "invalid description - should be 10+ symbols, ";
-        if(r.getEmployeeCount() != 0)
-            if(r.getEmployeeCount() < 0)
+        if(r.getEmployeeCount() != null)
+            if(Integer.parseInt(r.getEmployeeCount()) < 0)
                 badDataFields += "invalid employee count - should be >0, ";
-        if(r.getFoundingYear() != 0)
-            if(r.getFoundingYear() < 1900)
+        if(r.getFoundingYear() != null)
+            if(Integer.parseInt(r.getFoundingYear()) < 1900)
                 badDataFields += "invalid founding year - should be 1900+, ";
 
         if(badDataFields != "")
@@ -127,11 +126,45 @@ public class ValidationService {
         if(r.getJobCategory() != null)
             if(r.getJobCategory().ordinal() < 0 && r.getJobCategory().ordinal() > 16)
                 badDataFields += "invalid job category, ";
-        if(companyRepo.findUserCompanyByUsername(r.getCompanyUsername()) == null) // В заявката се пише "company": {"username":"rabota@gmail.com"}
+        if(companyRepo.findUserCompanyById(r.getCompanyId()) == null)
             badDataFields += "invalid company, ";
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
 
+        return true;
+    }
+
+    public Boolean validateEditJobOfferRequest(EditJobOfferRequest r) throws Exception {
+        String badDataFields = "";
+        if(r.getTitle() != null)
+            if(r.getTitle().length() < 4)
+                badDataFields += "invalid title - should be 4+ symbols, ";
+        if(r.getDescription() != null)
+            if(r.getDescription().length() < 10)
+                badDataFields += "invalid description - should be 10+ symbols, ";
+        if(r.getRequirements() != null)
+            if(r.getRequirements().length() < 10)
+                badDataFields += "invalid requirements - should be 10+ symbols, ";
+        if(r.getNiceToHave() != null)
+            if(r.getNiceToHave().length() < 4)
+                badDataFields += "invalid nice to have field - should be 4+ symbols, ";
+        if(r.getBenefits() != null)
+            if(r.getBenefits().length() < 4)
+                badDataFields += "invalid benefits field - should be 4+ symbols, ";
+        if(r.getLocation() != null)
+            if(r.getLocation().length() < 3)
+                badDataFields += "invalid location - should be 3+ symbols, ";
+        if(r.getSalary() != null)
+            if(r.getSalary().length() < 3)
+                badDataFields += "invalid salary - should be 3+ symbols, ";
+        if(r.getJobLevel() != null)
+            if(r.getJobLevel().ordinal() < 0 && r.getJobLevel().ordinal() > 3)
+                badDataFields += "invalid job level, ";
+        if(r.getJobCategory() != null)
+            if(r.getJobCategory().ordinal() < 0 && r.getJobCategory().ordinal() > 16)
+                badDataFields += "invalid job category, ";
+        if(badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
         return true;
     }
 }

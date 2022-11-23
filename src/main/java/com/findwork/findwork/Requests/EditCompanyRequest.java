@@ -2,13 +2,14 @@ package com.findwork.findwork.Requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EditCompanyRequest {
-    private String oldEmail;
 
     private String email;
 
@@ -18,12 +19,10 @@ public class EditCompanyRequest {
 
     private String description;
 
-    private int employeeCount;
+    private String employeeCount;
 
-    private int foundingYear;
+    private String foundingYear;
 
     private String address;
 
-    public EditCompanyRequest() {
-    }
 }

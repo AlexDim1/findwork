@@ -2,14 +2,17 @@ package com.findwork.findwork.Requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EditPersonRequest {
-    private String oldEmail;
-
     private String email;
 
     private String password;
@@ -18,12 +21,11 @@ public class EditPersonRequest {
 
     private String lastName;
 
-    private int age;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate birthDate;
 
     private String education;
 
     private String skills;
 
-    public EditPersonRequest() {
-    }
 }

@@ -1,85 +1,83 @@
 package com.findwork.findwork.Controllers;
 
 import com.findwork.findwork.Entities.JobOffer;
-import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
+import com.findwork.findwork.Requests.EditJobOfferRequest;
 import com.findwork.findwork.Services.OfferService;
 import com.findwork.findwork.Services.ValidationService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/offer")
 public class JobOfferController {
     private final ValidationService validationService;
     private final OfferService offerService;
 
-    public JobOfferController(ValidationService validationService, OfferService offerService) {
-        this.validationService = validationService;
-        this.offerService = offerService;
-    }
-
-    @GetMapping("/fetchAll")
-    public ModelAndView fetchOffers() {
-        ModelAndView view = new ModelAndView("homepage");
+    @GetMapping("/all")
+    public String getAllOffers(Model model) {
         List<JobOffer> offers = offerService.getAllOffers();
-        view.addObject("offers", offers);
-        return view;
+        model.addAttribute("offers", offers);
+        return "homepage";
     }
 
-    @GetMapping("/fetchCompany")
-    public ModelAndView fetchCompanyOffers(String companyUsername) {
-        ModelAndView view = new ModelAndView("fetchCompanyOffers");
-        List<JobOffer> offers = new ArrayList<>();
-        try {offers = offerService.getCompanyOffers(companyUsername);}
-        catch (Exception e)
-        {
-            view.addObject("error", e.getMessage());
-            return view;
-        }
-        view.addObject("offers", offers);
-        return view;
-    }
+    @GetMapping ("/create") String getCreateOfferPage() {return "editOffer";}
 
     @PostMapping("/create")
-    public ModelAndView createOffer(@RequestBody CreateJobOfferRequest request) {
-        ModelAndView view = new ModelAndView("createOffer");
-        try{validationService.validateCreateJobOfferRequest(request);}
+    public String createOffer(CreateJobOfferRequest request, Model model) {
+        try
+        {
+            validationService.validateCreateJobOfferRequest(request);
+            offerService.createOffer(request);
+        }
         catch (Exception e)
         {
-            view.addObject("error", e.getMessage());
-            return view;
+            model.addAttribute("error", e.getMessage());
+            return "createOffer";
         }
+
+        model.addAttribute("success", "Bravo, pich - Suzdade obqva!");
+        return "company" /* + request.getCompanyId();*/;
+    }
+
+    @GetMapping ("/{id}/remove") String getRemoveOfferPage() {return "editOffer";}
+
+    @DeleteMapping("/{id}/remove")
+    public String removeOffer(@PathVariable UUID id, Model model) {
         try {
-            offerService.createOffer(request);}
+            offerService.removeOffer(id);
+        }
         catch (Exception e)
         {
-            view.addObject("error", e.getMessage());
-            return view;
+            model.addAttribute("error", e.getMessage());
+            return "editOffer";
         }
-        view.setViewName("editOffer");
-        view.addObject("success", "Bravo, pich - Suzdade obqva!");
-        return view;
+        model.addAttribute("success", "Bravo, pich - Iztri obqva!");
+        return "company";
     }
 
-    @PostMapping("/remove")
-    public ModelAndView removeOffer() {
-        ModelAndView view = new ModelAndView("removeOffer");
-        return view;
-    }
+    @GetMapping ("/{id}/edit") String getEditOfferPage() {return "editOffer";}
 
-    @PostMapping("/edit")
-    public ModelAndView editOffer() {
-        ModelAndView view = new ModelAndView("editOffer");
-        return view;
+    @PutMapping("/{id}/edit")
+    public String editOffer(@PathVariable UUID id, EditJobOfferRequest request, Model model) {
+        try
+        {
+            validationService.validateEditJobOfferRequest(request);
+            offerService.editOffer(id, request);
+        }
+        catch (Exception e)
+        {
+            model.addAttribute("error", e.getMessage());
+            return "editOffer";
+        }
+        model.addAttribute("success", "Bravo, pich - Promeni obqvata!");
+        return "company";
     }
 
 }

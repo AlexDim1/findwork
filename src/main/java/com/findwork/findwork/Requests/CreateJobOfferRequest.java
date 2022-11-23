@@ -5,11 +5,15 @@ import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CreateJobOfferRequest {
 
     private String title;
@@ -24,10 +28,5 @@ public class CreateJobOfferRequest {
 
     private Category jobCategory;
 
-    private UserCompany company;
-
-    public CreateJobOfferRequest() {
-    }
-
-    public String getCompanyUsername() {return company.getUsername();}
+    private UUID companyId;
 }

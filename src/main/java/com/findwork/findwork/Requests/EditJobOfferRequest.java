@@ -5,11 +5,13 @@ import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EditJobOfferRequest {
 
     private String title;
@@ -32,6 +34,4 @@ public class EditJobOfferRequest {
 
     private Category jobCategory;
 
-    public EditJobOfferRequest() {
-    }
 }
