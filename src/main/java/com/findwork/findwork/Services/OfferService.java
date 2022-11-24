@@ -2,6 +2,8 @@ package com.findwork.findwork.Services;
 
 import com.findwork.findwork.Entities.JobOffer;
 import com.findwork.findwork.Entities.Users.UserCompany;
+import com.findwork.findwork.Enums.Category;
+import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.JobOfferRepository;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
@@ -21,10 +23,16 @@ public class OfferService{
         this.companyRepo = companyRepo;
     }
 
-    public void createOffer(CreateJobOfferRequest r){
+    public JobOffer loadOfferById(UUID id)
+    {
+        return jobRepo.findJobOfferById(id);
+    }
+
+    public JobOffer createOffer(CreateJobOfferRequest r){
         JobOffer offer = new JobOffer(r.getTitle(), r.getRequirements(),r.getLocation(), r.getSalary(),
-                r.getJobLevel(), r.getJobCategory(), companyRepo.findUserCompanyById(r.getCompanyId()));
+                JobLevel.valueOf(r.getJobLevel()), Category.valueOf(r.getJobCategory()), companyRepo.findUserCompanyById(r.getCompanyId()));
         jobRepo.save(offer);
+        return offer;
     }
 
     public List<JobOffer>  getAllOffers()
@@ -67,9 +75,9 @@ public class OfferService{
         if(r.getSalary() != null)
             questionableOffer.setSalary(r.getSalary());
         if(r.getJobLevel() != null)
-            questionableOffer.setJobLevel(r.getJobLevel());
+            questionableOffer.setJobLevel(JobLevel.valueOf(r.getJobLevel()));
         if(r.getJobCategory() != null)
-            questionableOffer.setJobCategory(r.getJobCategory());
+            questionableOffer.setJobCategory(Category.valueOf(r.getJobCategory()));
         jobRepo.save(questionableOffer);
     }
 }

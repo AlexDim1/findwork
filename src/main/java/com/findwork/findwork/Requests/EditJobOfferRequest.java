@@ -29,8 +29,8 @@ public class EditJobOfferRequest {
 
     private String salary;
 
-    private JobLevel jobLevel;
+    private String jobLevel;
 
-    private Category jobCategory;
+    private String jobCategory;
 
 }

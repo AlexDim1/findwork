@@ -23,9 +23,9 @@ public class CreateJobOfferRequest {
 
     private String salary;
 
-    private JobLevel jobLevel;
+    private String jobLevel;
 
-    private Category jobCategory;
+    private String jobCategory;
 
     private UUID companyId;
 }

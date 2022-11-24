@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,22 +23,30 @@ public class CompanyController {
     private final ValidationService validationService;
     private final OfferService offerService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/offers")
     public String getCompanyOffers(@PathVariable UUID id,  Model model) {
-        List<JobOffer> offers = null;
+        List<JobOffer> offers = new ArrayList<>();
         try { offers = offerService.getCompanyOffers(id);}
         catch (Exception e)
         {
             model.addAttribute("error", e.getMessage());
         }
+        model.addAttribute("company", userService.loadUserCompanyById(id));
         model.addAttribute("offers", offers);
+        return "company";
+    }
+
+    @GetMapping("/{id}")
+    public String getCompanyPage(@PathVariable UUID id, Model model)
+    {
+        model.addAttribute("company", userService.loadUserCompanyById(id));
         return "company";
     }
 
     @GetMapping("/{id}/edit")
     public String getEditPageCompany() {return "editCompany";}
 
-    @PutMapping("/{id}/edit")
+    @PutMapping("/{id}")
     public String editCompany(@PathVariable UUID id, EditCompanyRequest request, Model model)
     {
         try
@@ -50,7 +59,7 @@ public class CompanyController {
             model.addAttribute("error", e.getMessage());
             return "editCompany";
         }
-        return "company"  /* + "/" + id*/;
+        return "redirect:/company/" + id;
     }
 
 }

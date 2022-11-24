@@ -1,5 +1,7 @@
 package com.findwork.findwork.Controllers;
 
+import com.findwork.findwork.Entities.Users.UserCompany;
+import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
 import com.findwork.findwork.Services.UserService;
@@ -46,30 +48,32 @@ public class AuthenticationController {
 
     @PostMapping("/register/person")
     public String registerPerson(RegisterPersonRequest request, Model model, HttpServletRequest sReq) {
+        UserPerson registered;
         try {
             validationService.validateRegisterPersonRequest(request);
-            userService.registerPerson(request);
+            registered = userService.registerPerson(request);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "registerPerson";
         }
 
         authAfterRegistration(sReq, request.getEmail(), request.getPassword());
-        return "redirect:/";
+        return "redirect:/person/" + registered.getId() + "/edit";
     }
 
     @PostMapping("/register/company")
     public String registerCompany(RegisterCompanyRequest request, Model model, HttpServletRequest sReq) {
+        UserCompany registered;
         try {
             validationService.validateRegisterCompanyRequest(request);
-            userService.registerCompany(request);
+            registered = userService.registerCompany(request);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "registerCompany";
         }
 
         authAfterRegistration(sReq, request.getEmail(), request.getPassword());
-        return "redirect:/";
+        return "redirect:/company/" + registered.getId() + "/edit";
     }
 
 

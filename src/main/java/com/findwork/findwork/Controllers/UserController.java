@@ -18,10 +18,17 @@ public class UserController {
     private final UserService userService;
     private final ValidationService validationService;
 
+    @GetMapping("/{id}")
+    public String getPersonPage(@PathVariable UUID id, Model model)
+    {
+        model.addAttribute("user", userService.loadUserById(id));
+        return "user";
+    }
+
     @GetMapping("/{id}/edit")
     public String getEditPagePerson() {return "editPerson";}
 
-    @PutMapping("/{id}/edit")
+    @PutMapping("/{id}")
     public String editPerson(@PathVariable UUID id, EditPersonRequest request, Model model)
     {
         try
@@ -34,6 +41,6 @@ public class UserController {
             model.addAttribute("error", e.getMessage());
             return "editPerson";
         }
-      return "user" /* + "/" + id*/;
+      return "redirect:/user/" + id;
     }
 }

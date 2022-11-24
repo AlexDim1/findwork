@@ -37,15 +37,16 @@ public class UserService implements UserDetailsService {
         return foundCompany;
     }
 
-    public void registerPerson(RegisterPersonRequest r) throws Exception {
+    public UserPerson registerPerson(RegisterPersonRequest r) throws Exception {
         if (personRepo.findUserPersonByUsername(r.getEmail()) != null
                 || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
             throw new Exception("An account with this email already exists");
         UserPerson registered = new UserPerson(r.getEmail(), encoder.encode(r.getPassword()), r.getFirstName(), r.getLastName());
         personRepo.save(registered);
+        return registered;
     }
 
-    public void registerCompany(RegisterCompanyRequest r) throws Exception {
+    public UserCompany registerCompany(RegisterCompanyRequest r) throws Exception {
         if (personRepo.findUserPersonByUsername(r.getEmail()) != null
                 || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
             throw new Exception("An account with this email already exists");
@@ -53,6 +54,7 @@ public class UserService implements UserDetailsService {
             throw new Exception("A company with this name already exists");
         UserCompany registered = new UserCompany(r.getEmail(), encoder.encode(r.getPassword()), r.getName());
         companyRepo.save(registered);
+        return registered;
     }
 
     public void editPerson(UUID id, EditPersonRequest r) throws Exception {
@@ -110,5 +112,13 @@ public class UserService implements UserDetailsService {
         this.companyRepo = companyRepo;
         this.personRepo = personRepo;
         this.encoder = encoder;
+    }
+
+    public UserCompany loadUserCompanyById(UUID id) {
+        return companyRepo.findUserCompanyById(id);
+    }
+
+    public UserPerson loadUserById(UUID id) {
+        return personRepo.findUserPersonById(id);
     }
 }

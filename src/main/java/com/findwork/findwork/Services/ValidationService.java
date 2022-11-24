@@ -1,10 +1,13 @@
 package com.findwork.findwork.Services;
 
+import com.findwork.findwork.Enums.Category;
+import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Service
@@ -61,7 +64,7 @@ public class ValidationService {
         return email.matches("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
     }
 
-    public boolean validateEditPersonRequest(EditPersonRequest r) throws Exception {
+    public void validateEditPersonRequest(EditPersonRequest r) throws Exception {
         String badDataFields = "";
 
         if(r.getEmail() != null)
@@ -78,9 +81,8 @@ public class ValidationService {
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
 
-        return true;
     }
-    public boolean validateEditCompanyRequest(EditCompanyRequest r) throws Exception {
+    public void validateEditCompanyRequest(EditCompanyRequest r) throws Exception {
         String badDataFields = "";
 
         if(r.getEmail() != null)
@@ -103,10 +105,9 @@ public class ValidationService {
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
 
-        return true;
     }
 
-    public Boolean validateCreateJobOfferRequest(CreateJobOfferRequest r) throws Exception {
+    public void validateCreateJobOfferRequest(CreateJobOfferRequest r) throws Exception {
         String badDataFields = "";
         if(r.getTitle() != null)
             if(r.getTitle().length() < 4)
@@ -121,20 +122,34 @@ public class ValidationService {
             if(r.getSalary().length() < 3)
                 badDataFields += "invalid salary - should be 3+ symbols, ";
         if(r.getJobLevel() != null)
-            if(r.getJobLevel().ordinal() < 0 && r.getJobLevel().ordinal() > 3)
+        {
+            boolean contains = false;
+            for (JobLevel jl : JobLevel.values())
+            {
+                if(jl.toString().equals(r.getJobLevel()))
+                    contains = true;
+            }
+            if(!contains)
                 badDataFields += "invalid job level, ";
+        }
         if(r.getJobCategory() != null)
-            if(r.getJobCategory().ordinal() < 0 && r.getJobCategory().ordinal() > 16)
+        {
+            boolean contains = false;
+            for (Category category : Category.values())
+            {
+                if(category.toString().equals(r.getJobCategory()))
+                    contains = true;
+            }
+            if(!contains)
                 badDataFields += "invalid job category, ";
+        }
         if(companyRepo.findUserCompanyById(r.getCompanyId()) == null)
             badDataFields += "invalid company, ";
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
-
-        return true;
     }
 
-    public Boolean validateEditJobOfferRequest(EditJobOfferRequest r) throws Exception {
+    public void validateEditJobOfferRequest(EditJobOfferRequest r) throws Exception {
         String badDataFields = "";
         if(r.getTitle() != null)
             if(r.getTitle().length() < 4)
@@ -158,13 +173,29 @@ public class ValidationService {
             if(r.getSalary().length() < 3)
                 badDataFields += "invalid salary - should be 3+ symbols, ";
         if(r.getJobLevel() != null)
-            if(r.getJobLevel().ordinal() < 0 && r.getJobLevel().ordinal() > 3)
+        {
+            boolean contains = false;
+            for (JobLevel jl : JobLevel.values())
+            {
+                if(jl.toString().equals(r.getJobLevel()))
+                contains = true;
+            }
+            if(!contains)
                 badDataFields += "invalid job level, ";
+        }
         if(r.getJobCategory() != null)
-            if(r.getJobCategory().ordinal() < 0 && r.getJobCategory().ordinal() > 16)
+        {
+            boolean contains = false;
+            for (Category category : Category.values())
+            {
+                if(category.toString().equals(r.getJobCategory()))
+                 contains = true;
+            }
+            if(!contains)
                 badDataFields += "invalid job category, ";
+        }
+
         if(badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
-        return true;
     }
 }

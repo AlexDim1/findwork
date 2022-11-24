@@ -20,33 +20,30 @@ public class JobOfferController {
     private final ValidationService validationService;
     private final OfferService offerService;
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public String getAllOffers(Model model) {
-        List<JobOffer> offers = offerService.getAllOffers();
-        model.addAttribute("offers", offers);
-        return "homepage";
+            List<JobOffer> offers = offerService.getAllOffers();
+            model.addAttribute("offers", offers);
+            return "homepage";
     }
 
-    @GetMapping ("/create") String getCreateOfferPage() {return "editOffer";}
+    @GetMapping ("/create") String getCreateOfferPage() {return "createOffer";}
 
     @PostMapping("/create")
     public String createOffer(CreateJobOfferRequest request, Model model) {
+        JobOffer questionableOffer;
         try
         {
             validationService.validateCreateJobOfferRequest(request);
-            offerService.createOffer(request);
+            questionableOffer = offerService.createOffer(request);
         }
         catch (Exception e)
         {
             model.addAttribute("error", e.getMessage());
             return "createOffer";
         }
-
-        model.addAttribute("success", "Bravo, pich - Suzdade obqva!");
-        return "company" /* + request.getCompanyId();*/;
+        return "redirect:/offer/" + questionableOffer.getId();
     }
-
-    @GetMapping ("/{id}/remove") String getRemoveOfferPage() {return "editOffer";}
 
     @DeleteMapping("/{id}/remove")
     public String removeOffer(@PathVariable UUID id, Model model) {
@@ -59,12 +56,18 @@ public class JobOfferController {
             return "editOffer";
         }
         model.addAttribute("success", "Bravo, pich - Iztri obqva!");
-        return "company";
+        return "redirect:/";
     }
 
     @GetMapping ("/{id}/edit") String getEditOfferPage() {return "editOffer";}
 
-    @PutMapping("/{id}/edit")
+    @GetMapping ("/{id}") String getOfferPage(@PathVariable UUID id, Model model)
+    {
+        model.addAttribute("offer", offerService.loadOfferById(id));
+        return "offer";
+    }
+
+    @PutMapping("/{id}")
     public String editOffer(@PathVariable UUID id, EditJobOfferRequest request, Model model) {
         try
         {
@@ -76,8 +79,7 @@ public class JobOfferController {
             model.addAttribute("error", e.getMessage());
             return "editOffer";
         }
-        model.addAttribute("success", "Bravo, pich - Promeni obqvata!");
-        return "company";
+        return "redirect:/offer/" + id;
     }
 
 }
