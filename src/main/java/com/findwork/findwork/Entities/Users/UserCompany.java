@@ -9,10 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @Getter
@@ -32,13 +30,13 @@ public class UserCompany implements UserDetails {
     @Column(columnDefinition = "TEXT", length = 5000)
     private String description;
 
-    private int employeeCount;
+    private String employeeCount;
 
-    private int foundingYear;
+    private String foundingYear;
 
     private String address;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company",cascade = {CascadeType.ALL})
     private List<JobOffer> offers;
 
     public UserCompany() {
@@ -85,4 +83,6 @@ public class UserCompany implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

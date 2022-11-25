@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">>
+<head>
+    <meta charset="UTF-8">
+    <title>Company</title>
+</head>
+<body>
+    <p>COMPANY</p>
+    <p th:text = "${error}"></p>
+    <th:block th:each="companyField : ${company}">
+        <li th:text = "${company.name}">
+        <li th:text = "${company.description}"></li>
+        <li th:text = "${company.employeeCount}"></li>
+        <li th:text = "${company.foundingYear}"></li>
+        <li th:text = "${company.address}"></li>
+    </th:block>
+
+    <th:block th:each="offer : ${offers}">
+        <li th:text = "${offer.title}">
+        <li th:text= "${offer.requirements}"></li>
+        <li th:text= "${offer.location}"></li>
+        <li th:text= "${offer.salary}"></li>
+        <li th:text= "${offer.jobLevel}"></li>
+        <li th:text= "${offer.jobCategory}"></li>
+        <li th:text= "${offer.company.name}"></li>
+    </th:block>
+</body>
+</html>

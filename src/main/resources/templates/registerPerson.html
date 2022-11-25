@@ -1,37 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org/">>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Register</title>
 </head>
 <body>
-<h1 class="text-center">Registration</h1>
-
-<div class="card shadow">
-    <div class="card-body">
-
-        <form action="/register/person" class="validate" novalidate method="POST">
-            <div class="mb-3">
-                <label class="form-label" for="firstName">First name</label>
-                <input class="form-control" type="text" id="firstName" name="firstName" placeholder="Nona" required />
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="lastName" >Last name</label>
-                <input class="form-control" type="text" id="lastName" name="firstName" placeholder="Mavrodieva" required />
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="password">Password</label>
-                <input class="form-control" type="password" id="password" name="password" placeholder="******" required />
-            </div>
-            <button class="btn btn-success w-100">Registration</button>
-        </form>
-    </div>
-</div>
-
-<script th:src="@{/scripts/validateForm.js}"></script>
+    <p th:text = "${error}"></p>
 </body>
 </html>
