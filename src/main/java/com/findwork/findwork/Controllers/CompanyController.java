@@ -44,7 +44,11 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}/edit")
-    public String getEditPageCompany() {return "editCompany";}
+    public String getEditPageCompany(@PathVariable UUID id, Model model)
+    {
+        model.addAttribute("company", userService.loadUserCompanyById(id));
+        return "editCompany";
+    }
 
     @PutMapping("/{id}")
     public String editCompany(@PathVariable UUID id, EditCompanyRequest request, Model model)

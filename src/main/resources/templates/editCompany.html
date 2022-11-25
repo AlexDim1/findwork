@@ -5,7 +5,13 @@
     <title>EditCompany</title>
 </head>
 <body>
-<p th:text = "${error}"></p>
-<p th:text = "${success}"></p>
+    <p th:text = "${error}"></p>
+    <th:block th:each="companyField : ${company}">
+        <li th:text = "${company.name}">
+        <li th:text = "${company.description}"></li>
+        <li th:text = "${company.employeeCount}"></li>
+        <li th:text = "${company.foundingYear}"></li>
+        <li th:text = "${company.address}"></li>
+    </th:block>
 </body>
 </html>

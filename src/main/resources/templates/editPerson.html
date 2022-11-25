@@ -5,7 +5,13 @@
     <title>EditPerson</title>
 </head>
 <body>
-        <p th:text = "${error}"></p>
-        <p th:text = "${success}"></p>
+    <p th:text = "${error}"></p>
+    <th:block th:each="userField : ${user}">
+        <li th:text = "${user.firstName}">
+        <li th:text = "${user.lastName}">
+        <li th:text = "${user.birthDate}">
+        <li th:text = "${user.education}">
+        <li th:text = "${user.skills}">
+    </th:block>
 </body>
 </html>

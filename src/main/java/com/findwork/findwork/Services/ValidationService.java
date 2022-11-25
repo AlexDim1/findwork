@@ -7,8 +7,6 @@ import com.findwork.findwork.Requests.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.UUID;
 
 @Service
 public class ValidationService {
@@ -68,7 +66,7 @@ public class ValidationService {
         String badDataFields = "";
 
         if(r.getEmail() != null)
-            if(validateEmail(r.getEmail()))
+            if(!validateEmail(r.getEmail()))
                 badDataFields += "invalid email format, ";
 
         if(r.getPassword() != null)

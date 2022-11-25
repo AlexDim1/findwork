@@ -24,7 +24,7 @@ public class JobOfferController {
     public String getAllOffers(Model model) {
             List<JobOffer> offers = offerService.getAllOffers();
             model.addAttribute("offers", offers);
-            return "homepage";
+            return "offers";
     }
 
     @GetMapping ("/create") String getCreateOfferPage() {return "createOffer";}
@@ -55,11 +55,14 @@ public class JobOfferController {
             model.addAttribute("error", e.getMessage());
             return "editOffer";
         }
-        model.addAttribute("success", "Bravo, pich - Iztri obqva!");
         return "redirect:/";
     }
 
-    @GetMapping ("/{id}/edit") String getEditOfferPage() {return "editOffer";}
+    @GetMapping ("/{id}/edit") String getEditOfferPage(@PathVariable UUID id, Model model)
+    {
+        model.addAttribute("offer", offerService.loadOfferById(id));
+        return "editOffer";
+    }
 
     @GetMapping ("/{id}") String getOfferPage(@PathVariable UUID id, Model model)
     {

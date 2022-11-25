@@ -26,7 +26,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}/edit")
-    public String getEditPagePerson() {return "editPerson";}
+    public String getEditPagePerson(@PathVariable UUID id, Model model)
+    {
+        model.addAttribute("user", userService.loadUserById(id));
+        return "editPerson";
+    }
 
     @PutMapping("/{id}")
     public String editPerson(@PathVariable UUID id, EditPersonRequest request, Model model)

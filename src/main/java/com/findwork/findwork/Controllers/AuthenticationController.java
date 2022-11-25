@@ -58,7 +58,7 @@ public class AuthenticationController {
         }
 
         authAfterRegistration(sReq, request.getEmail(), request.getPassword());
-        return "redirect:/person/" + registered.getId() + "/edit";
+        return "redirect:/user/" + registered.getId() + "/edit";
     }
 
     @PostMapping("/register/company")
