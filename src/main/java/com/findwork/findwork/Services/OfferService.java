@@ -89,4 +89,15 @@ public class OfferService {
 
         applicationRepo.save(new JobApplication(user, offer));
     }
+
+    public void deleteApplication(UserPerson user, UUID offerId) {
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        JobApplication application = findUserApplication(user, offer);
+
+        applicationRepo.delete(application);
+    }
+
+    public JobApplication findUserApplication(UserPerson user, JobOffer offer) {
+        return applicationRepo.findJobApplicationByApplicantAndOffer(user, offer);
+    }
 }

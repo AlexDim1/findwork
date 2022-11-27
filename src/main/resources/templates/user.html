@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">>
 <head>
-    <meta charset="UTF-8">
-    <title>User</title>
+	<meta charset="UTF-8">
+	<title>User</title>
 </head>
 <body>
-    <p>USER</p>
-    <p th:text = "${error}"></p>
-    <th:block th:each="userField : ${user}">
-        <li th:text = "${user.firstName}">
-        <li th:text = "${user.lastName}">
-        <li th:text = "${user.birthDate}">
-        <li th:text = "${user.education}">
-        <li th:text = "${user.skills}">
-    </th:block>
+<p>USER</p>
+<p th:text="${error}"></p>
+<p th:text="${success}"></p>
+<th:block th:each="userField : ${user}">
+	<li th:text="${user.firstName}">
+	<li th:text="${user.lastName}">
+	<li th:text="${user.birthDate}">
+	<li th:text="${user.education}">
+	<li th:text="${user.skills}">
+</th:block>
 </body>
 </html>

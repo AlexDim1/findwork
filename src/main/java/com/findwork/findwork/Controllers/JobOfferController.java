@@ -97,4 +97,13 @@ public class JobOfferController {
         atrr.addFlashAttribute("success", "You have applied successfully!");
         return "redirect:/offer/" + id;
     }
+
+    @DeleteMapping("/{id}/cancel")
+    public String cancelApplication(@PathVariable UUID id, Authentication auth, RedirectAttributes atrr) {
+        UserPerson user = (UserPerson) auth.getPrincipal();
+        offerService.deleteApplication(user, id);
+
+        atrr.addFlashAttribute("success", "Canceled job application!");
+        return "redirect:/user/" + user.getId();
+    }
 }
