@@ -3,6 +3,7 @@ package com.findwork.findwork.Entities.Users;
 import com.findwork.findwork.Entities.JobApplication;
 import com.findwork.findwork.Entities.JobOffer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserPerson implements UserDetails {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -45,9 +47,6 @@ public class UserPerson implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<JobOffer> savedOffers;
-
-    public UserPerson() {
-    }
 
     public UserPerson(String username, String password, String firstName, String lastName) {
         this.username = username;

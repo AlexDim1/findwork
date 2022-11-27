@@ -2,6 +2,7 @@ package com.findwork.findwork.Entities.Users;
 
 import com.findwork.findwork.Entities.JobOffer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,12 +10,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserCompany implements UserDetails {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -36,11 +40,8 @@ public class UserCompany implements UserDetails {
 
     private String address;
 
-    @OneToMany(mappedBy = "company",cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "company", cascade = {CascadeType.ALL})
     private List<JobOffer> offers;
-
-    public UserCompany() {
-    }
 
     public UserCompany(String username, String password, String name) {
         this.username = username;
