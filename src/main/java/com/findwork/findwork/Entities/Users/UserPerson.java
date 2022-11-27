@@ -3,6 +3,7 @@ package com.findwork.findwork.Entities.Users;
 import com.findwork.findwork.Entities.JobApplication;
 import com.findwork.findwork.Entities.JobOffer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,11 +13,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserPerson implements UserDetails {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -40,11 +45,8 @@ public class UserPerson implements UserDetails {
     @OneToMany(mappedBy = "applicant")
     private List<JobApplication> jobApplications;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<JobOffer> savedOffers;
-
-    public UserPerson() {
-    }
 
     public UserPerson(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -69,7 +71,9 @@ public class UserPerson implements UserDetails {
         return username;
     }
 
-    public int getAge() {return Period.between(birthDate, java.time.LocalDate.now()).getYears();}
+    public int getAge() {
+        return Period.between(birthDate, java.time.LocalDate.now()).getYears();
+    }
 
     @Override
     public boolean isAccountNonExpired() {

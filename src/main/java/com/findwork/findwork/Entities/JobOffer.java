@@ -4,8 +4,8 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "job_offers")
 @Getter
 @Setter
+@NoArgsConstructor
 public class JobOffer {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -40,8 +41,6 @@ public class JobOffer {
 
     private String salary;
 
-    private int viewCount;
-
     @Enumerated
     private JobLevel jobLevel;
 
@@ -53,9 +52,6 @@ public class JobOffer {
 
     @OneToMany(mappedBy = "offer", cascade = {CascadeType.REFRESH})
     private List<JobApplication> jobApplications;
-
-    public JobOffer() {
-    }
 
     public JobOffer(String title, String requirements, String location, String salary, JobLevel jobLevel, Category jobCategory, UserCompany company) {
         this.title = title;

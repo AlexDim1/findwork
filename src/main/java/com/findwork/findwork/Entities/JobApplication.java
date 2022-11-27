@@ -2,6 +2,7 @@ package com.findwork.findwork.Entities;
 
 import com.findwork.findwork.Entities.Users.UserPerson;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Table(name = "job_applications")
 @Getter
 @Setter
+@NoArgsConstructor
 public class JobApplication {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -27,9 +29,6 @@ public class JobApplication {
     private JobOffer offer;
 
     private Date date;
-
-    public JobApplication() {
-    }
 
     public JobApplication(UserPerson applicant, JobOffer offer) {
         this.applicant = applicant;

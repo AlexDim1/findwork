@@ -1,5 +1,6 @@
 package com.findwork.findwork.Services;
 
+import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
@@ -65,135 +66,137 @@ public class ValidationService {
     public void validateEditPersonRequest(EditPersonRequest r) throws Exception {
         String badDataFields = "";
 
-        if(r.getEmail() != null)
-            if(!validateEmail(r.getEmail()))
+        if (r.getEmail() != null)
+            if (!validateEmail(r.getEmail()))
                 badDataFields += "invalid email format, ";
 
-        if(r.getPassword() != null)
-            if(!validatePassword(r.getPassword()))
+        if (r.getPassword() != null)
+            if (!validatePassword(r.getPassword()))
                 badDataFields += "invalid password - should be 8+ symbols, ";
-        if(r.getBirthDate() != null)
-            if(r.getBirthDate().compareTo(LocalDate.parse("1920-01-01")) < 1)
+        if (r.getBirthDate() != null)
+            if (r.getBirthDate().compareTo(LocalDate.parse("1920-01-01")) < 1)
                 badDataFields += "invalid age - should be 1920+ year, ";
 
-        if(badDataFields != "")
-            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
+        if (badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length() - 2) + "."); // слага точка вместо последната запетая
 
     }
+
     public void validateEditCompanyRequest(EditCompanyRequest r) throws Exception {
         String badDataFields = "";
 
-        if(r.getEmail() != null)
-            if(!validateEmail(r.getEmail()))
+        if (r.getEmail() != null)
+            if (!validateEmail(r.getEmail()))
                 badDataFields += "invalid email format, ";
 
-        if(r.getPassword() != null)
-            if(!validatePassword(r.getPassword()))
+        if (r.getPassword() != null)
+            if (!validatePassword(r.getPassword()))
                 badDataFields += "invalid password - should be 8+ symbols, ";
-        if(r.getDescription() != null)
-            if(r.getDescription().length() < 10)
+        if (r.getDescription() != null)
+            if (r.getDescription().length() < 10)
                 badDataFields += "invalid description - should be 10+ symbols, ";
-        if(r.getEmployeeCount() != null)
-            if(Integer.parseInt(r.getEmployeeCount()) < 0)
+        if (r.getEmployeeCount() != null)
+            if (Integer.parseInt(r.getEmployeeCount()) < 0)
                 badDataFields += "invalid employee count - should be >0, ";
-        if(r.getFoundingYear() != null)
-            if(Integer.parseInt(r.getFoundingYear()) < 1900)
+        if (r.getFoundingYear() != null)
+            if (Integer.parseInt(r.getFoundingYear()) < 1900)
                 badDataFields += "invalid founding year - should be 1900+, ";
 
-        if(badDataFields != "")
-            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
+        if (badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length() - 2) + "."); // слага точка вместо последната запетая
 
     }
 
     public void validateCreateJobOfferRequest(CreateJobOfferRequest r) throws Exception {
         String badDataFields = "";
-        if(r.getTitle() != null)
-            if(r.getTitle().length() < 4)
+        if (r.getTitle() != null)
+            if (r.getTitle().length() < 4)
                 badDataFields += "invalid title - should be 4+ symbols, ";
-        if(r.getRequirements() != null)
-            if(r.getRequirements().length() < 10)
+        if (r.getRequirements() != null)
+            if (r.getRequirements().length() < 10)
                 badDataFields += "invalid requirements - should be 10+ symbols, ";
-        if(r.getLocation() != null)
-            if(r.getLocation().length() < 3)
+        if (r.getLocation() != null)
+            if (r.getLocation().length() < 3)
                 badDataFields += "invalid location - should be 3+ symbols, ";
-        if(r.getSalary() != null)
-            if(r.getSalary().length() < 3)
+        if (r.getSalary() != null)
+            if (r.getSalary().length() < 3)
                 badDataFields += "invalid salary - should be 3+ symbols, ";
-        if(r.getJobLevel() != null)
-        {
+        if (r.getJobLevel() != null) {
             boolean contains = false;
-            for (JobLevel jl : JobLevel.values())
-            {
-                if(jl.toString().equals(r.getJobLevel()))
+            for (JobLevel jl : JobLevel.values()) {
+                if (jl.toString().equals(r.getJobLevel()))
                     contains = true;
             }
-            if(!contains)
+            if (!contains)
                 badDataFields += "invalid job level, ";
         }
-        if(r.getJobCategory() != null)
-        {
+        if (r.getJobCategory() != null) {
             boolean contains = false;
-            for (Category category : Category.values())
-            {
-                if(category.toString().equals(r.getJobCategory()))
+            for (Category category : Category.values()) {
+                if (category.toString().equals(r.getJobCategory()))
                     contains = true;
             }
-            if(!contains)
+            if (!contains)
                 badDataFields += "invalid job category, ";
         }
-        if(companyRepo.findUserCompanyById(r.getCompanyId()) == null)
+        if (companyRepo.findUserCompanyById(r.getCompanyId()) == null)
             badDataFields += "invalid company, ";
-        if(badDataFields != "")
-            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
+        if (badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length() - 2) + "."); // слага точка вместо последната запетая
     }
 
     public void validateEditJobOfferRequest(EditJobOfferRequest r) throws Exception {
         String badDataFields = "";
-        if(r.getTitle() != null)
-            if(r.getTitle().length() < 4)
+        if (r.getTitle() != null)
+            if (r.getTitle().length() < 4)
                 badDataFields += "invalid title - should be 4+ symbols, ";
-        if(r.getDescription() != null)
-            if(r.getDescription().length() < 10)
+        if (r.getDescription() != null)
+            if (r.getDescription().length() < 10)
                 badDataFields += "invalid description - should be 10+ symbols, ";
-        if(r.getRequirements() != null)
-            if(r.getRequirements().length() < 10)
+        if (r.getRequirements() != null)
+            if (r.getRequirements().length() < 10)
                 badDataFields += "invalid requirements - should be 10+ symbols, ";
-        if(r.getNiceToHave() != null)
-            if(r.getNiceToHave().length() < 4)
+        if (r.getNiceToHave() != null)
+            if (r.getNiceToHave().length() < 4)
                 badDataFields += "invalid nice to have field - should be 4+ symbols, ";
-        if(r.getBenefits() != null)
-            if(r.getBenefits().length() < 4)
+        if (r.getBenefits() != null)
+            if (r.getBenefits().length() < 4)
                 badDataFields += "invalid benefits field - should be 4+ symbols, ";
-        if(r.getLocation() != null)
-            if(r.getLocation().length() < 3)
+        if (r.getLocation() != null)
+            if (r.getLocation().length() < 3)
                 badDataFields += "invalid location - should be 3+ symbols, ";
-        if(r.getSalary() != null)
-            if(r.getSalary().length() < 3)
+        if (r.getSalary() != null)
+            if (r.getSalary().length() < 3)
                 badDataFields += "invalid salary - should be 3+ symbols, ";
-        if(r.getJobLevel() != null)
-        {
+        if (r.getJobLevel() != null) {
             boolean contains = false;
-            for (JobLevel jl : JobLevel.values())
-            {
-                if(jl.toString().equals(r.getJobLevel()))
-                contains = true;
+            for (JobLevel jl : JobLevel.values()) {
+                if (jl.toString().equals(r.getJobLevel()))
+                    contains = true;
             }
-            if(!contains)
+            if (!contains)
                 badDataFields += "invalid job level, ";
         }
-        if(r.getJobCategory() != null)
-        {
+        if (r.getJobCategory() != null) {
             boolean contains = false;
-            for (Category category : Category.values())
-            {
-                if(category.toString().equals(r.getJobCategory()))
-                 contains = true;
+            for (Category category : Category.values()) {
+                if (category.toString().equals(r.getJobCategory()))
+                    contains = true;
             }
-            if(!contains)
+            if (!contains)
                 badDataFields += "invalid job category, ";
         }
 
-        if(badDataFields != "")
-            throw new Exception(badDataFields.substring(0, badDataFields.length()-2) + "."); // слага точка вместо последната запетая
+        if (badDataFields != "")
+            throw new Exception(badDataFields.substring(0, badDataFields.length() - 2) + "."); // слага точка вместо последната запетая
+    }
+
+    public void validateUserinfo(UserPerson user) throws Exception {
+        if (user.getFirstName() == null || user.getFirstName().isEmpty()
+                || user.getLastName() == null || user.getLastName().isEmpty()
+                || user.getEducation() == null || user.getEducation().isEmpty()
+                || user.getSkills() == null || user.getSkills().isEmpty()
+                || user.getBirthDate() == null)
+            throw new Exception("Cannot apply without full user information!");
     }
 }

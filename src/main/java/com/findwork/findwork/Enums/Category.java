@@ -17,5 +17,6 @@ public enum Category {
     LAW,
     TRANSPORT,
     ENTERTAINMENT,
-    TELECOMMUNICATIONS
+    TELECOMMUNICATIONS,
+    IT
 }
