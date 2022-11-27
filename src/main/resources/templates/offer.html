@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">>
 <head>
-    <meta charset="UTF-8">
-    <title>Offer</title>
+	<meta charset="UTF-8">
+	<title>Offer</title>
 </head>
 <body>
-    <p>OFFER</p>
-    <th:block th:each="offerField : ${offer}">
-        <li th:text = "${offer.title}">
-        <li th:text= "${offer.requirements}"></li>
-        <li th:text= "${offer.location}"></li>
-        <li th:text= "${offer.salary}"></li>
-        <li th:text= "${offer.jobLevel}"></li>
-        <li th:text= "${offer.jobCategory}"></li>
-        <li th:text= "${offer.company.name}"></li>
-    </th:block>
+<p>OFFER</p>
+<p th:text="${error}"></p>
+<p th:text="${success}"></p>
+<th:block th:each="offerField : ${offer}">
+	<li th:text="${offer.title}">
+	<li th:text="${offer.requirements}"></li>
+	<li th:text="${offer.location}"></li>
+	<li th:text="${offer.salary}"></li>
+	<li th:text="${offer.jobLevel}"></li>
+	<li th:text="${offer.jobCategory}"></li>
+	<li th:text="${offer.company.name}"></li>
+</th:block>
 </body>
 </html>
