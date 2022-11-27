@@ -9,6 +9,7 @@ import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.JobApplicationRepository;
 import com.findwork.findwork.Repositories.JobOfferRepository;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
+import com.findwork.findwork.Repositories.UserPersonRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class OfferService {
     private final JobOfferRepository jobRepo;
     private final UserCompanyRepository companyRepo;
     private final JobApplicationRepository applicationRepo;
+    private final UserPersonRepository userRepo;
 
     public JobOffer loadOfferById(UUID id) {
         return jobRepo.findJobOfferById(id);
@@ -99,5 +101,23 @@ public class OfferService {
 
     public JobApplication findUserApplication(UserPerson user, JobOffer offer) {
         return applicationRepo.findJobApplicationByApplicantAndOffer(user, offer);
+    }
+
+    public void saveOffer(UserPerson user, UUID offerId) throws Exception {
+        if (user.getSavedOffers().stream().anyMatch(offer -> offer.getId().equals(offerId)))
+            throw new Exception("Offer already saved!");
+
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        user.getSavedOffers().add(offer);
+        userRepo.save(user);
+    }
+
+    public void unsaveOffer(UserPerson user, UUID offerId) throws Exception {
+        if (user.getSavedOffers().stream().noneMatch(offer -> offer.getId().equals(offerId)))
+            throw new Exception("This offer has not been saved!");
+
+        JobOffer offerToDelete = user.getSavedOffers().stream().filter(offer -> offer.getId().equals(offerId)).findFirst().get();
+        user.getSavedOffers().remove(offerToDelete);
+        userRepo.save(user);
     }
 }

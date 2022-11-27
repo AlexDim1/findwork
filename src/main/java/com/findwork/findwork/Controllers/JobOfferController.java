@@ -106,4 +106,32 @@ public class JobOfferController {
         atrr.addFlashAttribute("success", "Canceled job application!");
         return "redirect:/user/" + user.getId();
     }
+
+    @PostMapping("/{id}/save")
+    public String saveOffer(@PathVariable UUID id, Authentication auth, RedirectAttributes attr) {
+        UserPerson user = (UserPerson) auth.getPrincipal();
+        try {
+            offerService.saveOffer(user, id);
+        } catch (Exception e) {
+            attr.addFlashAttribute("error", e.getMessage());
+            return "redirect:/offer/" + id;
+        }
+
+        attr.addFlashAttribute("success", "Offer saved!");
+        return "redirect:/offer/" + id;
+    }
+
+    @PostMapping("/{id}/unsave")
+    public String unsaveOffer(@PathVariable UUID id, Authentication auth, RedirectAttributes atrr) {
+        UserPerson user = (UserPerson) auth.getPrincipal();
+        try {
+            offerService.unsaveOffer(user, id);
+        } catch (Exception e) {
+            atrr.addFlashAttribute("error", e.getMessage());
+            return "redirect:/offer/" + id;
+        }
+
+        atrr.addFlashAttribute("success", "Offer removed from saved!");
+        return "redirect:/offer/" + id;
+    }
 }

@@ -12,7 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -40,7 +43,7 @@ public class UserPerson implements UserDetails {
     @OneToMany(mappedBy = "applicant")
     private List<JobApplication> jobApplications;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<JobOffer> savedOffers;
 
     public UserPerson() {
@@ -69,7 +72,9 @@ public class UserPerson implements UserDetails {
         return username;
     }
 
-    public int getAge() {return Period.between(birthDate, java.time.LocalDate.now()).getYears();}
+    public int getAge() {
+        return Period.between(birthDate, java.time.LocalDate.now()).getYears();
+    }
 
     @Override
     public boolean isAccountNonExpired() {
