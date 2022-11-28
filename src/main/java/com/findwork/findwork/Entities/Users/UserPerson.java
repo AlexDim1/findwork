@@ -61,6 +61,10 @@ public class UserPerson implements UserDetails {
         return Collections.singletonList(authority);
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String getPassword() {
         return password;
