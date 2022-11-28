@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org/">>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
+	<meta charset="UTF-8">
+	<title>Register</title>
 </head>
 <body>
-    <p th:text = "${error}"></p>
+<form th:action="@{/register/company}" method="post">
+	<label for="email">Email:</label>
+	<input type="email" name="email" id="email" required>
+	<label for="password">Password:</label>
+	<input type="password" name="password" id="password" required>
+	<label for="name">Company name:</label>
+	<input type="text" name="name" id="name" required>
+	<label for="employeeCount">Number of employees:</label>
+	<input type="text" name="employeeCount" id="employeeCount" required>
+	<label for="foundingYear">Year of Founding:</label>
+	<input type="text" name="foundingYear" id="foundingYear" required>
+	<label for="address">Company address:</label>
+	<input type="text" name="address" id="address" required>
+	<label for="description">Company description:</label>
+	<textarea name="description" id="description" rows="10" cols="40" required></textarea>
+	<button type="submit">Register</button>
+</form>
+<p th:text="${error}"></p>
 </body>
 </html>

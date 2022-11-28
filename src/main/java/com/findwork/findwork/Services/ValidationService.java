@@ -40,13 +40,21 @@ public class ValidationService {
     public void validateRegisterCompanyRequest(RegisterCompanyRequest r) throws Exception {
         if (r.getEmail() == null
                 || r.getPassword() == null
-                || r.getName() == null)
-            throw new Exception("Email, name and password are required!");
+                || r.getName() == null
+                || r.getAddress() == null
+                || r.getEmployeeCount() == null
+                || r.getFoundingYear() == null
+                || r.getDescription() == null)
+            throw new Exception("All information is required!");
 
         if (r.getEmail().isEmpty()
                 || r.getPassword().isEmpty()
-                || r.getName().isEmpty())
-            throw new Exception("Email, name and password are required!");
+                || r.getName().isEmpty()
+                || r.getAddress().isEmpty()
+                || r.getEmployeeCount().isEmpty()
+                || r.getFoundingYear().isEmpty()
+                || r.getDescription().isEmpty())
+            throw new Exception("All information is required!");
 
         if (!validatePassword(r.getPassword()))
             throw new Exception("Password should be at least 8 characters long!");
