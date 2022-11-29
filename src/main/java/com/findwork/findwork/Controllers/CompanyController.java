@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +53,13 @@ public class CompanyController {
     }
 
     @PostMapping("/{id}")
-    public String editCompany(@PathVariable UUID id, EditCompanyRequest request, Model model) {
+    public String editCompany(@PathVariable UUID id, EditCompanyRequest request, RedirectAttributes atrr) {
         try {
             validationService.validateEditCompanyRequest(request);
             userService.editCompany(id, request);
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "editCompany";
+            atrr.addFlashAttribute("error", e.getMessage());
+            return "redirect:/company/" + id + "/edit";
         }
         return "redirect:/company/" + id;
     }

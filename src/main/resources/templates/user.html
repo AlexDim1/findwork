@@ -49,7 +49,8 @@
 					<p th:text="${offer.salary}" class="card-text"></p>
 					<p th:text="${offer.jobLevel}" class="card-text"></p>
 					<p th:text="${offer.jobCategory}" class="card-text"></p>
-					<p th:text="${offer.company.name}" class="card-text"></p>
+					<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
+					   class="card-text mb-0"></a>
 					<div class="d-flex justify-content-between">
 						<form th:action="@{/offer/{id}/unsave(id=${offer.id})}" method="post">
 							<button type="submit" class="btn btn-primary">Remove from Saved</button>
@@ -73,7 +74,8 @@
 					<p th:text="${ja.offer.salary}" class="card-text"></p>
 					<p th:text="${ja.offer.jobLevel}" class="card-text"></p>
 					<p th:text="${ja.offer.jobCategory}" class="card-text"></p>
-					<p th:text="${ja.offer.company.name}" class="card-text"></p>
+					<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
+					   class="card-text mb-0"></a>
 					<div class="d-flex justify-content-between">
 						<a th:href="@{/offer/{id}(id=${ja.offer.id})}" class="card-link btn btn-primary">See
 						                                                                                 more</a>

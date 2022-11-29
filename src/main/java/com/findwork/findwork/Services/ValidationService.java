@@ -3,7 +3,6 @@ package com.findwork.findwork.Services;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
-import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -103,7 +102,7 @@ public class ValidationService {
             if (Integer.parseInt(r.getEmployeeCount()) < 0)
                 badDataFields += "invalid employee count - should be >0, ";
         if (r.getFoundingYear() != null)
-            if (Integer.parseInt(r.getFoundingYear()) < 1900)
+            if (Integer.parseInt(r.getFoundingYear()) < 1500)
                 badDataFields += "invalid founding year - should be 1900+, ";
 
         if (badDataFields != "")
