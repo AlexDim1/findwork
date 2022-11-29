@@ -22,6 +22,6 @@
 	<textarea name="description" id="description" rows="10" cols="40" required></textarea>
 	<button type="submit">Register</button>
 </form>
-<p th:text="${error}"></p>
+<p th:if="${error != null}" th:text="${error}"></p>
 </body>
 </html>
