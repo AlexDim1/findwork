@@ -5,18 +5,14 @@ import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
+@AllArgsConstructor
 public class ValidationService {
-    private final UserCompanyRepository companyRepo;
-
-    public ValidationService(UserCompanyRepository companyRepo) {
-        this.companyRepo = companyRepo;
-    }
-
     public void validateRegisterPersonRequest(RegisterPersonRequest r) throws Exception {
         if (r.getEmail() == null
                 || r.getPassword() == null
@@ -123,32 +119,22 @@ public class ValidationService {
         if (r.getRequirements() != null)
             if (r.getRequirements().length() < 10)
                 badDataFields += "invalid requirements - should be 10+ symbols, ";
+        if (r.getDescription() != null)
+            if (r.getDescription().length() < 10)
+                badDataFields += "invalid description - should be 10+ symbols, ";
+        if (r.getNiceToHave() != null)
+            if (r.getNiceToHave().length() < 10)
+                badDataFields += "invalid Nice to have - should be 10+ symbols, ";
+        if (r.getBenefits() != null)
+            if (r.getBenefits().length() < 10)
+                badDataFields += "invalid benefits - should be 10+ symbols, ";
         if (r.getLocation() != null)
             if (r.getLocation().length() < 3)
                 badDataFields += "invalid location - should be 3+ symbols, ";
         if (r.getSalary() != null)
             if (r.getSalary().length() < 3)
                 badDataFields += "invalid salary - should be 3+ symbols, ";
-        if (r.getJobLevel() != null) {
-            boolean contains = false;
-            for (JobLevel jl : JobLevel.values()) {
-                if (jl.toString().equals(r.getJobLevel()))
-                    contains = true;
-            }
-            if (!contains)
-                badDataFields += "invalid job level, ";
-        }
-        if (r.getJobCategory() != null) {
-            boolean contains = false;
-            for (Category category : Category.values()) {
-                if (category.toString().equals(r.getJobCategory()))
-                    contains = true;
-            }
-            if (!contains)
-                badDataFields += "invalid job category, ";
-        }
-        if (companyRepo.findUserCompanyById(r.getCompanyId()) == null)
-            badDataFields += "invalid company, ";
+
         if (badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length() - 2) + "."); // слага точка вместо последната запетая
     }

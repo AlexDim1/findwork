@@ -8,7 +8,10 @@ import com.findwork.findwork.Services.ValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +27,11 @@ public class CompanyController {
     private final OfferService offerService;
 
     @GetMapping("/{id}/offers")
-    public String getCompanyOffers(@PathVariable UUID id,  Model model) {
+    public String getCompanyOffers(@PathVariable UUID id, Model model) {
         List<JobOffer> offers = new ArrayList<>();
-        try { offers = offerService.getCompanyOffers(id);}
-        catch (Exception e)
-        {
+        try {
+            offers = offerService.getCompanyOffers(id);
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
         }
         model.addAttribute("company", userService.loadUserCompanyById(id));
@@ -37,29 +40,23 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public String getCompanyPage(@PathVariable UUID id, Model model)
-    {
+    public String getCompanyPage(@PathVariable UUID id, Model model) {
         model.addAttribute("company", userService.loadUserCompanyById(id));
         return "company";
     }
 
     @GetMapping("/{id}/edit")
-    public String getEditPageCompany(@PathVariable UUID id, Model model)
-    {
+    public String getEditPageCompany(@PathVariable UUID id, Model model) {
         model.addAttribute("company", userService.loadUserCompanyById(id));
         return "editCompany";
     }
 
-    @PutMapping("/{id}")
-    public String editCompany(@PathVariable UUID id, EditCompanyRequest request, Model model)
-    {
-        try
-        {
+    @PostMapping("/{id}")
+    public String editCompany(@PathVariable UUID id, EditCompanyRequest request, Model model) {
+        try {
             validationService.validateEditCompanyRequest(request);
             userService.editCompany(id, request);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "editCompany";
         }

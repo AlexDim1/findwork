@@ -30,9 +30,8 @@ public class OfferService {
         return jobRepo.findJobOfferById(id);
     }
 
-    public JobOffer createOffer(CreateJobOfferRequest r) {
-        JobOffer offer = new JobOffer(r.getTitle(), r.getRequirements(), r.getLocation(), r.getSalary(),
-                JobLevel.valueOf(r.getJobLevel()), Category.valueOf(r.getJobCategory()), companyRepo.findUserCompanyById(r.getCompanyId()));
+    public JobOffer createOffer(CreateJobOfferRequest r, UserCompany company) {
+        JobOffer offer = new JobOffer(r.getTitle(), r.getDescription(), r.getRequirements(), r.getNiceToHave(), r.getBenefits(), r.getLocation(), r.getSalary(), JobLevel.valueOf(r.getJobLevel()), Category.valueOf(r.getJobCategory()), company);
         jobRepo.save(offer);
         return offer;
     }
@@ -119,5 +118,9 @@ public class OfferService {
         JobOffer offerToDelete = user.getSavedOffers().stream().filter(offer -> offer.getId().equals(offerId)).findFirst().get();
         user.getSavedOffers().remove(offerToDelete);
         userRepo.save(user);
+    }
+
+    public boolean checkSaved(UserPerson user, UUID offerId) {
+        return user.getSavedOffers().stream().anyMatch(offer -> offer.getId().equals(offerId));
     }
 }
