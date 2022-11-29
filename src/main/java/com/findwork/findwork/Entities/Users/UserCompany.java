@@ -43,10 +43,14 @@ public class UserCompany implements UserDetails {
     @OneToMany(mappedBy = "company", cascade = {CascadeType.ALL})
     private List<JobOffer> offers;
 
-    public UserCompany(String username, String password, String name) {
+    public UserCompany(String username, String password, String name, String description, String employeeCount, String foundingYear, String address) {
         this.username = username;
         this.password = password;
         this.name = name;
+        this.description = description;
+        this.employeeCount = employeeCount;
+        this.foundingYear = foundingYear;
+        this.address = address;
     }
 
     @Override

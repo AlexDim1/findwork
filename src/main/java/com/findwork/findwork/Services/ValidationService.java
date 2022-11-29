@@ -3,20 +3,15 @@ package com.findwork.findwork.Services;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
-import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Requests.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
+@AllArgsConstructor
 public class ValidationService {
-    private final UserCompanyRepository companyRepo;
-
-    public ValidationService(UserCompanyRepository companyRepo) {
-        this.companyRepo = companyRepo;
-    }
-
     public void validateRegisterPersonRequest(RegisterPersonRequest r) throws Exception {
         if (r.getEmail() == null
                 || r.getPassword() == null
@@ -40,13 +35,21 @@ public class ValidationService {
     public void validateRegisterCompanyRequest(RegisterCompanyRequest r) throws Exception {
         if (r.getEmail() == null
                 || r.getPassword() == null
-                || r.getName() == null)
-            throw new Exception("Email, name and password are required!");
+                || r.getName() == null
+                || r.getAddress() == null
+                || r.getEmployeeCount() == null
+                || r.getFoundingYear() == null
+                || r.getDescription() == null)
+            throw new Exception("All information is required!");
 
         if (r.getEmail().isEmpty()
                 || r.getPassword().isEmpty()
-                || r.getName().isEmpty())
-            throw new Exception("Email, name and password are required!");
+                || r.getName().isEmpty()
+                || r.getAddress().isEmpty()
+                || r.getEmployeeCount().isEmpty()
+                || r.getFoundingYear().isEmpty()
+                || r.getDescription().isEmpty())
+            throw new Exception("All information is required!");
 
         if (!validatePassword(r.getPassword()))
             throw new Exception("Password should be at least 8 characters long!");
@@ -99,7 +102,7 @@ public class ValidationService {
             if (Integer.parseInt(r.getEmployeeCount()) < 0)
                 badDataFields += "invalid employee count - should be >0, ";
         if (r.getFoundingYear() != null)
-            if (Integer.parseInt(r.getFoundingYear()) < 1900)
+            if (Integer.parseInt(r.getFoundingYear()) < 1500)
                 badDataFields += "invalid founding year - should be 1900+, ";
 
         if (badDataFields != "")
@@ -115,32 +118,22 @@ public class ValidationService {
         if (r.getRequirements() != null)
             if (r.getRequirements().length() < 10)
                 badDataFields += "invalid requirements - should be 10+ symbols, ";
+        if (r.getDescription() != null)
+            if (r.getDescription().length() < 10)
+                badDataFields += "invalid description - should be 10+ symbols, ";
+        if (r.getNiceToHave() != null)
+            if (r.getNiceToHave().length() < 10)
+                badDataFields += "invalid Nice to have - should be 10+ symbols, ";
+        if (r.getBenefits() != null)
+            if (r.getBenefits().length() < 10)
+                badDataFields += "invalid benefits - should be 10+ symbols, ";
         if (r.getLocation() != null)
             if (r.getLocation().length() < 3)
                 badDataFields += "invalid location - should be 3+ symbols, ";
         if (r.getSalary() != null)
             if (r.getSalary().length() < 3)
                 badDataFields += "invalid salary - should be 3+ symbols, ";
-        if (r.getJobLevel() != null) {
-            boolean contains = false;
-            for (JobLevel jl : JobLevel.values()) {
-                if (jl.toString().equals(r.getJobLevel()))
-                    contains = true;
-            }
-            if (!contains)
-                badDataFields += "invalid job level, ";
-        }
-        if (r.getJobCategory() != null) {
-            boolean contains = false;
-            for (Category category : Category.values()) {
-                if (category.toString().equals(r.getJobCategory()))
-                    contains = true;
-            }
-            if (!contains)
-                badDataFields += "invalid job category, ";
-        }
-        if (companyRepo.findUserCompanyById(r.getCompanyId()) == null)
-            badDataFields += "invalid company, ";
+
         if (badDataFields != "")
             throw new Exception(badDataFields.substring(0, badDataFields.length() - 2) + "."); // слага точка вместо последната запетая
     }

@@ -6,7 +6,10 @@ import com.findwork.findwork.Services.ValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
@@ -19,32 +22,27 @@ public class UserController {
     private final ValidationService validationService;
 
     @GetMapping("/{id}")
-    public String getPersonPage(@PathVariable UUID id, Model model)
-    {
+    public String getPersonPage(@PathVariable UUID id, Model model) {
         model.addAttribute("user", userService.loadUserById(id));
         return "user";
     }
 
     @GetMapping("/{id}/edit")
-    public String getEditPagePerson(@PathVariable UUID id, Model model)
-    {
+    public String getEditPagePerson(@PathVariable UUID id, Model model) {
         model.addAttribute("user", userService.loadUserById(id));
         return "editPerson";
     }
 
-    @PutMapping("/{id}")
-    public String editPerson(@PathVariable UUID id, EditPersonRequest request, Model model)
-    {
-        try
-        {
+    @PostMapping("/{id}")
+    public String editPerson(@PathVariable UUID id, EditPersonRequest request, Model model) {
+        try {
             validationService.validateEditPersonRequest(request);
             userService.editPerson(id, request);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "editPerson";
         }
-      return "redirect:/user/" + id;
+
+        return "redirect:/user/" + id;
     }
 }

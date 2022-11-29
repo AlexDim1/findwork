@@ -1,7 +1,10 @@
 package com.findwork.findwork.Controllers;
 
 import com.findwork.findwork.Entities.JobOffer;
+import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
+import com.findwork.findwork.Enums.Category;
+import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import com.findwork.findwork.Services.OfferService;
@@ -27,20 +30,25 @@ public class JobOfferController {
     public String getAllOffers(Model model) {
         List<JobOffer> offers = offerService.getAllOffers();
         model.addAttribute("offers", offers);
+        model.addAttribute("levels", JobLevel.values());
+        model.addAttribute("categories", Category.values());
         return "offers";
     }
 
     @GetMapping("/create")
-    String getCreateOfferPage() {
+    String getCreateOfferPage(Model model) {
+        model.addAttribute("levels", JobLevel.values());
+        model.addAttribute("categories", Category.values());
         return "createOffer";
     }
 
     @PostMapping("/create")
-    public String createOffer(CreateJobOfferRequest request, Model model) {
+    public String createOffer(Authentication auth, CreateJobOfferRequest request, Model model) {
+        UserCompany company = (UserCompany) auth.getPrincipal();
         JobOffer questionableOffer;
         try {
             validationService.validateCreateJobOfferRequest(request);
-            questionableOffer = offerService.createOffer(request);
+            questionableOffer = offerService.createOffer(request, company);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "createOffer";
@@ -54,14 +62,17 @@ public class JobOfferController {
             offerService.removeOffer(id);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            return "editOffer";
+            return "redirect:/offer" + id;
         }
         return "redirect:/";
     }
 
     @GetMapping("/{id}/edit")
     String getEditOfferPage(@PathVariable UUID id, Model model) {
-        model.addAttribute("offer", offerService.loadOfferById(id));
+        JobOffer offer = offerService.loadOfferById(id);
+        model.addAttribute("offer", offer);
+        model.addAttribute("levels", JobLevel.values());
+        model.addAttribute("categories", Category.values());
         return "editOffer";
     }
 
@@ -71,7 +82,7 @@ public class JobOfferController {
         return "offer";
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public String editOffer(@PathVariable UUID id, EditJobOfferRequest request, Model model) {
         try {
             validationService.validateEditJobOfferRequest(request);
@@ -98,13 +109,18 @@ public class JobOfferController {
         return "redirect:/offer/" + id;
     }
 
-    @DeleteMapping("/{id}/cancel")
+    @PostMapping("/{id}/cancel")
     public String cancelApplication(@PathVariable UUID id, Authentication auth, RedirectAttributes atrr) {
         UserPerson user = (UserPerson) auth.getPrincipal();
-        offerService.deleteApplication(user, id);
+        try {
+            offerService.deleteApplication(user, id);
+        } catch (Exception e) {
+            atrr.addFlashAttribute("error", e.getMessage());
+            return "redirect:/offer/" + id;
+        }
 
         atrr.addFlashAttribute("success", "Canceled job application!");
-        return "redirect:/user/" + user.getId();
+        return "redirect:/offer/" + id;
     }
 
     @PostMapping("/{id}/save")

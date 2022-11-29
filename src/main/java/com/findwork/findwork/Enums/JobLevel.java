@@ -1,8 +1,9 @@
 package com.findwork.findwork.Enums;
 
 public enum JobLevel {
-    INTERN,
-    JUNIOR,
-    MID,
-    SENIOR
+    Intern,
+    Junior,
+    Mid,
+    Senior,
+    Manager
 }

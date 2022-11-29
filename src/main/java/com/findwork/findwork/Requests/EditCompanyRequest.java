@@ -10,19 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditCompanyRequest {
-
     private String email;
-
     private String password;
-
     private String name;
-
     private String description;
-
     private String employeeCount;
-
     private String foundingYear;
-
     private String address;
-
 }

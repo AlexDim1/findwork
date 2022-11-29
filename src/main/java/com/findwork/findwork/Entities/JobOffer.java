@@ -53,9 +53,12 @@ public class JobOffer {
     @OneToMany(mappedBy = "offer", cascade = {CascadeType.REFRESH})
     private List<JobApplication> jobApplications;
 
-    public JobOffer(String title, String requirements, String location, String salary, JobLevel jobLevel, Category jobCategory, UserCompany company) {
+    public JobOffer(String title, String description, String requirements, String niceToHave, String benefits, String location, String salary, JobLevel jobLevel, Category jobCategory, UserCompany company) {
         this.title = title;
+        this.description = description;
         this.requirements = requirements;
+        this.niceToHave = niceToHave;
+        this.benefits = benefits;
         this.location = location;
         this.salary = salary;
         this.jobLevel = jobLevel;

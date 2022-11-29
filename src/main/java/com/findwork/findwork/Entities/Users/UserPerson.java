@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -42,11 +42,11 @@ public class UserPerson implements UserDetails {
 
     private String skills;
 
-    @OneToMany(mappedBy = "applicant")
-    private List<JobApplication> jobApplications;
+    @OneToMany(mappedBy = "applicant", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH}, orphanRemoval = true)
+    private Set<JobApplication> jobApplications;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<JobOffer> savedOffers;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    private Set<JobOffer> savedOffers;
 
     public UserPerson(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -55,10 +55,22 @@ public class UserPerson implements UserDetails {
         this.lastName = lastName;
     }
 
+    public boolean checkIfOfferSaved(UUID id) {
+        return savedOffers.stream().anyMatch(offer -> offer.getId().equals(id));
+    }
+
+    public boolean checkIfApplied(UUID id) {
+        return jobApplications.stream().anyMatch(application -> application.getOffer().getId().equals(id));
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("Person");
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("User");
         return Collections.singletonList(authority);
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Override

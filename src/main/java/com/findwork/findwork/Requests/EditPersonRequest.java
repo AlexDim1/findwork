@@ -14,18 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class EditPersonRequest {
     private String email;
-
     private String password;
-
     private String firstName;
-
     private String lastName;
-
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
     private String education;
-
     private String skills;
-
 }

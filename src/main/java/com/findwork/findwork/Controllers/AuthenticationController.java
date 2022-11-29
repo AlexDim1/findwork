@@ -73,7 +73,7 @@ public class AuthenticationController {
         }
 
         authAfterRegistration(sReq, request.getEmail(), request.getPassword());
-        return "redirect:/company/" + registered.getId() + "/edit";
+        return "redirect:/company/" + registered.getId();
     }
 
 

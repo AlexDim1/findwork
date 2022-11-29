@@ -13,4 +13,8 @@ public class RegisterCompanyRequest {
     private String name;
     private String email;
     private String password;
+    private String employeeCount;
+    private String foundingYear;
+    private String address;
+    private String description;
 }

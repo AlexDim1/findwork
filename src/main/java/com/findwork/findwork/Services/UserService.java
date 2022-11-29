@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
             throw new Exception("An account with this email already exists");
         if (companyRepo.findUserCompanyByName(r.getName()) != null)
             throw new Exception("A company with this name already exists");
-        UserCompany registered = new UserCompany(r.getEmail(), encoder.encode(r.getPassword()), r.getName());
+        UserCompany registered = new UserCompany(r.getEmail(), encoder.encode(r.getPassword()), r.getName(), r.getDescription(), r.getEmployeeCount(), r.getFoundingYear(), r.getAddress());
         companyRepo.save(registered);
         return registered;
     }
@@ -60,25 +60,24 @@ public class UserService implements UserDetailsService {
     public void editPerson(UUID id, EditPersonRequest r) throws Exception {
         UserPerson questionablePerson = personRepo.findUserPersonById(id);
 
-        if(r.getEmail() != null)
-        {
+        if (r.getEmail() != null) {
             if (personRepo.findUserPersonByUsername(r.getEmail()) == null
                     || companyRepo.findUserCompanyByUsername(r.getEmail()) == null)
                 questionablePerson.setUsername(r.getEmail());
             else throw new Exception("An account with this email already exists");
         }
 
-        if(r.getPassword() != null)
+        if (r.getPassword() != null)
             questionablePerson.setPassword(encoder.encode((r.getPassword())));
-        if(r.getFirstName() != null)
+        if (r.getFirstName() != null)
             questionablePerson.setFirstName(r.getFirstName());
-        if(r.getLastName() != null)
+        if (r.getLastName() != null)
             questionablePerson.setLastName(r.getLastName());
-        if(r.getBirthDate() != null)
+        if (r.getBirthDate() != null)
             questionablePerson.setBirthDate(r.getBirthDate());
-        if(r.getEducation() != null)
+        if (r.getEducation() != null)
             questionablePerson.setEducation(r.getEducation());
-        if(r.getSkills() != null)
+        if (r.getSkills() != null)
             questionablePerson.setSkills(r.getSkills());
 
         personRepo.save(questionablePerson);
@@ -86,24 +85,23 @@ public class UserService implements UserDetailsService {
 
     public void editCompany(UUID id, EditCompanyRequest r) throws Exception {
         UserCompany questionableCompany = companyRepo.findUserCompanyById(id);
-        if(r.getEmail() != null)
-        {
+        if (r.getEmail() != null) {
             if (personRepo.findUserPersonByUsername(r.getEmail()) == null
                     || companyRepo.findUserCompanyByUsername(r.getEmail()) == null)
                 questionableCompany.setUsername(r.getEmail());
             else throw new Exception("An account with this email already exists");
         }
-        if(r.getPassword() != null)
+        if (r.getPassword() != null)
             questionableCompany.setPassword(encoder.encode((r.getPassword())));
-        if(r.getName() != null)
+        if (r.getName() != null)
             questionableCompany.setName(r.getName());
-        if(r.getDescription() != null)
+        if (r.getDescription() != null)
             questionableCompany.setDescription(r.getDescription());
-        if(r.getEmployeeCount() != null)
+        if (r.getEmployeeCount() != null)
             questionableCompany.setEmployeeCount(r.getEmployeeCount());
-        if(r.getFoundingYear() != null)
+        if (r.getFoundingYear() != null)
             questionableCompany.setFoundingYear(r.getFoundingYear());
-        if(r.getAddress() != null)
+        if (r.getAddress() != null)
             questionableCompany.setAddress(r.getAddress());
         companyRepo.save(questionableCompany);
     }
