@@ -1,7 +1,7 @@
 package com.findwork.findwork.Entities.Users;
 
 import com.findwork.findwork.Entities.JobApplication;
-import com.findwork.findwork.Entities.JobOffer;
+import com.findwork.findwork.Entities.UserSavedOffer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,22 +45,14 @@ public class UserPerson implements UserDetails {
     @OneToMany(mappedBy = "applicant", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH}, orphanRemoval = true)
     private Set<JobApplication> jobApplications;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
-    private Set<JobOffer> savedOffers;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserSavedOffer> savedOffers;
 
     public UserPerson(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public boolean checkIfOfferSaved(UUID id) {
-        return savedOffers.stream().anyMatch(offer -> offer.getId().equals(id));
-    }
-
-    public boolean checkIfApplied(UUID id) {
-        return jobApplications.stream().anyMatch(application -> application.getOffer().getId().equals(id));
     }
 
     @Override
