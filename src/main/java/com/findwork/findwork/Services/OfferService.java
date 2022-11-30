@@ -82,23 +82,27 @@ public class OfferService {
 
     public void createApplication(UserPerson user, UUID offerId) throws Exception {
         JobOffer offer = jobRepo.findJobOfferById(offerId);
-        JobApplication existingApplication = applicationRepo.findJobApplicationByApplicantAndOffer(user, offer);
-
-        if (existingApplication != null)
+        if (applicationRepo.findJobApplicationByUserAndOffer(user, offer) != null)
             throw new Exception("You have already applied for this position!");
 
-        applicationRepo.save(new JobApplication(user, offer));
+        JobApplication application = new JobApplication(user, offer);
+        applicationRepo.save(application);
     }
 
-    public void deleteApplication(UserPerson user, UUID offerId) {
+    public void deleteApplication(UserPerson user, UUID offerId) throws Exception {
         JobOffer offer = jobRepo.findJobOfferById(offerId);
-        JobApplication application = findUserApplication(user, offer);
+        if (applicationRepo.findJobApplicationByUserAndOffer(user, offer) == null)
+            throw new Exception("No application found!");
 
-        applicationRepo.delete(application);
+        JobApplication toDelete = applicationRepo.findJobApplicationByUserAndOffer(user, offer);
+        applicationRepo.delete(toDelete);
     }
 
-    public JobApplication findUserApplication(UserPerson user, JobOffer offer) {
-        return applicationRepo.findJobApplicationByApplicantAndOffer(user, offer);
+    public boolean checkApplied(UserPerson user, UUID offerId) {
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        JobApplication applied = applicationRepo.findJobApplicationByUserAndOffer(user, offer);
+
+        return applied != null;
     }
 
     public void saveOffer(UserPerson user, UUID offerId) throws Exception {

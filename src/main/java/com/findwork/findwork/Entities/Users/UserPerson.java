@@ -42,17 +42,18 @@ public class UserPerson implements UserDetails {
 
     private String skills;
 
-    @OneToMany(mappedBy = "applicant", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<JobApplication> jobApplications;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserSavedOffer> savedOffers;
 
-    public UserPerson(String username, String password, String firstName, String lastName) {
+    public UserPerson(String username, String password, String firstName, String lastName, LocalDate birthDate) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.birthDate = birthDate;
     }
 
     @Override

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,9 +38,16 @@
 		<p th:text="${user.username}"></p>
 		<p th:text="${user.education}"></p>
 		<p th:text="${user.skills}"></p>
+		<form th:action="@{/user/{id}/edit(id=${user.id})}"
+		      sec:authorize="hasAuthority('User')"
+		      th:if="${#authentication.principal.username == user.username}"
+		      method="get">
+			<button type="submit">Edit Profile</button>
+		</form>
 	</div>
 	<div class="tab-pane fade" id="pills-savedOffers" role="tabpanel" aria-labelledby="pills-savedOffers-tab"
 	     tabindex="0">
+		<p th:if="${user.savedOffers.isEmpty()}">No offers saved!</p>
 		<th:block th:each="saved: ${user.savedOffers}">
 			<div class="card mb-3" style="width: 40rem;">
 				<div class="card-body">
@@ -66,6 +73,7 @@
 	</div>
 	<div class="tab-pane fade" id="pills-applications" role="tabpanel" aria-labelledby="pills-applications-tab"
 	     tabindex="0">
+		<p th:if="${user.jobApplications.isEmpty()}">You have not applied to any positions yet!</p>
 		<th:block th:each="ja: ${user.jobApplications}">
 			<div class="card mb-3" style="width: 40rem;">
 				<div class="card-body">
@@ -74,7 +82,7 @@
 					<p th:text="${ja.offer.salary}" class="card-text"></p>
 					<p th:text="${ja.offer.jobLevel}" class="card-text"></p>
 					<p th:text="${ja.offer.jobCategory}" class="card-text"></p>
-					<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
+					<a th:href="@{/company/{id}(id=${ja.offer.company.id})}" th:text="${ja.offer.company.name}"
 					   class="card-text mb-0"></a>
 					<div class="d-flex justify-content-between">
 						<a th:href="@{/offer/{id}(id=${ja.offer.id})}" class="card-link btn btn-primary">See

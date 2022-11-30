@@ -78,9 +78,12 @@ public class JobOfferController {
 
     @GetMapping("/{id}")
     String getOfferPage(@PathVariable UUID id, Model model, Authentication auth) {
-        if (auth != null && auth.isAuthenticated()) {
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof UserPerson) {
             boolean saved = offerService.checkSaved((UserPerson) auth.getPrincipal(), id);
             model.addAttribute("saved", saved);
+
+            boolean applied = offerService.checkApplied((UserPerson) auth.getPrincipal(), id);
+            model.addAttribute("applied", applied);
         }
 
         model.addAttribute("offer", offerService.loadOfferById(id));

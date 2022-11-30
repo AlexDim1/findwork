@@ -38,11 +38,11 @@
       th:action="@{/offer/{id}/edit(id=${offer.id})}" method="get">
 	<button type="submit">Edit</button>
 </form>
-<form sec:authorize="hasAuthority('User')" th:if="${#authentication.principal.checkIfApplied(offer.id) == false}"
+<form sec:authorize="hasAuthority('User')" th:if="${applied != null && applied == false}"
       th:action="@{/offer/{id}/apply(id=${offer.id})}" method="post">
 	<button type="submit">Apply!</button>
 </form>
-<form sec:authorize="hasAuthority('User')" th:if="${#authentication.principal.checkIfApplied(offer.id) == true}"
+<form sec:authorize="hasAuthority('User')" th:if="${applied != null && applied == true}"
       th:action="@{/offer/{id}/cancel(id=${offer.id})}" method="post">
 	<button type="submit">Cancel application</button>
 </form>

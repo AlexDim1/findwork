@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface JobApplicationRepository extends JpaRepository<JobApplication, UUID> {
-    JobApplication findJobApplicationByApplicantAndOffer(UserPerson applicant, JobOffer offer);
+    JobApplication findJobApplicationByUserAndOffer(UserPerson user, JobOffer offer);
 
     List<JobApplication> findAllByOffer(JobOffer offer);
 }

@@ -35,6 +35,7 @@
 		<p th:text="${company.description}"></p>
 	</div>
 	<div class="tab-pane fade" id="pills-offers" role="tabpanel" aria-labelledby="pills-offers-tab" tabindex="0">
+		<p th:if="${company.offers.isEmpty()}">You have not posted any offers!</p>
 		<th:block th:each="offer: ${company.offers}">
 			<div class="card mb-3" style="width: 40rem;">
 				<div class="card-body">

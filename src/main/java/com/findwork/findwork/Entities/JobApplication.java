@@ -23,15 +23,15 @@ public class JobApplication {
     private UUID id;
 
     @ManyToOne
-    private UserPerson applicant;
+    private UserPerson user;
 
     @ManyToOne
     private JobOffer offer;
 
     private Date date;
 
-    public JobApplication(UserPerson applicant, JobOffer offer) {
-        this.applicant = applicant;
+    public JobApplication(UserPerson user, JobOffer offer) {
+        this.user = user;
         this.offer = offer;
         this.date = Date.from(Instant.now());
     }
