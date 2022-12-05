@@ -6,17 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.time.Instant;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Entity
-@Table(name = "job_applications")
 @Getter
 @Setter
 @NoArgsConstructor
-public class JobApplication {
+public class UserSavedOffer {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")
@@ -28,11 +28,8 @@ public class JobApplication {
     @ManyToOne
     private JobOffer offer;
 
-    private Date date;
-
-    public JobApplication(UserPerson user, JobOffer offer) {
+    public UserSavedOffer(UserPerson user, JobOffer offer) {
         this.user = user;
         this.offer = offer;
-        this.date = Date.from(Instant.now());
     }
 }

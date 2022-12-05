@@ -1,7 +1,7 @@
 package com.findwork.findwork.Entities.Users;
 
 import com.findwork.findwork.Entities.JobApplication;
-import com.findwork.findwork.Entities.JobOffer;
+import com.findwork.findwork.Entities.UserSavedOffer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,25 +42,18 @@ public class UserPerson implements UserDetails {
 
     private String skills;
 
-    @OneToMany(mappedBy = "applicant", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<JobApplication> jobApplications;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
-    private Set<JobOffer> savedOffers;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserSavedOffer> savedOffers;
 
-    public UserPerson(String username, String password, String firstName, String lastName) {
+    public UserPerson(String username, String password, String firstName, String lastName, LocalDate birthDate) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public boolean checkIfOfferSaved(UUID id) {
-        return savedOffers.stream().anyMatch(offer -> offer.getId().equals(id));
-    }
-
-    public boolean checkIfApplied(UUID id) {
-        return jobApplications.stream().anyMatch(application -> application.getOffer().getId().equals(id));
+        this.birthDate = birthDate;
     }
 
     @Override
@@ -69,7 +62,7 @@ public class UserPerson implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-    public String getFullName() {
+    public String getName() {
         return firstName + " " + lastName;
     }
 

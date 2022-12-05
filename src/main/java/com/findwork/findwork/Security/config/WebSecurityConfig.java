@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -27,7 +28,12 @@ public class WebSecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login");
+                .loginProcessingUrl("/login")
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/");
 
         return http.build();
     }

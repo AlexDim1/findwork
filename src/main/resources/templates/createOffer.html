@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,7 @@
 <body>
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <p th:if="${error != null}" th:text="${error}"></p>
-<form th:action="@{/offer/create}" method="post">
+<form th:action="@{/offers/create}" method="post">
 	<label for="title">Title:</label>
 	<input type="text" name="title" id="title" required>
 	<label for="location">Location:</label>
@@ -36,7 +36,8 @@
 	<textarea name="niceToHave" id="niceToHave" rows="10" cols="50" required></textarea>
 	<label for="benefits">Benefits:</label>
 	<textarea name="benefits" id="benefits" rows="10" cols="50" required></textarea>
-	<button type="submit">Register</button>
+	<a th:href="@{/company/{id}(id=${company.id})}">Cancel</a>
+	<button type="submit">Create</button>
 </form>
 </body>
 </html>

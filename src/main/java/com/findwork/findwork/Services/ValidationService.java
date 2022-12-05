@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Service
 @AllArgsConstructor
@@ -16,7 +17,8 @@ public class ValidationService {
         if (r.getEmail() == null
                 || r.getPassword() == null
                 || r.getFirstName() == null
-                || r.getLastName() == null)
+                || r.getLastName() == null
+                || r.getBirthDate() == null)
             throw new Exception("Email, names and password are required!");
 
         if (r.getEmail().isEmpty()
@@ -30,6 +32,9 @@ public class ValidationService {
 
         if (!validateEmail(r.getEmail()))
             throw new Exception("Invalid email address!");
+
+        if (Period.between(r.getBirthDate(), java.time.LocalDate.now()).getYears() < 16)
+            throw new Exception("You should be at least 16 years old in order to register!");
     }
 
     public void validateRegisterCompanyRequest(RegisterCompanyRequest r) throws Exception {
