@@ -123,4 +123,9 @@ public class OfferService {
     public boolean checkSaved(UserPerson user, UUID offerId) {
         return user.getSavedOffers().stream().anyMatch(offer -> offer.getId().equals(offerId));
     }
+
+    public List<JobOffer> getFilteredOffers(String field)
+    {
+        return jobRepo.findJobOffersByKeyWords(field);
+    }
 }

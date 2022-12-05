@@ -14,11 +14,6 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, UUID> {
 
     List<JobOffer> findJobOfferByCompany(UserCompany company);
 
-    /*@Query("SELECT o " +
-            "FROM JobOffer o " +
-            "WHERE o.requirements = :taskId")
-    List<JobOffer> filterOffersByRequirements(String);*/
-
     @Query("select j from JobOffer j where lower(j.benefits) like lower(concat('%', ?1, '%'))")
     List<JobOffer> findJobOffersByBenefitsContaining(String benefits);
 
@@ -43,8 +38,8 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, UUID> {
     @Query("select j from JobOffer j where CAST(j.salary AS int) >= CAST(?1 AS int) AND CAST(j.salary AS int) <= CAST(?2 AS int)")
     List<JobOffer> findJobOffersBySalary(String lowEnd, String highEnd);
 
-    //@Query("select j from JobOffer j where lower(j.title) in (Select column_value FROM table(sys.odcivarchar2list(?1)))")
-    //List<JobOffer> findJobOffersByKeyWords(String[] keyWords);
+    @Query("select j from JobOffer j where lower(j.title) like ?1 or lower(j.requirements) like ?1 or lower(j.description) like ?1")
+    List<JobOffer> findJobOffersByKeyWords(String keyWord);
 
 
 }
