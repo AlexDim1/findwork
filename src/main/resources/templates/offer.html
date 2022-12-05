@@ -11,7 +11,6 @@
 	<title th:text="${offer.title}"></title>
 </head>
 <body>
-<!--TODO: fix cancel-->
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <p th:if="${error != null}" th:text="${error}"></p>
 <p th:if="${success != null}" th:text="${success}"></p>
@@ -27,23 +26,23 @@
 <p th:text="${offer.jobCategory}"></p>
 <!--Само една от долните 2 форми може да съществува в даден момент в зависимост дали обявата е сейвната, и то само ако сме логнати като user -->
 <form sec:authorize="hasAuthority('User')" th:if="${saved != null && saved == false}"
-      th:action="@{/offer/{id}/save(id=${offer.id})}" method="post">
+      th:action="@{/offers/{id}/save(id=${offer.id})}" method="post">
 	<button type="submit">Save Offer</button>
 </form>
 <form sec:authorize="hasAuthority('User')" th:if="${saved != null && saved == true}"
-      th:action="@{/offer/{id}/unsave(id=${offer.id})}" method="post">
+      th:action="@{/offers/{id}/unsave(id=${offer.id})}" method="post">
 	<button type="submit">Unsave Offer</button>
 </form>
 <form sec:authorize="hasAuthority('Company')" th:if="${#authentication.principal.username == offer.company.username}"
-      th:action="@{/offer/{id}/edit(id=${offer.id})}" method="get">
+      th:action="@{/offers/{id}/edit(id=${offer.id})}" method="get">
 	<button type="submit">Edit</button>
 </form>
 <form sec:authorize="hasAuthority('User')" th:if="${applied != null && applied == false}"
-      th:action="@{/offer/{id}/apply(id=${offer.id})}" method="post">
+      th:action="@{/offers/{id}/apply(id=${offer.id})}" method="post">
 	<button type="submit">Apply!</button>
 </form>
 <form sec:authorize="hasAuthority('User')" th:if="${applied != null && applied == true}"
-      th:action="@{/offer/{id}/cancel(id=${offer.id})}" method="post">
+      th:action="@{/offers/{id}/cancel(id=${offer.id})}" method="post">
 	<button type="submit">Cancel application</button>
 </form>
 </body>

@@ -50,8 +50,11 @@ public class JobOffer {
     @ManyToOne(cascade = {CascadeType.REFRESH})
     private UserCompany company;
 
-    @OneToMany(mappedBy = "offer", cascade = {CascadeType.REFRESH})
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.REMOVE)
     private List<JobApplication> jobApplications;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.REMOVE)
+    private List<UserSavedOffer> saves;
 
     public JobOffer(String title, String description, String requirements, String niceToHave, String benefits, String location, String salary, JobLevel jobLevel, Category jobCategory, UserCompany company) {
         this.title = title;

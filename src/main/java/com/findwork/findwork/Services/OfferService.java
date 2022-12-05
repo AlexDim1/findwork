@@ -7,7 +7,10 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
-import com.findwork.findwork.Repositories.*;
+import com.findwork.findwork.Repositories.JobApplicationRepository;
+import com.findwork.findwork.Repositories.JobOfferRepository;
+import com.findwork.findwork.Repositories.UserCompanyRepository;
+import com.findwork.findwork.Repositories.UserSavedOfferRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import lombok.AllArgsConstructor;
@@ -22,7 +25,6 @@ public class OfferService {
     private final JobOfferRepository jobRepo;
     private final UserCompanyRepository companyRepo;
     private final JobApplicationRepository applicationRepo;
-    private final UserPersonRepository userRepo;
     private final UserSavedOfferRepository savedOffersRepo;
 
     public JobOffer loadOfferById(UUID id) {
@@ -48,11 +50,13 @@ public class OfferService {
         return offers;
     }
 
-    public void removeOffer(UUID id) throws Exception {
+    public void removeOffer(UserCompany company, UUID id) throws Exception {
         JobOffer questionableOffer = jobRepo.findJobOfferById(id);
+
         if (questionableOffer == null)
             throw new Exception("The job offer you are referring to is not existent.");
         jobRepo.delete(questionableOffer);
+        System.out.println(questionableOffer.getTitle());
     }
 
     public void editOffer(UUID id, EditJobOfferRequest r) throws Exception {
@@ -78,6 +82,11 @@ public class OfferService {
         if (r.getJobCategory() != null)
             questionableOffer.setJobCategory(Category.valueOf(r.getJobCategory()));
         jobRepo.save(questionableOffer);
+    }
+
+    public List<JobApplication> getOfferApplications(UUID id) {
+        JobOffer offer = jobRepo.findJobOfferById(id);
+        return applicationRepo.findAllByOffer(offer);
     }
 
     public void createApplication(UserPerson user, UUID offerId) throws Exception {

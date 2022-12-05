@@ -13,21 +13,45 @@
 <body>
 <!--TODO: finish-->
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
-<th:block th:each="offer: ${offers}">
-	<div class="card mb-3" style="width: 40rem;">
-		<div class="card-body">
-			<h5 th:text="${offer.title}" class="card-title"></h5>
-			<p th:text="${offer.location}" class="card-subtitle mb-2 text-muted"></p>
-			<p th:text="${offer.salary}" class="card-text mb-0"></p>
-			<p th:text="${offer.jobLevel}" class="card-text mb-0"></p>
-			<p th:text="${offer.jobCategory}" class="card-text mb-0"></p>
-			<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
-			   class="card-text mb-0"></a>
-			<div class="d-flex justify-content-between">
-				<a th:href="@{/offer/{id}(id=${offer.id})}" class="card-link btn btn-primary">See more</a>
+<div class="row">
+	<div class="col-8">
+		<th:block th:each="offer: ${offers}">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5 th:text="${offer.title}" class="card-title"></h5>
+					<p th:text="${offer.location}" class="card-subtitle mb-2 text-muted"></p>
+					<p th:text="${offer.salary}" class="card-text mb-0"></p>
+					<p th:text="${offer.jobLevel}" class="card-text mb-0"></p>
+					<p th:text="${offer.jobCategory}" class="card-text mb-0"></p>
+					<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
+					   class="card-text mb-0"></a>
+					<div class="d-flex justify-content-between">
+						<a th:href="@{/offers/{id}(id=${offer.id})}" class="card-link btn btn-primary">See more</a>
+					</div>
+				</div>
 			</div>
-		</div>
+		</th:block>
 	</div>
-</th:block>
+	<div class="col-4">
+		<form th:action="@{/offers/}" role="search" method="get">
+			<div>
+				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+			</div>
+			<div>
+				<label for="jobLevel">Position level:</label>
+				<select id="jobLevel" name="jobLevel">
+					<option>--Any--</option>
+					<option th:each="level: ${levels}" th:value="${level}" th:text="${level}"></option>
+				</select>
+				<label for="jobCategory">Category:</label>
+				<select id="jobCategory" name="jobCategory">
+					<option>--Any--</option>
+					<option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
+				</select>
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</div>
+		</form>
+	</div>
+</div>
 </body>
 </html>

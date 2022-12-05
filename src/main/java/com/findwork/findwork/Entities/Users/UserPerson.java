@@ -62,7 +62,7 @@ public class UserPerson implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-    public String getFullName() {
+    public String getName() {
         return firstName + " " + lastName;
     }
 

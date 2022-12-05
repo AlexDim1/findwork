@@ -1,6 +1,5 @@
 package com.findwork.findwork.Controllers;
 
-import com.findwork.findwork.Entities.JobOffer;
 import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Services.OfferService;
 import com.findwork.findwork.Services.UserService;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -27,18 +24,18 @@ public class CompanyController {
     private final ValidationService validationService;
     private final OfferService offerService;
 
-    @GetMapping("/{id}/offers")
-    public String getCompanyOffers(@PathVariable UUID id, Model model) {
-        List<JobOffer> offers = new ArrayList<>();
-        try {
-            offers = offerService.getCompanyOffers(id);
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-        }
-        model.addAttribute("company", userService.loadUserCompanyById(id));
-        model.addAttribute("offers", offers);
-        return "company";
-    }
+//    @GetMapping("/{id}/offers")
+//    public String getCompanyOffers(@PathVariable UUID id, Model model) {
+//        List<JobOffer> offers = new ArrayList<>();
+//        try {
+//            offers = offerService.getCompanyOffers(id);
+//        } catch (Exception e) {
+//            model.addAttribute("error", e.getMessage());
+//        }
+//        model.addAttribute("company", userService.loadUserCompanyById(id));
+//        model.addAttribute("offers", offers);
+//        return "company";
+//    }
 
     @GetMapping("/{id}")
     public String getCompanyPage(@PathVariable UUID id, Model model) {
