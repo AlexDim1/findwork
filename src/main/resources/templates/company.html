@@ -5,13 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/companyDecor.css}">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	        crossorigin="anonymous"></script>
 	<title th:text="${company.name}"></title>
 </head>
 <body>
-<th:block th:insert="fragments/navbar :: navbar"></th:block>
+<!--<th:block th:insert="fragments/navbar :: navbar"></th:block>-->
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 	<li class="nav-item" role="presentation">
 		<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-company"
@@ -27,30 +28,55 @@
 <div class="tab-content" id="pills-tabContent">
 	<div class="tab-pane fade show active" id="pills-company" role="tabpanel" aria-labelledby="pills-company-tab"
 	     tabindex="0">
-		<h1 th:text="${company.name}"></h1>
-		<p th:text="${company.address}"></p>
-		<p th:text="${company.employeeCount}"></p>
-		<p th:text="${company.foundingYear}"></p>
-		<p th:text="${company.username}"></p>
-		<p th:text="${company.description}"></p>
+		<section id="yourOffer">
+			<form class="yourOffer">
+				<img src="img.png">
+				<div>
+					<h1 th:text="${company.name}"></h1>
+					<p th:text="${company.address}"></p>
+					<p th:text="${company.employeeCount}"></p>
+					<p th:text="${company.foundingYear}"></p>
+					<p th:text="${company.username}"></p>
+					<p th:text="${company.description}"></p>
+					</th:block>
+
+					<button href="/offer/create" class="decorBTNItem" type="submit">Create offer</button>
+				</div>
+			</form>
+		</section>
+
 	</div>
 	<div class="tab-pane fade" id="pills-offers" role="tabpanel" aria-labelledby="pills-offers-tab" tabindex="0">
-		<th:block th:each="offer: ${company.offers}">
-			<div class="card mb-3" style="width: 40rem;">
-				<div class="card-body">
-					<h5 th:text="${offer.title}" class="card-title"></h5>
-					<p th:text="${offer.location}" class="card-subtitle mb-2 text-muted"></p>
-					<p th:text="${offer.salary}" class="card-text mb-0"></p>
-					<p th:text="${offer.jobLevel}" class="card-text mb-0"></p>
-					<p th:text="${offer.jobCategory}" class="card-text mb-0"></p>
-					<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
-					   class="card-text mb-0"></a>
-					<div class="d-flex justify-content-between">
-						<a th:href="@{/offer/{id}(id=${offer.id})}" class="card-link btn btn-primary">See more</a>
+		<section id="dashboard">
+			<h1 class="dashboard-title">Your offers</h1>
+			<div class="offers-board">
+				<article class="service-img">
+					<img class="offer-image-cover" src="img.png">
+				</article>
+
+				<th:block th:each="offer: ${company.offers}">
+					<div class="card mb-3" style="width: 40rem;">
+						<div class="card-body">
+							<h5 th:text="${offer.title}" class="card-title"></h5>
+							<p th:text="${offer.location}" class="card-subtitle mb-2 text-muted"></p>
+							<p th:text="${offer.salary}" class="card-text mb-0"></p>
+							<p th:text="${offer.jobLevel}" class="card-text mb-0"></p>
+							<p th:text="${offer.jobCategory}" class="card-text mb-0"></p>
+							<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
+							   class="card-text mb-0"></a>
+							<div class="d-flex justify-content-between">
+								<a th:href="@{/offer/{id}(id=${offer.id})}" class="card-link btn btn-primary">See more</a>
+							</div>
+						</div>
 					</div>
+				</th:block>
+				<div>
+					<button  id="edit-submit" type="submit" href="/offer/{id}/edit" class="decorBTNItem">Edit</button>
+					<button  id="delete-submit" type="submit" href="/offer/{id}/remove" class="decorBTNItem">Delete</button>
 				</div>
 			</div>
-		</th:block>
+		</section>
+
 	</div>
 </div>
 

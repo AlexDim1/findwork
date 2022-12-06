@@ -2,20 +2,60 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/offerDecor.css}">
 	<title>Offer</title>
 </head>
 <body>
 <p>OFFER</p>
 <p th:text="${error}"></p>
 <p th:text="${success}"></p>
-<th:block th:each="offerField : ${offer}">
-	<li th:text="${offer.title}">
-	<li th:text="${offer.requirements}"></li>
-	<li th:text="${offer.location}"></li>
-	<li th:text="${offer.salary}"></li>
-	<li th:text="${offer.jobLevel}"></li>
-	<li th:text="${offer.jobCategory}"></li>
-	<li th:text="${offer.company.name}"></li>
-</th:block>
+<!--<th:block th:each="offerField : ${offer}">-->
+<!--	<li th:text="${offer.title}">-->
+<!--	<li th:text="${offer.requirements}"></li>-->
+<!--	<li th:text="${offer.location}"></li>-->
+<!--	<li th:text="${offer.salary}"></li>-->
+<!--	<li th:text="${offer.jobLevel}"></li>-->
+<!--	<li th:text="${offer.jobCategory}"></li>-->
+<!--	<li th:text="${offer.company.name}"></li>-->
+<!--</th:block>-->
+<header id="nav">
+	<nav>
+		<section class="logo">
+			<a>FindWork</a>
+		</section>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/offer/">Offers</a></li>
+			<li><a href="/user/{id}">Profile</a></li>
+			<li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+</header>
+
+<section id="detailsPage">
+	<div class="details">
+		<div class="offerPic">
+			<img src=${pet.image}>
+		</div>
+		<div>
+			<div class="offerInfo">
+				<th:block th:each="offer : ${offers}">
+					<h2 th:text= "${offer.company.name}"></h2>
+					<p th:text = "${offer.title}" ></p>
+					<p th:text= "${offer.jobCategory}" ></p>
+					<p th:text = "${offer.jobLevel}" ></p>
+					<p th:text= "${offer.location}" ></p>
+					<p th:text = "${offer.salary}" ></p>
+					<p th:text= "${offer.requirements}" ></p>
+				</th:block>
+			</div>
+
+			<div class="actionBtn">
+				<a href="/offer/{id}" class="apply">Apply</a>
+			</div>
+		</div>
+	</div>
+</section>
+<footer>FindWork 2022©</footer>
 </body>
 </html>
