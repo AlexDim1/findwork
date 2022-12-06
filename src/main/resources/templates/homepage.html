@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<!--xmlns:th="http://thymeleaf.org/"-->
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">&ndash;&gt;-->
+<!--<th:block th:insert="fragments/head :: head(title = 'FindWork')">-->
+<!--</th:block>-->
+<head>
+    <meta charset="UTF-8">
+    <!--    <link rel="stylesheet" th:href="@{/css/homeDecorTest.css}">-->
+    <link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
+    <title>FindWork</title>
+</head>
+
+<!--<link rel="stylesheet" href="homeDecorTest.css">-->
+<!--<link type="text/css" th:href="@{css/homeDecorTest.css}" href="css/styles.css"-->
+<!--      rel="stylesheet" />-->
+
+<body>
+<header id="nav">
+    <nav>
+        <section class="logo">
+            <a>FindWork</a>
+        </section>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/offer/">Offers</a></li>
+            <li><a href="/login">Log in</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="first">
+    <div>
+        <div class="title">
+            <h1>Welcome to FindWork!</h1>
+        </div>
+        <!--    <div class="styleDivLogo">-->
+        <!--        <img class="styleLogo" src="img.png">-->
+        <!--    </div>-->
+        <div>
+            <div class="item1">
+                <p>If you want to start your career or want to attract new people to your team, then you are in the right place!</p>
+            </div>
+
+            <div class="item2">
+                <p>Create your account in the best page!</p>
+                <div class="buttons">
+                    <button  id="start-submit" type="submit" class="decorBTNItem" href="/register/person">Start career!</button>
+                    <button  id="grow-submit" type="submit" href="/register/company" class="decorBTNItem">Grow your team!</button>
+                </div>
+            </div>
+
+            <div class="item3">
+                <p>If you already have one, please</p>
+                <a class="btn" href="/login">log in</a>
+                <!--                <button id="login-submit" type="button" class="button">Log in</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>FindWork 2022©</footer>
+
+<script th:src="@{/scripts/validateForm.js}"></script>
+</body>
+</html>
