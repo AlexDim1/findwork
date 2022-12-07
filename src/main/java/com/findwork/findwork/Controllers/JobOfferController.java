@@ -60,24 +60,33 @@ public class JobOfferController {
             return "redirect:/offers/create";
         }
 
-        return "redirect:/offer/" + questionableOffer.getId();
+        return "redirect:/offers/" + questionableOffer.getId();
     }
 
     @PostMapping("/{id}/remove")
     public String removeOffer(@PathVariable UUID id, RedirectAttributes attr, Authentication auth) {
         UserCompany company = (UserCompany) auth.getPrincipal();
+        if (!offerService.loadOfferById(id).getCompany().getId().equals(company.getId()))
+            return "redirect:/offers/" + id;
+
         try {
             offerService.removeOffer(company, id);
         } catch (Exception e) {
             attr.addFlashAttribute("error", e.getMessage());
             return "redirect:/offers/" + id;
         }
+
         return "redirect:/company/" + company.getId();
     }
 
     @GetMapping("/{id}/edit")
-    String getEditOfferPage(@PathVariable UUID id, Model model) {
+    String getEditOfferPage(@PathVariable UUID id, Model model, Authentication auth) {
         JobOffer offer = offerService.loadOfferById(id);
+
+        UserCompany company = (UserCompany) auth.getPrincipal();
+        if (!offer.getCompany().getId().equals(company.getId()))
+            return "redirect:/offers/" + id;
+
         model.addAttribute("offer", offer);
         model.addAttribute("levels", JobLevel.values());
         model.addAttribute("categories", Category.values());
@@ -99,7 +108,11 @@ public class JobOfferController {
     }
 
     @GetMapping("/{id}/applications")
-    public String getOfferApplications(@PathVariable UUID id, Model model) {
+    public String getOfferApplications(@PathVariable UUID id, Model model, Authentication auth) {
+        UserCompany company = (UserCompany) auth.getPrincipal();
+        if (!offerService.loadOfferById(id).getCompany().getId().equals(company.getId()))
+            return "redirect:/offers/" + id;
+
         List<JobApplication> applications = offerService.getOfferApplications(id);
 
         model.addAttribute("offer", offerService.loadOfferById(id));
@@ -108,7 +121,11 @@ public class JobOfferController {
     }
 
     @PostMapping("/{id}")
-    public String editOffer(@PathVariable UUID id, EditJobOfferRequest request, Model model) {
+    public String editOffer(@PathVariable UUID id, EditJobOfferRequest request, Model model, Authentication auth) {
+        UserCompany company = (UserCompany) auth.getPrincipal();
+        if (!offerService.loadOfferById(id).getCompany().getId().equals(company.getId()))
+            return "redirect:/offers/" + id;
+
         try {
             validationService.validateEditJobOfferRequest(request);
             offerService.editOffer(id, request);
@@ -116,6 +133,7 @@ public class JobOfferController {
             model.addAttribute("error", e.getMessage());
             return "editOffer";
         }
+
         return "redirect:/offers/" + id;
     }
 
