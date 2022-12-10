@@ -9,13 +9,18 @@ import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.JobApplicationRepository;
 import com.findwork.findwork.Repositories.JobOfferRepository;
-import com.findwork.findwork.Repositories.UserCompanyRepository;
 import com.findwork.findwork.Repositories.UserSavedOfferRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,9 +28,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OfferService {
     private final JobOfferRepository jobRepo;
-    private final UserCompanyRepository companyRepo;
     private final JobApplicationRepository applicationRepo;
     private final UserSavedOfferRepository savedOffersRepo;
+    private final EntityManager entityManager;
 
     public JobOffer loadOfferById(UUID id) {
         return jobRepo.findJobOfferById(id);
@@ -37,20 +42,57 @@ public class OfferService {
         return offer;
     }
 
-    public List<JobOffer> getAllOffers() {
-        List<JobOffer> offers = jobRepo.findAll();
-        return offers;
+    public List<JobOffer> getOffers(String search, String category, String level) {
+        if (search == null && category == null && level == null)
+            return jobRepo.findAll();
+
+        Category jobCategory = null;
+        JobLevel jobLevel = null;
+
+        if (category != null && !category.equals("--Any--"))
+            jobCategory = Category.valueOf(category);
+        if (level != null && !level.equals("--Any--"))
+            jobLevel = JobLevel.valueOf(level);
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<JobOffer> cq = cb.createQuery(JobOffer.class);
+        Root<JobOffer> offer = cq.from(JobOffer.class);
+        cq.select(offer);
+
+        Predicate currentPredicate = null;
+        Predicate newPredicate;
+        if (search != null) {
+            newPredicate = cb.like(cb.upper(offer.get("title")), "%" + search.toUpperCase() + "%");
+            currentPredicate = newPredicate;
+        }
+
+        if (jobCategory != null) {
+            newPredicate = cb.equal(offer.get("jobCategory"), jobCategory);
+
+            if (currentPredicate != null)
+                currentPredicate = cb.and(currentPredicate, newPredicate);
+            else {
+                currentPredicate = newPredicate;
+            }
+        }
+
+        if (jobLevel != null) {
+            newPredicate = cb.equal(offer.get("jobLevel"), jobLevel);
+
+            if (currentPredicate != null)
+                currentPredicate = cb.and(currentPredicate, newPredicate);
+            else {
+                currentPredicate = newPredicate;
+            }
+        }
+
+        cq.where(currentPredicate);
+        Query query = entityManager.createQuery(cq);
+
+        return query.getResultList();
     }
 
-    public List<JobOffer> getCompanyOffers(UUID id) throws Exception {
-        UserCompany questionableCompany = companyRepo.findUserCompanyById(id);
-        if (questionableCompany == null)
-            throw new Exception("Such company does not exist.");
-        List<JobOffer> offers = jobRepo.findJobOfferByCompany(questionableCompany);
-        return offers;
-    }
-
-    public void removeOffer(UserCompany company, UUID id) throws Exception {
+    public void removeOffer(UUID id) throws Exception {
         JobOffer questionableOffer = jobRepo.findJobOfferById(id);
 
         if (questionableOffer == null)
