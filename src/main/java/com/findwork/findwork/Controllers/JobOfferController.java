@@ -14,10 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -31,8 +28,20 @@ public class JobOfferController {
     private final OfferService offerService;
 
     @GetMapping("/")
-    public String getAllOffers(Model model) {
-        List<JobOffer> offers = offerService.getAllOffers();
+    public String getAllOffers(Model model,
+                               @RequestParam(required = false) String search,
+                               @RequestParam(required = false) String jobCategory,
+                               @RequestParam(required = false) String jobLevel) {
+        List<JobOffer> offers;
+
+        if (jobCategory != null && jobCategory.equals("--Any--"))
+            jobCategory = null;
+
+        if (jobLevel != null && jobLevel.equals("--Any--"))
+            jobLevel = null;
+
+        offers = offerService.getOffers(search, jobCategory, jobLevel);
+
         model.addAttribute("offers", offers);
         model.addAttribute("levels", JobLevel.values());
         model.addAttribute("categories", Category.values());
@@ -70,7 +79,7 @@ public class JobOfferController {
             return "redirect:/offers/" + id;
 
         try {
-            offerService.removeOffer(company, id);
+            offerService.removeOffer(id);
         } catch (Exception e) {
             attr.addFlashAttribute("error", e.getMessage());
             return "redirect:/offers/" + id;

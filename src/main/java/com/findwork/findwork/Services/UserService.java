@@ -8,6 +8,7 @@ import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserCompanyRepository companyRepo;
     private final UserPersonRepository personRepo;
@@ -104,12 +106,6 @@ public class UserService implements UserDetailsService {
         if (r.getAddress() != null)
             questionableCompany.setAddress(r.getAddress());
         companyRepo.save(questionableCompany);
-    }
-
-    public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo, BCryptPasswordEncoder encoder) {
-        this.companyRepo = companyRepo;
-        this.personRepo = personRepo;
-        this.encoder = encoder;
     }
 
     public UserCompany loadUserCompanyById(UUID id) {
