@@ -1,34 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org/">
-<!--xmlns:th="http://thymeleaf.org/"-->
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">&ndash;&gt;-->
-<!--<th:block th:insert="fragments/head :: head(title = 'FindWork')">-->
-<!--</th:block>-->
+<th:block th:insert="fragments/head :: head(title = 'FindWork')">
+</th:block>
 <head>
     <meta charset="UTF-8">
-    <!--    <link rel="stylesheet" th:href="@{/css/homeDecorTest.css}">-->
     <link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
+    <link rel="stylesheet" th:href="@{/css/homeDecor.css}">
     <title>FindWork</title>
 </head>
 
-<!--<link rel="stylesheet" href="homeDecorTest.css">-->
-<!--<link type="text/css" th:href="@{css/homeDecorTest.css}" href="css/styles.css"-->
-<!--      rel="stylesheet" />-->
-
 <body>
-<header id="nav">
-    <nav>
-        <section class="logo">
-            <a>FindWork</a>
-        </section>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/offer/">Offers</a></li>
-            <li><a href="/login">Log in</a></li>
-        </ul>
-    </nav>
-</header>
-
+<th:block th:insert="fragments/navbar :: navbar"></th:block>
 <div class="first">
     <div>
         <div class="title">
@@ -45,21 +28,21 @@
             <div class="item2">
                 <p>Create your account in the best page!</p>
                 <div class="buttons">
-                    <button  id="start-submit" type="submit" class="decorBTNItem" href="/register/person">Start career!</button>
-                    <button  id="grow-submit" type="submit" href="/register/company" class="decorBTNItem">Grow your team!</button>
+                    <a   th:href="@{/register/person}" class="decorBTNItem">Start career!</a>
+                    <p class="or">or</p>
+                    <a   th:href="@{/register/company}" class="decorBTNItem">Grow your team!</a>
                 </div>
             </div>
 
             <div class="item3">
                 <p>If you already have one, please</p>
-                <a class="btn" href="/login">log in</a>
-                <!--                <button id="login-submit" type="button" class="button">Log in</button>-->
+                <a th:href="@{/login}" class="btn">log in</a>
             </div>
         </div>
     </div>
 </div>
 
-<footer>FindWork 2022©</footer>
+<footer class="footer">FindWork 2022©</footer>
 
 <script th:src="@{/scripts/validateForm.js}"></script>
 </body>
