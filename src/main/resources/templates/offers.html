@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/dashboardDecor.css}">
+    <title>Offers</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -12,6 +15,55 @@
     <link rel="stylesheet" th:href="@{/css/dashboardDecor.css}">
 </head>
 <body>
+<header id="nav">
+    <nav>
+        <section class="logo">
+            <a>FindWork</a>
+        </section>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/offer/">Offers</a></li>
+            <li><a href="/user/{id}">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="first">
+    <section id="dashboard">
+        <h1 class="dashboard-title">Offers</h1>
+        <!--        <div class="offers-dashboard">-->
+        <!--If there is no pets in dashboard-->
+        <!--            ${pets.lenght == 0-->
+        <!--            ? html `  <div>-->
+        <!--            <p class="no-offers">No offers in dashboard</p>-->
+        <!--        </div>`-->
+        <div class="offers-board">
+            <article class="service-img">
+                <img class="offer-image-cover" src="img.png">
+            </article>
+
+            <th:block th:each="offer : ${offers}">
+                <h2 th:text= "${offer.company.name}"></h2>
+                <p th:text = "${offer.title}" ></p>
+                <p th:text= "${offer.jobLevel}" ></p>
+                <p th:text= "${offer.jobCategory}" ></p>
+            </th:block>
+            <div>
+                <a class="btn" href="/offer/{id}">Show details</a>
+            </div>
+            <!--            <th:block th:each="offer : ${offers}">-->
+            <!--                    <li th:text = "${offer.title}">-->
+            <!--                    <li th:text= "${offer.requirements}"></li>-->
+            <!--                    <li th:text= "${offer.location}"></li>-->
+            <!--                    <li th:text= "${offer.salary}"></li>-->
+            <!--                    <li th:text= "${offer.jobLevel}"></li>-->
+            <!--                    <li th:text= "${offer.jobCategory}"></li>-->
+            <!--                    <li th:text= "${offer.company.name}"></li>-->
+            <!--</th:block>-->
+        </div>
+    </section>
+</div>
+<footer>FindWork 2022©</footer>
 <!--TODO: finish-->
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <div class="row">
