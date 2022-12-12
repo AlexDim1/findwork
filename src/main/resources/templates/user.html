@@ -9,6 +9,7 @@
 	        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	        crossorigin="anonymous"></script>
 	<title th:text="${user.getName()}"></title>
+	<link rel="stylesheet" href="/scripts/CssStyles/styleUser.css">
 </head>
 <body>
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
@@ -35,15 +36,25 @@
 	<div class="tab-pane fade show active" id="pills-information" role="tabpanel"
 	     aria-labelledby="pills-information-tab"
 	     tabindex="0">
-		<h1 th:text="${user.getName()}"></h1>
-		<p th:text="${user.getAge()}"></p>
-		<p th:text="${user.username}"></p>
-		<p th:text="${user.education}"></p>
-		<p th:text="${user.skills}"></p>
+		<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
+			<div class="row" style="height: 100%;">
+				<div class="col" style="width:50%;"></div>
+				<div class="col">
+					<div class="userBoard">
+						<h1 class="userText" th:text="${user.getName()}"></h1>
+						<p class="userText" th:text="${user.getAge()}"></p>
+						<p class="userText" th:text="${user.username}"></p>
+						<p class="userText" th:text="${user.education}"></p>
+						<p class="userText" th:text="${user.skills}"></p>
+					</div>
+				</div>
+				<div class="col" style="width:50%;"></div>
+			</div>
+		</div>
 		<form th:action="@{/user/{id}/edit(id=${user.id})}"
-		      sec:authorize="hasAuthority('User')"
-		      th:if="${#authentication.principal.username == user.username}"
-		      method="get">
+			  sec:authorize="hasAuthority('User')"
+			  th:if="${#authentication.principal.username == user.username}"
+			  method="get">
 			<button type="submit">Edit Profile</button>
 		</form>
 	</div>
