@@ -41,7 +41,7 @@
 		</form>
 	</div>
 		<section id="dashboard">
-			<p th:if="${offers.isEmpty()}">Sorry, any offers match your criteria!</p>
+			<p th:if="${offers.isEmpty()}">Sorry, no offers match your criteria!</p>
 		<th:block th:each="offer: ${offers}">
 			<div class="offers-board">
 				<div class="card-body">
