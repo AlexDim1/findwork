@@ -10,6 +10,8 @@
 	        crossorigin="anonymous"></script>
 	<title th:text="${user.getName()}"></title>
 	<link rel="stylesheet" href="/scripts/CssStyles/styleUser.css">
+	<link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
+	<link rel="stylesheet" th:href="@{/css/homeDecor.css}">
 </head>
 <body>
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
@@ -41,23 +43,27 @@
 				<div class="col" style="width:50%;"></div>
 				<div class="col">
 					<div class="userBoard">
-						<h1 class="userText" th:text="${user.getName()}"></h1>
-						<p class="userText" th:text="${user.getAge()}"></p>
-						<p class="userText" th:text="${user.username}"></p>
-						<p class="userText" th:text="${user.education}"></p>
-						<p class="userText" th:text="${user.skills}"></p>
+						<label class="userText">Name:</label>
+						<h1 class="userInfo" th:text="${user.getName()}"></h1>
+						<label class="userText">Age:</label>
+						<p class="userInfo" th:text="${user.getAge()}"></p>
+						<label class="userText">Username:</label>
+						<p class="userInfo" th:text="${user.username}"></p>
+						<label class="userText">Education:</label>
+						<p class="userInfo" th:text="${user.education}"></p>
+						<label class="userText">Skills:</label>
+						<p class="userInfo" th:text="${user.skills}"></p>
+						<form th:action="@{/user/{id}/edit(id=${user.id})}"
+							  sec:authorize="hasAuthority('User')"
+							  th:if="${#authentication.principal.username == user.username}"
+							  method="get">
+							<button class="userBtn" type="submit">Edit Profile</button>
+						</form>
 					</div>
 				</div>
 				<div class="col" style="width:50%;"></div>
 			</div>
 		</div>
-		<form th:action="@{/user/{id}/edit(id=${user.id})}"
-			  sec:authorize="hasAuthority('User')"
-			  th:if="${#authentication.principal.username == user.username}"
-			  method="get">
-			<button type="submit">Edit Profile</button>
-		</form>
-	</div>
 	<div sec:authorize="hasAuthority('User')"
 	     th:if="${#authentication.principal.username == user.username}" class="tab-pane fade" id="pills-savedOffers"
 	     role="tabpanel" aria-labelledby="pills-savedOffers-tab"
@@ -77,8 +83,7 @@
 						<form th:action="@{/offers/{id}/unsave(id=${saved.offer.id})}" method="post">
 							<button type="submit" class="btn btn-primary">Remove from Saved</button>
 						</form>
-						<a th:href="@{/offers/{id}(id=${saved.offer.id})}" class="card-link btn btn-primary">See
-						                                                                                     more</a>
+						<a th:href="@{/offers/{id}(id=${saved.offer.id})}" class="card-link btn btn-primary">See more</a>
 						<form th:action="@{/offers/{id}/apply(id=${saved.offer.id})}" method="post">
 							<button type="submit" class="btn btn-primary">Apply</button>
 						</form>
@@ -103,8 +108,7 @@
 					<a th:href="@{/company/{id}(id=${ja.offer.company.id})}" th:text="${ja.offer.company.name}"
 					   class="card-text mb-0"></a>
 					<div class="d-flex justify-content-between">
-						<a th:href="@{/offers/{id}(id=${ja.offer.id})}" class="card-link btn btn-primary">See
-						                                                                                  more</a>
+						<a th:href="@{/offers/{id}(id=${ja.offer.id})}" class="card-link btn btn-primary">See more</a>
 						<form th:action="@{/offers/{id}/cancel(id=${ja.offer.id})}" method="post">
 							<button type="submit" class="btn btn-primary">Cancel application</button>
 						</form>
@@ -113,7 +117,8 @@
 			</div>
 		</th:block>
 	</div>
+	</div>
 </div>
-
 </body>
+<footer class="footer">FindWork 2022©</footer>
 </html>

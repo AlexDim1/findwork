@@ -19,7 +19,7 @@ body{
 .stylePageName1{
     padding: 0px;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 40px;
+    font-size: 60px;
     letter-spacing: 0px;
     word-spacing: 0px;
     color: white;
@@ -82,7 +82,7 @@ body{
     margin-bottom: 10px;
     margin-top: 0px;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 18px;
+    font-size: 60px;
     letter-spacing: 0px;
     word-spacing: 0px;
     color: white;
@@ -111,7 +111,7 @@ body{
     background-color: lightcyan;
 }
 .styleButton1:active {
-    background-color: darkgreen;
+    background-color: darkcyan;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
