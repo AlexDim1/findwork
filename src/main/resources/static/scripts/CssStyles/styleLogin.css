@@ -42,36 +42,14 @@
     width: 320px;
     height: 50px;
     padding-left: 2%;
-    border: 10px darkgrey;
+    border: 10px darkcyan;
     margin: auto;
     margin-bottom: 10px;
     margin-right: 0%;
 }
-/*.styleInputDate{*/
-/*    background-color: lightcyan;*/
-/*    border-radius: 4px;*/
-/*    width: 185px;*/
-/*    height: 40px;*/
-/*    padding-left: 2%;*/
-/*    border: 10px darkgrey;*/
-/*    !*margin: auto;*!*/
-/*    margin-left: 5px;*/
-/*    margin-bottom: 10px;*/
-/*    margin-right: 0%;*/
-/*}*/
 .styleDateDiv{
     margin: auto;
 }
-/*.styleInputLarge1{*/
-/*    background-color: lightcyan;*/
-/*    border: 10px darkgrey;*/
-/*    border-radius: 4px;*/
-/*    width: 375px;*/
-/*    height: 40px;*/
-/*    padding-left: 2%;*/
-/*    margin: auto;*/
-/*    margin-bottom: 10px;*/
-/*}*/
 .styleText2{
     margin-bottom: 10px;
     margin-top: 0px;
@@ -105,7 +83,7 @@
     background-color: lightcyan;
 }
 .styleButton2:active {
-    background-color: darkgreen;
+    background-color: darkcyan;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }

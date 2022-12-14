@@ -10,6 +10,9 @@
 			crossorigin="anonymous"></script>
 	<title>Register</title>
 	<link rel="stylesheet" href="/scripts/CssStyles/styleCompanyRegister.css">
+	<link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
+	<link rel="stylesheet" th:href="@{/css/homeDecor.css}">
+	<title>FindWork</title>
 </head>
 <body>
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
@@ -37,5 +40,6 @@
 
 </form>
 <p th:if="${error != null}" th:text="${error}"></p>
+<footer class="footer">FindWork 2022©</footer>
 </body>
 </html>

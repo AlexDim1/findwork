@@ -9,27 +9,46 @@
 	        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	        crossorigin="anonymous"></script>
 	<title>Edit profile</title>
+	<link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
+	<link rel="stylesheet" th:href="@{/css/homeDecor.css}">
+	<link rel="stylesheet" href="/scripts/CssStyles/styleUser.css">
 </head>
 <body>
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <p th:if="${error != null}" th:text="${error}"></p>
-<form th:action="@{/user/{id}(id=${user.id})}" method="post">
-	<label for="email">Email:</label>
-	<input th:value="${user.username}" type="email" name="email" id="email" required>
-	<label for="password">New password:</label>
-	<input type="password" name="password" id="password" required>
-	<label for="firstName">First name:</label>
-	<input th:value="${user.firstName}" type="text" name="firstName" id="firstName" required>
-	<label for="lastName">Last name:</label>
-	<input th:value="${user.lastName}" type="text" name="lastName" id="lastName" required>
-	<label for="birthDate">Birth date:</label>
-	<input th:value="${user.birthDate}" type="date" name="birthDate" id="birthDate" required>
-	<label for="education">Education:</label>
-	<input th:value="${user.education}" type="text" name="education" id="education" required>
-	<label for="skills">Skills:</label>
-	<input th:value="${user.skills}" type="text" name="skills" id="skills" required>
-	<a th:href="@{/user/{id}(id=${user.id})}">Cancel</a>
-	<button type="submit">Save</button>
-</form>
+<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
+	<div class="row" style="height: 100%;">
+		<div class="col" style="width:50%;"></div>
+		<div class="col">
+			<div class="userBoard">
+				<form th:action="@{/user/{id}(id=${user.id})}" method="post">
+					<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
+							<div class="col">
+									<label class="userText" for="email">Email:</label>
+									<input class="styleEditInput" th:value="${user.username}" type="email" name="email" id="email" required>
+									<label class="userText" for="password">New password:</label>
+									<input class="styleEditInput" type="password" name="password" id="password" required>
+									<label class="userText" for="firstName">First name:</label>
+									<input class="styleEditInput" th:value="${user.firstName}" type="text" name="firstName" id="firstName" required>
+									<label class="userText" for="lastName">Last name:</label>
+									<input class="styleEditInput" th:value="${user.lastName}" type="text" name="lastName" id="lastName" required>
+									<label class="userText" for="birthDate">Birth date:</label>
+									<input class="styleEditInput" th:value="${user.birthDate}" type="date" name="birthDate" id="birthDate" required>
+									<label class="userText" or="education">Education:</label>
+									<input class="styleEditInput" th:value="${user.education}" type="text" name="education" id="education" required>
+									<label class="userText" for="skills">Skills:</label>
+									<input class="styleEditInput" th:value="${user.skills}" type="text" name="skills" id="skills" required>
+									<button class="userBtn" th:href="@{/user/{id}(id=${user.id})}">Cancel</button>
+									<button class="userBtn" type="submit">Save</button>
+							</div>
+						<div class="col" style="width:50%;"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col" style="width:50%;"></div>
+	</div>
+</div>
 </body>
+<footer class="footer">FindWork 2022©</footer>
 </html>
