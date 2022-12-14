@@ -8,14 +8,14 @@
 <title>FindWork</title>
 <body class="body">
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
-<form action="/login" class="validate" style="height: 500px" novalidate method="POST">
+<form action="/login" class="validate" style="height: 500px">
 	<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
 		<label class="stylePageName2">Login</label>
 		<div style="color: firebrick; align-self: center;" th:if="${param.error}">
 			Invalid username and password.
 		</div>
 		<div class="styleBox2">
-			<input class="styleInputSmall2" type="text" placeholder="Username:" id="username" name="username" required autofocus/>
+			<input class="styleInputSmall2" type="text" placeholder="Email:" id="username" name="username" required autofocus/>
 			<div class="valid-feedback">Looks Good!</div>
 			<input class="styleInputSmall2" type="password" placeholder="Password:" id="password" name="password" required/>
 			<div class="valid-feedback">Looks Good!</div>
@@ -23,7 +23,7 @@
 		</div>
 	</div>
 </form>
-<script th:src="@{/scripts/validateForm.js}"></script>
+<!--<script th:src="@{/scripts/validateForm.js}"></script>-->
 <footer class="footer">FindWork 2022©</footer>
 </body>
 </html>
