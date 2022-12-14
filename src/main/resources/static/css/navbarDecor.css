@@ -1,0 +1,32 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2A2A2A;
+}
+.navbar-brand{
+    text-decoration: none;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 25px;
+    color: aqua;
+    font-weight: normal;
+}
+.navbar-brand:hover { color: white}
+
+.nav-link{
+    text-decoration: none;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;
+    color: aqua;
+    font-weight: normal;
+}
+.nav-link:hover { color: white}
+.dropdown-item{
+    text-decoration: none;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: aqua;
+}
+.dropdown-item:hover { color: black}
+
+
+
