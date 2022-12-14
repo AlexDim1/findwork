@@ -41,6 +41,7 @@
 		</form>
 	</div>
 		<section id="dashboard">
+			<p th:if="${offers.isEmpty()}">Sorry, any offers match your criteria!</p>
 		<th:block th:each="offer: ${offers}">
 			<div class="offers-board">
 				<div class="card-body">
@@ -59,11 +60,11 @@
 						<a th:text="${offer.salary}" class="aStyle"></a>
 					</div>
 					<div class="divStyle">
-						<label  class="lebStyle">JobLevel: </label>
+						<label  class="lebStyle">Level: </label>
 						<a th:text="${offer.jobLevel}" class="aStyle"></a>
 					</div>
 					<div class="divStyle">
-						<label class="lebStyle">JobCategory: </label>
+						<label class="lebStyle">Category: </label>
 						<a th:text="${offer.jobCategory}" class="aStyle"></a>
 					</div>
 					<div class="divBtn">

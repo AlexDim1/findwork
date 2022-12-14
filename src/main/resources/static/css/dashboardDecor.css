@@ -25,13 +25,21 @@ body{
 }
 #dashboard {
     display: flex;
-    overflow-x:scroll;
     scroll-behavior: smooth;
     margin-left: 20px;
     margin-right: 20px;
     size: auto;
     flex-direction: column;
     box-sizing: border-box;
+}
+#dashboard p{
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
+    text-align: center;
+    font-size: x-large;
 }
 .col-4{
     margin: auto;

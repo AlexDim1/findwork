@@ -69,7 +69,6 @@
 
 	<div class="tab-pane fade" id="pills-offers" role="tabpanel" aria-labelledby="pills-offers-tab" tabindex="0">
 		<div class="decorBTN">
-			<h1 class="dashboard-title">Your offers</h1>
 			<form sec:authorize="hasAuthority('Company')"
 				  th:if="${#authentication.principal.username == company.username}"
 				  th:action="@{/offers/create}" method="get" class="formStyle">
@@ -95,11 +94,11 @@
 							<a th:text="${offer.salary}" class="aStyle"></a>
 						</div>
 						<div class="divStyle">
-							<label class="lebStyle">JobLevel: </label>
+							<label class="lebStyle">Level: </label>
 							<a th:text="${offer.jobLevel}" class="aStyle"></a>
 						</div>
 						<div class="divStyle">
-							<label class="lebStyle">JobCategory: </label>
+							<label class="lebStyle">Category: </label>
 							<a th:text="${offer.jobCategory}" class="aStyle"></a>
 						</div>
 

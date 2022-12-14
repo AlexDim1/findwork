@@ -14,8 +14,6 @@
 	<title th:text="${offer.title}"></title>
 </head>
 <body>
-<!--<p th:text="${error}"></p>-->
-<!--<p th:text="${success}"></p>-->
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <p th:if="${error != null}" th:text="${error}"></p>
 <p th:if="${success != null}" th:text="${success}"></p>
@@ -36,7 +34,7 @@
 					<a th:text="${offer.salary}" class="aStyle"></a>
 				</div>
 				<div class="divStyle">
-					<label class="lebStyle">JobLevel: </label>
+					<label class="lebStyle">Level: </label>
 					<a th:text="${offer.jobLevel}" class="aStyle"></a>
 				</div>
 				<div class="divStyle">
@@ -48,7 +46,7 @@
 					<a th:text="${offer.requirements}" class="aStyle"></a>
 				</div>
 				<div class="divStyle">
-					<label class="lebStyle">Skills: </label>
+					<label class="lebStyle">Nice to have: </label>
 					<a th:text="${offer.niceToHave}" class="aStyle"></a>
 				</div>
 				<div class="divStyle">
@@ -56,7 +54,7 @@
 					<a th:text="${offer.benefits}" class="aStyle"></a>
 				</div>
 				<div class="divStyle">
-					<label class="lebStyle">JobCategory: </label>
+					<label class="lebStyle">Category: </label>
 					<a th:text="${offer.jobCategory}" class="aStyle"></a>
 				</div>
             </div>
