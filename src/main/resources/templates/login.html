@@ -8,7 +8,7 @@
 <title>FindWork</title>
 <body class="body">
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
-<form action="/login" class="validate" style="height: 500px">
+<form action="/login" class="validate" style="height: 500px" method="POST">
 	<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
 		<label class="stylePageName2">Login</label>
 		<div style="color: firebrick; align-self: center;" th:if="${param.error}">
