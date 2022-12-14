@@ -22,7 +22,7 @@ body{
     font-size: 60px;
     letter-spacing: 0px;
     word-spacing: 0px;
-    color: white;
+    color: aqua;
     font-weight: 400;
     text-decoration: none;
     font-style: normal;
@@ -43,40 +43,54 @@ body{
     margin-top: 5%;
 }
 .styleInputSmall1{
-    background-color: lightcyan;
+    background-color: lightblue;
     border-radius: 4px;
     width: 220px;
     height: 50px;
     padding-left: 2%;
+    color: black;
     border: 10px darkgrey;
     margin: auto;
     margin-bottom: 10px;
     margin-right: 0%;
 }
+.styleInputSmall1::placeholder{
+    color: lightcyan;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
 .styleInputDate{
-    background-color: lightcyan;
+    background-color: lightblue;
     border-radius: 4px;
     width: 220px;
     height: 50px;
     padding-left: 2%;
     border: 10px darkgrey;
-    /*margin: auto;*/
     margin-left: 5px;
     margin-bottom: 10px;
     margin-right: 0%;
+    color: darkslategrey;
 }
 .styleDateDiv{
     margin: auto;
 }
 .styleInputLarge1{
-    background-color: lightcyan;
+    background-color: lightblue;
     border: 10px darkgrey;
     border-radius: 4px;
+    color: black;
     width: 445px;
     height: 50px;
     padding-left: 2%;
     margin: auto;
     margin-bottom: 10px;
+}
+.styleInputLarge1::placeholder{
+    color: darkslategrey;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.styleInputSmall1::placeholder{
+    color: darkslategrey;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .styleText1{
     margin-bottom: 10px;
@@ -106,6 +120,7 @@ body{
     border-radius: 15px;
     box-shadow: 0 9px #999;
     margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .styleButton1:hover {
     background-color: lightcyan;
