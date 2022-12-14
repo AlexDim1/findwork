@@ -3,7 +3,6 @@ body{
     font-family: system-ui;
     background-image: url("img_4.png");
 }
-
 p{
     margin: auto;
     margin-top: 25px;
@@ -13,10 +12,12 @@ p{
     text-align: center;
     font-size: x-large;
 }
-#detailsPage{
+#createPage{
     display: flex;
+    margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    position: center;
     justify-items: center;
 }
 
@@ -33,16 +34,14 @@ p{
     padding: 20px 3px;
     border-radius: 40px;
 }
-
-.offerInfo {
+.createInfo {
     padding-left: 10px;
     padding-top: -10px;
 }
-
-.offerInfo h1 {
+.stylePageName{
     margin: auto;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 40px;
     letter-spacing: 0px;
@@ -56,72 +55,68 @@ p{
     text-transform: none;
     font-variant-position: normal;
 }
+.divStyle{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
 .lebStyle{
     margin: auto;
-    color: aqua;
+    color: white;
 }
-.aStyle{
+.styleInputSmall{
+    background-color: lightcyan;
+    border-radius: 4px;
+    width: 220px;
+    height: 50px;
+    padding-left: 2%;
+    border: 10px darkgrey;
     margin: auto;
-    margin-top: 10px;
     margin-bottom: 10px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 20px;
-    letter-spacing: 0px;
-    word-spacing: 0px;
-    color: white;
-    font-weight: 400;
-    text-align: center;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
+    margin-right: 0%;
 }
-.aStyle:hover{
-    color: white;
-}
-.divStyle {
+.styleTextArea{
+    background-color: lightcyan;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 20px;
-    letter-spacing: 0px;
-    word-spacing: 0px;
-    color: white;
-    font-weight: 400;
-    text-align: center;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
 }
-
 .actionBtn {
     margin: auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    display: inline-block;
-    /*position: initial;*/
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    padding: 5px;
-    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: inline;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    border-radius: 30px;
+    box-shadow: 0 9px #999;
+    color: black;
     cursor: pointer;
+    font-size: 15px;
+    padding: 5px;
+    width:100px;
     text-align: center;
     text-decoration: none;
     outline: none;
-    color: black;
-    width:120px;
-    background-color: white;
-    border: 2px solid #e7e7e7;
-    border-radius: 20px;
-    box-shadow: 0 9px #999;
 }
-
 .actionBtn:hover {
     background-color: aqua;
     color: black;
 }
 .actionBtn:active {
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+    box-shadow: #2A2A2A 2px 2px 0 0;
+    transform: translate(2px, 2px);
 }

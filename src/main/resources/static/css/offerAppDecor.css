@@ -4,42 +4,38 @@ body{
     background-image: url("img_4.png");
 }
 
-p{
-    margin: auto;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    color: white;
-    text-align: center;
-    font-size: x-large;
-}
-#detailsPage{
-    display: flex;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    justify-items: center;
-}
 
 .details {
-    position: center;
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
     box-shadow: 6px 6px 20px #464a4e62, -6px -6px 20px #464a4e62;
-    size: auto;
+    width: 900px;
+    /*size: auto;*/
     text-align: center;
     border: 1px solid aqua;
     background: #2A2A2A;
     padding: 20px 3px;
     border-radius: 40px;
 }
-
-.offerInfo {
+#yourOffer{
+    display: flex;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: center;
+    justify-items: center;
+    size: auto;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.card-body {
     padding-left: 10px;
     padding-top: -10px;
+    size: auto;
 }
 
-.offerInfo h1 {
+.card-title {
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -55,6 +51,22 @@ p{
     font-variant: normal;
     text-transform: none;
     font-variant-position: normal;
+}
+.divStyle {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
 }
 .lebStyle{
     margin: auto;
@@ -76,32 +88,11 @@ p{
     font-variant: normal;
     text-transform: none;
 }
-.aStyle:hover{
-    color: white;
-}
-.divStyle {
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 20px;
-    letter-spacing: 0px;
-    word-spacing: 0px;
-    color: white;
-    font-weight: 400;
-    text-align: center;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-}
-
 .actionBtn {
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
     display: inline-block;
-    /*position: initial;*/
     font-family: "Comic Sans MS", cursive, sans-serif;
     padding: 5px;
     font-size: 15px;
@@ -120,8 +111,4 @@ p{
 .actionBtn:hover {
     background-color: aqua;
     color: black;
-}
-.actionBtn:active {
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
 }

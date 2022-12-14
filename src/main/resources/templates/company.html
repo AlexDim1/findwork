@@ -7,6 +7,7 @@
 	      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	<link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
 	<link rel="stylesheet" th:href="@{/css/companyDecor.css}">
+	<link rel="stylesheet" th:href="@{/css/footerDecor.css}">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	        crossorigin="anonymous"></script>
@@ -19,6 +20,7 @@
 		<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-company"
 		        type="button" role="tab" aria-controls="pills-company" aria-selected="true">Company
 		</button>
+
 	</li>
 	<li class="nav-item" role="presentation">
 		<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-offers"
@@ -29,101 +31,97 @@
 <div class="tab-content" id="pills-tabContent">
 	<div class="tab-pane fade show active" id="pills-company" role="tabpanel" aria-labelledby="pills-company-tab"
 	     tabindex="0">
-<!--		done-->
-		<section id="yourOffer">
-			<form class="yourOffer">
-				<img src="img.png">
-				<div>
-					<h1 th:text="${company.name}"></h1>
-					<p th:text="${company.address}"></p>
-					<p th:text="${company.employeeCount}"></p>
-					<p th:text="${company.foundingYear}"></p>
-					<p th:text="${company.username}"></p>
-					<p th:text="${company.description}"></p>
-					</th:block>
+		<section id="yourProfile">
+			<div class="details">
+				<div class="yourProfile" >
+						<h1 th:text="${company.name}"></h1>
+					<div class="divStyle">
+						<label class="lebStyle">Address: </label>
+						<a th:text="${company.address}" class="aStyle"></a>
+					</div>
+					<div class="divStyle">
+						<label class="lebStyle">Employees: </label>
+						<a th:text="${company.employeeCount}" class="aStyle"></a>
+					</div>
+					<div class="divStyle">
+						<label class="lebStyle">Founding year: </label>
+						<a th:text="${company.foundingYear}" class="aStyle"></a>
+					</div>
+					<div class="divStyle">
+						<label class="lebStyle">Email: </label>
+						<a th:text="${company.username}" class="aStyle"></a>
+					</div>
+					<div class="divStyle">
+						<label class="lebStyle">Description: </label>
+						<a th:text="${company.description}" class="aStyle"></a>
+					</div>
+			 	</div>
 
-					<button href="/offer/create" class="decorBTNItem" type="submit">Create offer</button>
-				</div>
-			</form>
+				<form th:action="@{/company/{id}/edit(id=${company.id})}"
+					  sec:authorize="hasAuthority('Company')"
+					  th:if="${#authentication.principal.username == company.username}"
+					  method="get">
+					<button class="actionBtn" type="submit">Edit Profile</button>
+				</form>
+			</div>
 		</section>
-
-		<h1 th:text="${company.name}"></h1>
-		<p th:text="${company.address}"></p>
-		<p th:text="${company.employeeCount}"></p>
-		<p th:text="${company.foundingYear}"></p>
-		<p th:text="${company.username}"></p>
-		<p th:text="${company.description}"></p>
-		<form th:action="@{/company/{id}/edit(id=${company.id})}"
-		      sec:authorize="hasAuthority('Company')"
-		      th:if="${#authentication.principal.username == company.username}"
-		      method="get">
-			<button type="submit">Edit Profile</button>
-		</form>
 	</div>
+
 	<div class="tab-pane fade" id="pills-offers" role="tabpanel" aria-labelledby="pills-offers-tab" tabindex="0">
-		<section id="dashboard">
+		<div class="decorBTN">
 			<h1 class="dashboard-title">Your offers</h1>
-			<div class="offers-board">
-				<article class="service-img">
-					<img class="offer-image-cover" src="img.png">
-				</article>
+			<form sec:authorize="hasAuthority('Company')"
+				  th:if="${#authentication.principal.username == company.username}"
+				  th:action="@{/offers/create}" method="get" class="formStyle">
+				<button type="submit" class="createBTN">Create new offer</button>
+			</form>
+		</div>
 
-				<th:block th:each="offer: ${company.offers}">
-					<div class="card mb-3" style="width: 40rem;">
-						<div class="card-body">
+		<section id="yourOffer">
+			<th:block th:each="offer: ${company.offers}">
+ 		<div class="details">
+<!--	Не мога да взема решение	<div class="offers-board">-->
+					<p th:if="${company.offers.isEmpty()}">You have not posted any offers!</p>
+					<div class="card-body">
+						<div class="divStyle">
 							<h5 th:text="${offer.title}" class="card-title"></h5>
-							<p th:text="${offer.location}" class="card-subtitle mb-2 text-muted"></p>
-							<p th:text="${offer.salary}" class="card-text mb-0"></p>
-							<p th:text="${offer.jobLevel}" class="card-text mb-0"></p>
-							<p th:text="${offer.jobCategory}" class="card-text mb-0"></p>
-							<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
-							   class="card-text mb-0"></a>
-							<div class="d-flex justify-content-between">
-								<a th:href="@{/offer/{id}(id=${offer.id})}" class="card-link btn btn-primary">See more</a>
-							</div>
 						</div>
-					</div>
-				</th:block>
-				<div>
-					<button  id="edit-submit" type="submit" href="/offer/{id}/edit" class="decorBTNItem">Edit</button>
-					<button  id="delete-submit" type="submit" href="/offer/{id}/remove" class="decorBTNItem">Delete</button>
-				</div>
-			</div>
-		</section>
+						<div class="divStyle">
+							<label class="lebStyle">Location: </label>
+							<a th:text="${offer.location}" class="aStyle"></a>
+						</div>
+						<div class="divStyle">
+							<label class="lebStyle">Salary: </label>
+							<a th:text="${offer.salary}" class="aStyle"></a>
+						</div>
+						<div class="divStyle">
+							<label class="lebStyle">JobLevel: </label>
+							<a th:text="${offer.jobLevel}" class="aStyle"></a>
+						</div>
+						<div class="divStyle">
+							<label class="lebStyle">JobCategory: </label>
+							<a th:text="${offer.jobCategory}" class="aStyle"></a>
+						</div>
 
-		<p th:if="${company.offers.isEmpty()}">You have not posted any offers!</p>
-		<form sec:authorize="hasAuthority('Company')"
-		      th:if="${#authentication.principal.username == company.username}"
-		      th:action="@{/offers/create}" method="get">
-			<button type="submit" class="btn btn-primary">Create Offer</button>
-		</form>
-		<th:block th:each="offer: ${company.offers}">
-			<div class="card mb-3" style="width: 40rem;">
-				<div class="card-body">
-					<h5 th:text="${offer.title}" class="card-title"></h5>
-					<p th:text="${offer.location}" class="card-subtitle mb-2 text-muted"></p>
-					<p th:text="${offer.salary}" class="card-text mb-0"></p>
-					<p th:text="${offer.jobLevel}" class="card-text mb-0"></p>
-					<p th:text="${offer.jobCategory}" class="card-text mb-0"></p>
-					<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
-					   class="card-text mb-0"></a>
-					<div class="d-flex justify-content-between">
-						<form th:action="@{/offers/{id}/remove(id=${offer.id})}"
-						      sec:authorize="hasAuthority('Company')"
-						      th:if="${#authentication.principal.username == company.username}" method="post">
-							<button type="submit" class="card-link btn btn-primary">Delete</button>
-						</form>
-						<a th:href="@{/offers/{id}(id=${offer.id})}" class="card-link btn btn-primary">See more</a>
-						<a sec:authorize="hasAuthority('Company')"
-						   th:if="${#authentication.principal.username == company.username}"
-						   th:href="@{/offers/{id}/applications(id=${offer.id})}" class="card-link btn btn-primary">View
-						                                                                                            Applications</a>
+						<div class="actionBtnsContainer">
+							<form th:action="@{/offers/{id}/remove(id=${offer.id})}"
+								  sec:authorize="hasAuthority('Company')"
+								  th:if="${#authentication.principal.username == company.username}" method="post">
+								<button type="submit" class="actionBtn">Delete</button>
+							</form>
+							<a th:href="@{/offers/{id}(id=${offer.id})}" type="submit" class="actionBtn">See more</a>
+							<a sec:authorize="hasAuthority('Company')"
+							   th:if="${#authentication.principal.username == company.username}"
+							   th:href="@{/offers/{id}/applications(id=${offer.id})}" type="submit" class="actionBtn">Applications</a>
+						</div>
+
 					</div>
-				</div>
+<!--				</div>-->
 			</div>
-		</th:block>
+			</th:block>
+		</section>
 	</div>
 </div>
-
+<footer>FindWork 2022©</footer>
 </body>
 </html>
