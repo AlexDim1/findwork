@@ -107,6 +107,7 @@ body{
 }
 .styleButton:hover {
     background-color: lightcyan;
+    color: black;
 }
 .styleButton:active {
     background-color: darkcyan;
@@ -119,4 +120,17 @@ body{
     border-radius: 4px;
     margin: auto;
     font-family: "Comic Sans MS", cursive, sans-serif;
+}
+footer {
+    font-weight: bolder;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    padding: 10px;
+    background-color: #2A2A2A;
+    color: aqua;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height: 30px;
 }

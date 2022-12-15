@@ -38,8 +38,8 @@
 									<input class="styleEditInput" th:value="${user.education}" type="text" name="education" id="education" required>
 									<label class="userText" for="skills">Skills:</label>
 									<input class="styleEditInput" th:value="${user.skills}" type="text" name="skills" id="skills" required>
-									<button class="userBtn" th:href="@{/user/{id}(id=${user.id})}">Cancel</button>
-									<button class="userBtn" type="submit">Save</button>
+									<button class="styleButton" th:href="@{/user/{id}(id=${user.id})}">Cancel</button>
+									<button class="styleButton" type="submit">Save</button>
 							</div>
 						<div class="col" style="width:50%;"></div>
 					</div>

@@ -38,10 +38,10 @@ body{
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.userBtn{
+.styleButton{
     display: inline-block;
-    padding: 5px 14px;
-    font-size: 16px;
+    padding: 8px 20px;
+    font-size: 22px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
@@ -51,27 +51,14 @@ body{
     border: 2px solid #e7e7e7;
     border-radius: 15px;
     box-shadow: 0 9px #999;
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 8px;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-top: 5px;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 20px;
-    letter-spacing: 0px;
-    word-spacing: 0px;
-    color: black;
-    font-weight: 400;
-    text-align: center;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
 }
-.userBtn:hover {
+.styleButton:hover {
     background-color: lightcyan;
+    color: black;
 }
-.userBtn:active {
+.styleButton:active {
     background-color: darkcyan;
     box-shadow: 0 5px #666;
     transform: translateY(4px);

@@ -11,19 +11,22 @@
 <form action="/login" class="validate" style="height: 500px" method="POST">
 	<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
 		<label class="stylePageName2">Login</label>
-		<div style="color: firebrick; align-self: center;" th:if="${param.error}">
-			Invalid username and password.
-		</div>
 		<div class="styleBox2">
 			<input class="styleInputSmall2" type="text" placeholder="Email:" id="username" name="username" required autofocus/>
 			<div class="valid-feedback">Looks Good!</div>
 			<input class="styleInputSmall2" type="password" placeholder="Password:" id="password" name="password" required/>
 			<div class="valid-feedback">Looks Good!</div>
-			<button class="styleButton2">Login</button>
+			<button class="styleButton">Login</button>
+		</div>
+		<div style="font-size: 22px; color: #ff0000;margin: auto;" th:if="${param.error}">
+			Invalid username and password.
 		</div>
 	</div>
+
 </form>
-<!--<script th:src="@{/scripts/validateForm.js}"></script>-->
+<div style="margin: auto; margin-bottom: 90%">
+	<p style="font-size: 22px; color: #e7e7e7" th:if="${error != null}" th:text="${error}"></p>
+</div>
 <footer class="footer">FindWork 2022©</footer>
 </body>
 </html>

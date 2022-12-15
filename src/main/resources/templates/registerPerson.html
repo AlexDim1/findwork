@@ -27,14 +27,16 @@
 					<input class="styleInputLarge1" type="email" name="email" placeholder="Email:" id="email" required>
 					<input class="styleInputLarge1" type="password" name="password" placeholder="Password:" id="password" required>
 					<input class="styleInputLarge1" type="date" name="birthDate" id="birthDate" required>
-					<button class="styleButton1" type="submit">Register</button>
+					<button class="styleButton" type="submit">Register</button>
 				</div>
 			</div>
 			<div class="col" style="width:50%;"></div>
 		</div>
 	</div>
 </form>
-<p style="color: #e7e7e7" th:if="${error != null}" th:text="${error}"></p>
+<div style="margin: auto; margin-bottom: 90%">
+<p style="font-size: 22px; color: #e7e7e7" th:if="${error != null}" th:text="${error}"></p>
+</div>
 <footer class="footer">FindWork 2022©</footer>
 </body>
 </html>

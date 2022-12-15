@@ -33,6 +33,7 @@ p{
     background: #2A2A2A;
     padding: 20px 3px;
     border-radius: 40px;
+    size: auto;
 }
 .createInfo {
     padding-left: 10px;
@@ -71,6 +72,7 @@ p{
     font-style: normal;
     font-variant: normal;
     text-transform: none;
+    size: auto;
 }
 .lebStyle{
     margin: auto;
@@ -86,6 +88,21 @@ p{
     margin: auto;
     margin-bottom: 10px;
     margin-right: 0%;
+    margin-left: 45px;
+    margin-right: 45px;
+}
+.firstLabelStyle{
+    margin-right: 10%;
+    margin-left: 10%;
+    width: 85px;
+    height: 30px;
+}
+.secondLabelStyle{
+    margin-right: 20%;
+    margin-left: 20%;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 22px;
+    color: white;
 }
 .styleTextArea{
     background-color: lightcyan;
@@ -94,29 +111,54 @@ p{
     border-radius: 4px;
     margin: auto;
 }
-.actionBtn {
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    display: inline;
-    background-color: white;
-    border: 2px solid #e7e7e7;
-    border-radius: 30px;
-    box-shadow: 0 9px #999;
-    color: black;
+/*.actionBtn {*/
+/*    margin: auto;*/
+/*    !*margin-top: 10px;*!*/
+/*    !*margin-bottom: 20px;*!*/
+/*    display: inline;*/
+/*    background-color: white;*/
+/*    border: 2px solid #e7e7e7;*/
+/*    border-radius: 30px;*/
+/*    box-shadow: 0 9px #999;*/
+/*    color: black;*/
+/*    cursor: pointer;*/
+/*    font-size: 15px;*/
+/*    padding: 5px;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    outline: none;*/
+/*    size: 20px 10px;*/
+/*}*/
+/*.actionBtn:hover {*/
+/*    background-color: aqua;*/
+/*    color: black;*/
+/*}*/
+/*.actionBtn:active {*/
+/*    box-shadow: #2A2A2A 2px 2px 0 0;*/
+/*    transform: translate(2px, 2px);*/
+/*}*/
+.styleButton{
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 22px;
     cursor: pointer;
-    font-size: 15px;
-    padding: 5px;
-    width:100px;
     text-align: center;
     text-decoration: none;
     outline: none;
+    color: black;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
-.actionBtn:hover {
-    background-color: aqua;
+.styleButton:hover {
+    background-color: lightcyan;
     color: black;
 }
-.actionBtn:active {
-    box-shadow: #2A2A2A 2px 2px 0 0;
-    transform: translate(2px, 2px);
+.styleButton:active {
+    background-color: darkcyan;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }

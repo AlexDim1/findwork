@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html style="height: 100%; width: 100%;margin: auto;" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,55 +13,114 @@
 	        crossorigin="anonymous"></script>
 	<title>Create new offer</title>
 </head>
-<body>
+<body style="height: 100%; width: 100%;margin: auto;">
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <p th:if="${error != null}" th:text="${error}"></p>
-<form th:action="@{/offers/create}" method="post">
+<form style="margin: auto; height: auto; width: 1200px" th:action="@{/offers/create}" method="post">
 	<section id="createPage">
 		<div class="details">
 			<div class="createInfo">
 				<h1 class="stylePageName">Create your offer</h1>
 	<div class="divStyle">
-		<label class="lebStyle" for="title">Title:</label>
-		<input class="styleInputSmall" type="text" name="title" id="title" required>
 
-		<label class="lebStyle" for="location">Location:</label>
-		<input class="styleInputSmall" type="text" name="location" id="location" required>
-
-		<label class="lebStyle" for="salary">Salary:</label>
-		<input class="styleInputSmall" type="text" name="salary" id="salary" required>
-	</div>
-	<div class="divStyle">
-		<label class="lebStyle" for="jobLevel">Position level:</label>
-		<select id="jobLevel" name="jobLevel" required>
-			<option th:each="level: ${levels}" th:value="${level}" th:text="${level}"></option>
-		</select>
-
-		<label class="lebStyle" for="jobCategory">Category:</label>
-		<select id="jobCategory" name="jobCategory" required>
-			<option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
-		</select>
-	</div>
-	<div class="divStyle">
-		<label class="lebStyle" for="description">Description:</label>
-		<textarea class="styleTextArea"  name="description" id="description" rows="10" cols="50" required></textarea>
-
-		<label class="lebStyle" for="requirements">Requirements:</label>
-		<textarea class="styleTextArea"  name="requirements" id="requirements" rows="10" cols="50" required></textarea>
-   </div>
-	<div class="divStyle">
-		<label class="lebStyle" for="niceToHave">Nice to have:</label>
-		<textarea class="styleTextArea"  name="niceToHave" id="niceToHave" rows="10" cols="50" required></textarea>
-
-		<label class="lebStyle" for="benefits">Benefits:</label>
-		<textarea class="styleTextArea"  name="benefits" id="benefits" rows="10" cols="50" required></textarea>
-	</div>
-		<div class="divStyle">
-			<a class="actionBtn" th:href="@{/company/{id}(id=${company.id})}">Cancel</a>
-			<button class="actionBtn" type="submit">Create</button>
+		<div class="container text-center">
+			<div class="row">
+				<div class="col">
+					<label class="firstLabelStyle" for="title">Title:</label>
+					<input class="styleInputSmall" type="text" name="title" id="title" required>
+				</div>
+				<div class="col">
+					<label class="firstLabelStyle" for="location">Location:</label>
+					<input class="styleInputSmall" type="text" name="location" id="location" required>
+				</div>
+				<div class="col">
+					<label class="firstLabelStyle" for="salary">Salary:</label>
+					<input class="styleInputSmall" type="text" name="salary" id="salary" required>
+				</div>
+			</div>
 		</div>
 	</div>
+	<div class="divStyle">
+
+		<div class="container text-center">
+			<div class="row">
+				<div class="col">
+					<label class="lebStyle" for="jobLevel">Position level:</label>
+					<select style="width: 120px" id="jobLevel" name="jobLevel" required>
+						<option th:each="level: ${levels}" th:value="${level}" th:text="${level}"></option>
+					</select>
+				</div>
+				<div class="col">
+					<label class="lebStyle" for="jobCategory">Category:</label>
+					<select style="width: 120px" id="jobCategory" name="jobCategory" required>
+						<option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
+					</select>
+				</div>
+			</div>
 		</div>
+
+<!--		<label class="lebStyle" for="jobLevel">Position level:</label>-->
+<!--		<select id="jobLevel" name="jobLevel" required>-->
+<!--			<option th:each="level: ${levels}" th:value="${level}" th:text="${level}"></option>-->
+<!--		</select>-->
+
+<!--		<label class="lebStyle" for="jobCategory">Category:</label>-->
+<!--		<select id="jobCategory" name="jobCategory" required>-->
+<!--			<option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>-->
+<!--		</select>-->
+	</div>
+
+				<div class="container text-center">
+					<div class="row">
+						<div class="col">
+							<label class="secondLabelStyle" for="description">Description:</label>
+							<textarea class="styleTextArea"  name="description" id="description" rows="10" cols="50" required></textarea>
+						</div>
+						<div class="col">
+							<label class="secondLabelStyle" for="requirements">Requirements:</label>
+							<textarea class="styleTextArea"  name="requirements" id="requirements" rows="10" cols="50" required></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<label class="secondLabelStyle" for="niceToHave">Nice to have:</label>
+							<textarea class="styleTextArea"  name="niceToHave" id="niceToHave" rows="10" cols="50" required></textarea>
+						</div>
+						<div class="col">
+							<label class="secondLabelStyle" for="benefits">Benefits:</label>
+							<textarea class="styleTextArea"  name="benefits" id="benefits" rows="10" cols="50" required></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="divStyle">
+					<div class="container text-center">
+						<div class="row">
+							<div class="col">
+								<a class="styleButton" th:href="@{/company/{id}(id=${company.id})}">Cancel</a>
+							</div>
+							<div class="col">
+								<button class="styleButton" type="submit">Create</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!--	<div class="divStyle">-->
+<!--		<label class="lebStyle" for="description">Description:</label>-->
+<!--		<textarea class="styleTextArea"  name="description" id="description" rows="10" cols="50" required></textarea>-->
+
+<!--		<label class="lebStyle" for="requirements">Requirements:</label>-->
+<!--		<textarea class="styleTextArea"  name="requirements" id="requirements" rows="10" cols="50" required></textarea>-->
+<!--   </div>-->
+<!--	<div class="divStyle">-->
+<!--		<label class="lebStyle" for="niceToHave">Nice to have:</label>-->
+<!--		<textarea class="styleTextArea"  name="niceToHave" id="niceToHave" rows="10" cols="50" required></textarea>-->
+
+<!--		<label class="lebStyle" for="benefits">Benefits:</label>-->
+<!--		<textarea class="styleTextArea"  name="benefits" id="benefits" rows="10" cols="50" required></textarea>-->
+<!--	</div>-->
+
+<!--	</div>-->
 	</div>
 </section>
 </form>
