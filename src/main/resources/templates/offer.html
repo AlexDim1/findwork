@@ -62,23 +62,23 @@
 				<!--Само една от долните 2 форми може да съществува в даден момент в зависимост дали обявата е сейвната, и то само ако сме логнати като user -->
 				<form sec:authorize="hasAuthority('User')" th:if="${saved != null && saved == false}"
 			  		th:action="@{/offers/{id}/save(id=${offer.id})}" method="post">
-					<button class="actionBtn" type="submit">Save Offer</button>
+					<button class="styleButton" type="submit">Save Offer</button>
 				</form>
 				<form sec:authorize="hasAuthority('User')" th:if="${saved != null && saved == true}"
 			  		th:action="@{/offers/{id}/unsave(id=${offer.id})}" method="post">
-					<button class="actionBtn" type="submit">Unsave Offer</button>
+					<button class="styleButton" type="submit">Unsave Offer</button>
 				</form>
 				<form sec:authorize="hasAuthority('User')" th:if="${applied != null && applied == false}"
 			  		th:action="@{/offers/{id}/apply(id=${offer.id})}" method="post">
-					<button class="actionBtn" type="submit">Apply!</button>
+					<button class="styleButton" type="submit">Apply!</button>
 				</form>
 				<form sec:authorize="hasAuthority('User')" th:if="${applied != null && applied == true}"
 			  		th:action="@{/offers/{id}/cancel(id=${offer.id})}" method="post">
-					<button class="actionBtn" type="submit">Cancel application</button>
+					<button class="styleButton" type="submit">Cancel application</button>
 				</form>
 		        <form sec:authorize="hasAuthority('Company')" th:if="${#authentication.principal.username == offer.company.username}"
 		        	  th:action="@{/offers/{id}/edit(id=${offer.id})}" method="get">
-		        	<button class="actionBtn" type="submit">Edit</button>
+		        	<button class="styleButton" type="submit">Edit</button>
 		        </form>
 			</div>
 		</div>

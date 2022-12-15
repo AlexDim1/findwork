@@ -3,42 +3,46 @@ body{
     font-family: system-ui;
     background-image: url("img_4.png");
 }
-
-
-.details {
+p{
     margin: auto;
-    margin-top: 10px;
+    margin-top: 25px;
     margin-bottom: 10px;
-    box-shadow: 6px 6px 20px #464a4e62, -6px -6px 20px #464a4e62;
-    width: 900px;
-    /*size: auto;*/
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
     text-align: center;
-    border: 1px solid aqua;
-    background: #2A2A2A;
-    padding: 20px 3px;
-    border-radius: 40px;
+    font-size: x-large;
 }
-#yourOffer{
+#createPage{
     display: flex;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
     position: center;
     justify-items: center;
-    size: auto;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-.card-body {
-    padding-left: 10px;
-    padding-top: -10px;
-    size: auto;
 }
 
-.card-title {
+.details {
+    position: center;
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
+    box-shadow: 6px 6px 20px #464a4e62, -6px -6px 20px #464a4e62;
+    size: auto;
+    text-align: center;
+    border: 1px solid aqua;
+    background: #2A2A2A;
+    padding: 20px 3px;
+    border-radius: 40px;
+    size: auto;
+}
+.createInfo {
+    padding-left: 10px;
+    padding-top: -10px;
+}
+.stylePageName{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 40px;
     letter-spacing: 0px;
@@ -52,10 +56,11 @@ body{
     text-transform: none;
     font-variant-position: normal;
 }
-.divStyle {
+.divStyle{
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
+    position: relative;
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 20px;
     letter-spacing: 0px;
@@ -67,26 +72,44 @@ body{
     font-style: normal;
     font-variant: normal;
     text-transform: none;
+    size: auto;
 }
 .lebStyle{
     margin: auto;
-    color: aqua;
-}
-.aStyle{
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 20px;
-    letter-spacing: 0px;
-    word-spacing: 0px;
     color: white;
-    font-weight: 400;
-    text-align: center;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
+}
+.styleInputSmall{
+    background-color: lightcyan;
+    border-radius: 4px;
+    width: 220px;
+    height: 50px;
+    padding-left: 2%;
+    border: 10px darkgrey;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-right: 0%;
+    margin-left: 45px;
+    margin-right: 45px;
+}
+.firstLabelStyle{
+    margin-right: 10%;
+    margin-left: 10%;
+    width: 85px;
+    height: 30px;
+}
+.secondLabelStyle{
+    margin-right: 20%;
+    margin-left: 20%;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 22px;
+    color: white;
+}
+.styleTextArea{
+    background-color: lightcyan;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+    margin: auto;
 }
 .styleButton{
     display: inline-block;

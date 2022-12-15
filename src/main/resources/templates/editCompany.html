@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 100%; width: 100%;margin: auto;" lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,45 +13,70 @@
 	        crossorigin="anonymous"></script>
 	<title>Edit company profile</title>
 </head>
-<body>
+<body style="height: 100%; width: 100%;margin: auto;">
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <p th:if="${error != null}" th:text="${error}"></p>
-<form th:action="@{/company/{id}(id=${company.id})}" method="post">
+<form style="height: 100%; width: 100%;margin: auto;" th:action="@{/company/{id}(id=${company.id})}" method="post">
 	<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
 		<section id="editYourProfile">
 				<div class="details">
 					<div class="yourProfile" >
 					<h1 class="stylePageName">Edit profile</h1>
-						<div class="divStyle">
-							<label class="lebStyle" for="email">Email:</label>
-							<input class="styleInputSmall" th:value="${company.username}" type="email" name="email" id="email" required>
 
-							<label class="lebStyle" for="password">New password:</label>
-							<input class="styleInputSmall" type="password" name="password" id="password" required>
+						<div class="container text-center">
+							<div class="row">
+								<div class="col" style="margin-bottom: 10px;">
+									<label class="lebStyle" for="email">Email:</label>
+									<input class="styleInputSmall" th:value="${company.username}" type="email" name="email" id="email" required>
+
+									<label class="lebStyle" for="name">Company name:</label>
+									<input class="styleInputSmall" th:value="${company.name}" type="text" name="name" id="name" required>
+
+									<label class="lebStyle" for="foundingYear">Year of founding:</label>
+									<input class="styleInputSmall" th:value="${company.foundingYear}" type="text" name="foundingYear" id="foundingYear" required>
+								</div>
+								<div class="col" style="margin-bottom: 10px;">
+									<label class="lebStyle" for="password">New password:</label>
+									<input class="styleInputSmall" type="password" name="password" id="password" required>
+
+									<label class="lebStyle" for="employeeCount">Number of employees:</label>
+									<input class="styleInputSmall" th:value="${company.employeeCount}" type="text" name="employeeCount" id="employeeCount" required>
+
+									<label class="lebStyle" for="address">Company address:</label>
+									<input class="styleInputSmall" th:value="${company.address}" type="text" name="address" id="address" required>
+								</div>
+							</div>
 						</div>
 						<div class="divStyle">
-							<label class="lebStyle" for="name">Company name:</label>
-							<input class="styleInputSmall" th:value="${company.name}" type="text" name="name" id="name" required>
-
-							<label class="lebStyle" for="employeeCount">Number of employees:</label>
-							<input class="styleInputSmall" th:value="${company.employeeCount}" type="text" name="employeeCount" id="employeeCount" required>
-						</div>
-						<div class="divStyle">
-							<label class="lebStyle" for="foundingYear">Year of founding:</label>
-							<input class="styleInputSmall" th:value="${company.foundingYear}" type="text" name="foundingYear" id="foundingYear" required>
-
-							<label class="lebStyle" for="address">Company address:</label>
-							<input class="styleInputSmall" th:value="${company.address}" type="text" name="address" id="address" required>
-						</div>
-						<div class="divStyle">
-							<label class="lebStyle" for="description">Description:</label>
-							<textarea class="styleTextArea" th:text="${company.description}" name="description" id="description" rows="10" cols="40"
-									  required></textarea>
+							<label class="styleDescription" for="description">Description:</label>
+							<textarea class="styleTextArea" th:text="${company.description}" name="description" id="description" rows="10" cols="40" required></textarea>
 						</div>
 						<div>
-							<button class="actionBtn" th:href="@{/company/{id}(id=${company.id})}">Cancel</button>
-							<button class="actionBtn" type="submit">Save</button>
+							<button class="styleButton" th:href="@{/company/{id}(id=${company.id})}">Cancel</button>
+							<button class="styleButton" type="submit">Save</button>
 						</div>
+<!--						<div class="divStyle">-->
+<!--							<label class="lebStyle" for="email">Email:</label>-->
+<!--							<input class="styleInputSmall" th:value="${company.username}" type="email" name="email" id="email" required>-->
+
+<!--							<label class="lebStyle" for="password">New password:</label>-->
+<!--							<input class="styleInputSmall" type="password" name="password" id="password" required>-->
+<!--						</div>-->
+<!--						<div class="divStyle">-->
+<!--							<label class="lebStyle" for="name">Company name:</label>-->
+<!--							<input class="styleInputSmall" th:value="${company.name}" type="text" name="name" id="name" required>-->
+
+<!--							<label class="lebStyle" for="employeeCount">Number of employees:</label>-->
+<!--							<input class="styleInputSmall" th:value="${company.employeeCount}" type="text" name="employeeCount" id="employeeCount" required>-->
+<!--						</div>-->
+<!--						<div class="divStyle">-->
+<!--							<label class="lebStyle" for="foundingYear">Year of founding:</label>-->
+<!--							<input class="styleInputSmall" th:value="${company.foundingYear}" type="text" name="foundingYear" id="foundingYear" required>-->
+
+<!--							<label class="lebStyle" for="address">Company address:</label>-->
+<!--							<input class="styleInputSmall" th:value="${company.address}" type="text" name="address" id="address" required>-->
+<!--						</div>-->
+
 				</div>
 			</div>
 		</section>
