@@ -11,15 +11,12 @@
 	        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	        crossorigin="anonymous"></script>
 	<title th:text="${user.getName()}"></title>
-	<link rel="stylesheet" href="/scripts/CssStyles/styleUser.css">
-	<link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
-	<link rel="stylesheet" th:href="@{/css/homeDecor.css}">
 </head>
 <body>
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 	<li class="nav-item" role="presentation">
-		<button class="nav-link custom active" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-information"
+		<button class="nav-link active custom" id="pills-info-tab" data-bs-toggle="pill" data-bs-target="#pills-information"
 		        type="button" role="tab" aria-controls="pills-information" aria-selected="true">Information
 		</button>
 	</li>
@@ -40,7 +37,6 @@
 	<div class="tab-pane fade show active" id="pills-information" role="tabpanel"
 	     aria-labelledby="pills-information-tab"
 	     tabindex="0">
-
 		<section id="yourProfile">
 			<div class="details">
 				<div class="yourProfile" >
@@ -66,17 +62,16 @@
 		              sec:authorize="hasAuthority('User')"
 		              th:if="${#authentication.principal.username == user.username}"
 		              method="get">
-		        	<button class="actionBtn" type="submit">Edit Profile</button>
+		        	<button class="styleButton" type="submit">Edit Profile</button>
 		        </form>
 	        </div>
 		</section>
 	</div>
 
 	<div sec:authorize="hasAuthority('User')"
-	     th:if="${#authentication.principal.username == user.username}"  class="tab-pane fade" style="" id="pills-savedOffers"
+	     th:if="${#authentication.principal.username == user.username}" class="tab-pane fade" id="pills-savedOffers"
 	     role="tabpanel" aria-labelledby="pills-savedOffers-tab"
 	     tabindex="0">
-
 		<section id="yourSavedOffer">
 			<th:block th:each="saved: ${user.savedOffers}">
 				<div class="details">
@@ -110,12 +105,11 @@
 
 					<div class="actionBtnsContainer">
 						<form th:action="@{/offers/{id}/unsave(id=${saved.offer.id})}" method="post">
-							<button type="submit" class="actionBtn">Remove from Saved</button>
+							<button type="submit" class="styleButton">Remove from Saved</button>
 						</form>
-
-						<a class="actionBtn" th:href="@{/offers/{id}(id=${saved.offer.id})}">See more</a>
+						<a class="styleButton" th:href="@{/offers/{id}(id=${saved.offer.id})}">See more</a>
 						<form th:action="@{/offers/{id}/apply(id=${saved.offer.id})}" method="post">
-							<button type="submit" class="actionBtn">Apply</button>
+							<button type="submit" class="styleButton">Apply</button>
 						</form>
 					</div>
 				</div>
@@ -128,7 +122,6 @@
 	     th:if="${#authentication.principal.username == user.username}" class="tab-pane fade" id="pills-applications"
 	     role="tabpanel" aria-labelledby="pills-applications-tab"
 	     tabindex="0">
-
 		<section id="yourApplications">
 			<th:block th:each="ja: ${user.jobApplications}">
 				<div class="details">
@@ -137,7 +130,6 @@
 				<div class="card-body">
 					<div class="divStyle">
 					<h5 th:text="${ja.offer.title}" class="card-title"></h5>
-
 					</div>
 					<div class="divStyle">
 						<label class="lebStyle">Company: </label>
@@ -162,9 +154,9 @@
 					</div>
 
 					<div class="actionBtnsContainer">
-						<a th:href="@{/offers/{id}(id=${ja.offer.id})}" class="actionBtn">See more</a>
+						<a th:href="@{/offers/{id}(id=${ja.offer.id})}" class="styleButton">See more</a>
 						<form th:action="@{/offers/{id}/cancel(id=${ja.offer.id})}" method="post">
-							<button type="submit" class="actionBtn">Cancel application</button>
+							<button type="submit" class="styleButton">Cancel application</button>
 						</form>
 					</div>
 				</div>
@@ -172,8 +164,7 @@
 		</th:block>
 		</section>
 	</div>
-	</div>
 </div>
+
 </body>
-<footer class="footer">FindWork 2022©</footer>
 </html>

@@ -3,7 +3,9 @@ body{
     font-family: system-ui;
     background-image: url("img_4.png");
 }
-
+button.custom.active{
+    background-color: darkcyan!important;
+}
 #yourProfile{
     display: flex;
     margin: auto;
@@ -113,33 +115,30 @@ body{
     color: white;
 }
 
-.actionBtn {
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    size: auto;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    background-color: white;
-    border: 2px solid #e7e7e7;
-    border-radius: 20px;
-    box-shadow: 0 9px #999;
-    color: black;
+.styleButton{
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 22px;
     cursor: pointer;
-    font-size: 20px;
-    width:150px;
     text-align: center;
     text-decoration: none;
     outline: none;
+    color: black;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
-
-.actionBtn:hover {
-    background-color: aqua;
+.styleButton:hover {
+    background-color: lightcyan;
     color: black;
 }
-
-.actionBtn:active {
-    box-shadow: #2A2A2A 2px 2px 0 0;
-    transform: translate(2px, 2px);
+.styleButton:active {
+    background-color: darkcyan;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 .decorBTN{
     margin: auto;
