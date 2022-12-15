@@ -1,10 +1,10 @@
-body{
+body {
     margin: 0;
     font-family: system-ui;
     background-image: url("img_4.png");
 }
 
-p{
+p {
     margin: auto;
     margin-top: 25px;
     margin-bottom: 10px;
@@ -13,7 +13,8 @@ p{
     text-align: center;
     font-size: x-large;
 }
-#detailsPage{
+
+#detailsPage {
     display: flex;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -32,6 +33,8 @@ p{
     background: #2A2A2A;
     padding: 20px 3px;
     border-radius: 40px;
+    max-width: 100vw;
+    overflow-wrap: break-word;
 }
 
 .offerInfo {
@@ -47,7 +50,7 @@ p{
     font-size: 40px;
     letter-spacing: 0px;
     word-spacing: 0px;
-    color:aqua;
+    color: aqua;
     font-weight: 400;
     text-align: center;
     text-decoration: none;
@@ -56,11 +59,13 @@ p{
     text-transform: none;
     font-variant-position: normal;
 }
-.lebStyle{
+
+.lebStyle {
     margin: auto;
     color: aqua;
 }
-.aStyle{
+
+.aStyle {
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -76,9 +81,11 @@ p{
     font-variant: normal;
     text-transform: none;
 }
-.aStyle:hover{
+
+.aStyle:hover {
     color: white;
 }
+
 .divStyle {
     margin: auto;
     margin-top: 10px;
@@ -105,6 +112,7 @@ p{
     text-decoration: none;
     outline: none;
     color: black;
+    width: 120px;
     background-color: white;
     border: 2px solid #e7e7e7;
     border-radius: 15px;
@@ -116,8 +124,8 @@ p{
     background-color: lightcyan;
     color: black;
 }
-.styleButton:active {
-    background-color: darkcyan;
+
+.actionBtn:active {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
