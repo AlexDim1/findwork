@@ -5,10 +5,31 @@
     background-image: linear-gradient(to left bottom, #64ade5, #37bff0, #00d1f2, #00e1ea, #00efd9, #2aedcd, #3febc1, #50e9b5, #3bd8b1, #26c7ab, #12b7a4, #00a69c);
 
 }
+/*.decorItem{*/
+/*    display: inline-block;*/
+/*    padding: 15px 25px;*/
+/*    font-size: 16px;*/
+/*    cursor: pointer;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    outline: none;*/
+/*    color: black;*/
+/*    background-color: white;*/
+/*    border: 2px solid #e7e7e7;*/
+/*    border-radius: 15px;*/
+/*    box-shadow: 0 9px #999;*/
+/*}*/
+/*.decorItem:hover {background-color: aqua}*/
+
+/*.decorItem:active {*/
+/*    background-color: aqua;*/
+/*    box-shadow: 0 5px #666;*/
+/*    transform: translateY(4px);*/
+/*}*/
 .decorItem{
     display: inline-block;
-    padding: 15px 25px;
-    font-size: 16px;
+    padding: 12px 20px;
+    font-size: 22px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
@@ -18,21 +39,25 @@
     border: 2px solid #e7e7e7;
     border-radius: 15px;
     box-shadow: 0 9px #999;
+    margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
-.decorItem:hover {background-color: aqua}
-
+.decorItem:hover {
+    background-color: lightcyan;
+    color: black;
+}
 .decorItem:active {
-    background-color: aqua;
+    background-color: darkcyan;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
-.button {
-    background-color: white;
-    color: black;
-    border: 2px solid #e7e7e7;
-}
+/*.button {*/
+/*    background-color: white;*/
+/*    color: black;*/
+/*    border: 2px solid #e7e7e7;*/
+/*}*/
 
-.button:hover {background-color: aqua;}
+/*.button:hover {background-color: aqua;}*/
 
 .title{
     margin-left: 35%;

@@ -1,36 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  class="html" lang="en">
 <th:block th:insert="fragments/head :: head(title = 'Login')">
 </th:block>
-<body>
+<link rel="stylesheet" href="/scripts/CssStyles/styleLogin.css">
+<link rel="stylesheet" th:href="@{/css/navbarDecor.css}">
+<link rel="stylesheet" th:href="@{/css/homeDecor.css}">
+<title>FindWork</title>
+<body class="body">
 <th:block th:insert="fragments/navbar :: navbar"></th:block>
-<div class="container d-flex justify-content-center align-items-center mt-5">
-	<div class="row flex-fill">
-		<div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-			<div th:if="${param.error}">
-				Invalid username and password.
-			</div>
-			<div class="card shadow">
-				<div class="card-body">
-					<h5 class="card-title">Login</h5>
-					<form action="/login" class="validate" novalidate method="POST">
-						<div class="mb-3">
-							<label class="form-label" for="username">Username</label>
-							<input class="form-control" type="text" id="username" name="username" required autofocus/>
-							<div class="valid-feedback">Looks Good!</div>
-						</div>
-						<div class="mb-3">
-							<label class="form-label" for="password">Password</label>
-							<input class="form-control" type="password" id="password" name="password" required/>
-							<div class="valid-feedback">Looks Good!</div>
-						</div>
-						<button class="btn btn-success w-100">Login</button>
-					</form>
-				</div>
-			</div>
+<form action="/login" class="validate" style="height: 500px" method="POST">
+	<div class="container-xxl text-center" style="height: 100%; width: 100%;margin: auto;">
+		<label class="stylePageName2">Login</label>
+		<div class="styleBox2">
+			<input class="styleInputSmall2" type="text" placeholder="Email:" id="username" name="username" required autofocus/>
+			<div class="valid-feedback">Looks Good!</div>
+			<input class="styleInputSmall2" type="password" placeholder="Password:" id="password" name="password" required/>
+			<div class="valid-feedback">Looks Good!</div>
+			<button class="styleButton">Login</button>
+		</div>
+		<div style="font-size: 22px; color: #ff0000;margin: auto;" th:if="${param.error}">
+			Invalid username and password.
 		</div>
 	</div>
+
+</form>
+<div style="margin: auto; margin-bottom: 90%">
+	<p style="font-size: 22px; color: #e7e7e7" th:if="${error != null}" th:text="${error}"></p>
 </div>
-<script th:src="@{/scripts/validateForm.js}"></script>
+<footer class="footer">FindWork 2022©</footer>
 </body>
 </html>
