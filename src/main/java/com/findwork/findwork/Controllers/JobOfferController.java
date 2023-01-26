@@ -6,6 +6,7 @@ import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
+import com.findwork.findwork.Repositories.JobApplicationRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import com.findwork.findwork.Services.OfferService;
@@ -17,8 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -26,12 +26,14 @@ import java.util.UUID;
 public class JobOfferController {
     private final ValidationService validationService;
     private final OfferService offerService;
+    private final JobApplicationRepository applicationRepo;
 
     @GetMapping("/")
     public String getAllOffers(Model model,
                                @RequestParam(required = false) String search,
                                @RequestParam(required = false) String jobCategory,
-                               @RequestParam(required = false) String jobLevel) {
+                               @RequestParam(required = false) String jobLevel){
+
         List<JobOffer> offers;
 
         if (jobCategory != null && jobCategory.equals("--Any--"))
@@ -42,7 +44,12 @@ public class JobOfferController {
 
         offers = offerService.getOffers(search, jobCategory, jobLevel);
 
-        model.addAttribute("offers", offers);
+        HashMap<JobOffer, Integer> offerRating = new HashMap<JobOffer, Integer>();
+        for(JobOffer offer:offers){
+            offerRating.put(offer,applicationRepo.countAllByOffer(offer));
+        }
+
+        model.addAttribute("offers", offerRating);
         model.addAttribute("levels", JobLevel.values());
         model.addAttribute("categories", Category.values());
         return "offers";

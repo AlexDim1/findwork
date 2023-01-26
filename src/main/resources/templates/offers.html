@@ -45,30 +45,34 @@
 		<th:block th:each="offer: ${offers}">
 			<div class="offers-board">
 				<div class="card-body">
-					<h5 th:text="${offer.title}" class="card-title"></h5>
+					<h5 th:text="${offer.key.title}" class="card-title"></h5>
 					<div class="divStyle">
 						<label  class="lebStyle">Company: </label>
-						<a th:href="@{/company/{id}(id=${offer.company.id})}" th:text="${offer.company.name}"
+						<a th:href="@{/company/{id}(id=${offer.key.company.id})}" th:text="${offer.key.company.name}"
 						   class="companyName"></a>
 					</div>
 					<div class="divStyle">
 						<label  class="lebStyle">Location: </label>
-						<a th:text="${offer.location}" class="aStyle"></a>
+						<a th:text="${offer.key.location}" class="aStyle"></a>
 					</div>
 					<div class="divStyle">
 						<label  class="lebStyle">Salary: </label>
-						<a th:text="${offer.salary}" class="aStyle"></a>
+						<a th:text="${offer.key.salary}" class="aStyle"></a>
 					</div>
 					<div class="divStyle">
 						<label  class="lebStyle">Level: </label>
-						<a th:text="${offer.jobLevel}" class="aStyle"></a>
+						<a th:text="${offer.key.jobLevel}" class="aStyle"></a>
 					</div>
 					<div class="divStyle">
 						<label class="lebStyle">Category: </label>
-						<a th:text="${offer.jobCategory}" class="aStyle"></a>
+						<a th:text="${offer.key.jobCategory}" class="aStyle"></a>
+					</div>
+					<div class="divStyle">
+						<label class="lebStyle">Rating: </label>
+						<a th:text="${offer.value}" class="aStyle"></a>
 					</div>
 					<div class="divBtn">
-						<a th:href="@{/offers/{id}(id=${offer.id})}" class="styleButton">See more</a>
+						<a th:href="@{/offers/{id}(id=${offer.key.id})}" class="styleButton">See more</a>
 					</div>
 				</div>
 			</div>

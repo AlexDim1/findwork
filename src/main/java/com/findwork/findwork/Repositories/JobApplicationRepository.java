@@ -12,4 +12,5 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     JobApplication findJobApplicationByUserAndOffer(UserPerson user, JobOffer offer);
 
     List<JobApplication> findAllByOffer(JobOffer offer);
+    Integer countAllByOffer(JobOffer offer);
 }
