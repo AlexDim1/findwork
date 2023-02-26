@@ -22,6 +22,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -179,5 +180,15 @@ public class OfferService {
         UserSavedOffer saved = savedOffersRepo.findUserSavedOfferByUserAndOffer(user, offer);
 
         return saved != null;
+    }
+
+    public void testUsersDeleteSavedAndApplied(UserPerson testPerson)
+    {
+        Set<JobApplication> applicationsToDelete = applicationRepo.findAllByUser(testPerson);
+        Set<UserSavedOffer> savedOffersToDelete = savedOffersRepo.findAllByUser(testPerson);
+        for(int i = 0; i<applicationsToDelete.size(); i++)
+            applicationRepo.deleteAll(applicationsToDelete);
+        for(int i = 0; i<savedOffersToDelete.size(); i++)
+            savedOffersRepo.deleteAll(savedOffersToDelete);
     }
 }

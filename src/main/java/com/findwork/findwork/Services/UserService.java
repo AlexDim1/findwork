@@ -115,4 +115,23 @@ public class UserService implements UserDetailsService {
     public UserPerson loadUserById(UUID id) {
         return personRepo.findUserPersonById(id);
     }
+
+    public void adminDeleteAccount(String username) throws UsernameNotFoundException
+    {
+        UserPerson foundPerson = personRepo.findUserPersonByUsername(username);
+        UserCompany foundCompany = companyRepo.findUserCompanyByUsername(username);
+
+        if (foundCompany == null && foundPerson == null) {
+            throw new UsernameNotFoundException("No user found");
+        }
+
+        if (foundPerson != null)
+        {
+            personRepo.delete(foundPerson);
+        }
+        else
+        {
+            companyRepo.delete(foundCompany);
+        }
+    }
 }
