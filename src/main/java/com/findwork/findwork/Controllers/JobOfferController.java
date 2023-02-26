@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -202,5 +204,21 @@ public class JobOfferController {
 
         atrr.addFlashAttribute("success", "Offer removed from saved!");
         return "redirect:/offers/" + id;
+    }
+
+    @PostMapping("/filter")
+    public String getFilteredOffers(String field, Model model)
+    {
+        List<JobOffer> offers = new ArrayList<>();
+        String[] fieldArray = field.split(", ");
+        for(int i = 0; i < fieldArray.length; i++)
+        {
+            fieldArray[i] = "%"+fieldArray[i].toLowerCase()+"%";
+            List<JobOffer> offer = offerService.getFilteredOffers(fieldArray[i]);
+            offer.removeAll(offers); //маха повтарящите се елементи в списъка
+            offers.addAll(offer);
+        }
+        model.addAttribute("offers", offers);
+        return "filteredOffers";
     }
 }

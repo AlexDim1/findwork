@@ -191,4 +191,9 @@ public class OfferService {
         for(int i = 0; i<savedOffersToDelete.size(); i++)
             savedOffersRepo.deleteAll(savedOffersToDelete);
     }
+
+    public List<JobOffer> getFilteredOffers(String field)
+    {
+        return jobRepo.findJobOffersByKeyWords(field);
+    }
 }
