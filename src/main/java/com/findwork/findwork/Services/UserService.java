@@ -8,6 +8,7 @@ import com.findwork.findwork.Requests.EditCompanyRequest;
 import com.findwork.findwork.Requests.EditPersonRequest;
 import com.findwork.findwork.Requests.RegisterCompanyRequest;
 import com.findwork.findwork.Requests.RegisterPersonRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserCompanyRepository companyRepo;
     private final UserPersonRepository personRepo;
@@ -41,7 +43,7 @@ public class UserService implements UserDetailsService {
         if (personRepo.findUserPersonByUsername(r.getEmail()) != null
                 || companyRepo.findUserCompanyByUsername(r.getEmail()) != null)
             throw new Exception("An account with this email already exists");
-        UserPerson registered = new UserPerson(r.getEmail(), encoder.encode(r.getPassword()), r.getFirstName(), r.getLastName());
+        UserPerson registered = new UserPerson(r.getEmail(), encoder.encode(r.getPassword()), r.getFirstName(), r.getLastName(), r.getBirthDate());
         personRepo.save(registered);
         return registered;
     }
@@ -106,17 +108,30 @@ public class UserService implements UserDetailsService {
         companyRepo.save(questionableCompany);
     }
 
-    public UserService(UserCompanyRepository companyRepo, UserPersonRepository personRepo, BCryptPasswordEncoder encoder) {
-        this.companyRepo = companyRepo;
-        this.personRepo = personRepo;
-        this.encoder = encoder;
-    }
-
     public UserCompany loadUserCompanyById(UUID id) {
         return companyRepo.findUserCompanyById(id);
     }
 
     public UserPerson loadUserById(UUID id) {
         return personRepo.findUserPersonById(id);
+    }
+
+    public void adminDeleteAccount(String username) throws UsernameNotFoundException
+    {
+        UserPerson foundPerson = personRepo.findUserPersonByUsername(username);
+        UserCompany foundCompany = companyRepo.findUserCompanyByUsername(username);
+
+        if (foundCompany == null && foundPerson == null) {
+            throw new UsernameNotFoundException("No user found");
+        }
+
+        if (foundPerson != null)
+        {
+            personRepo.delete(foundPerson);
+        }
+        else
+        {
+            companyRepo.delete(foundCompany);
+        }
     }
 }

@@ -1,0 +1,152 @@
+body{
+    margin: 0;
+    font-family: system-ui;
+    background-image: url("img_4.png");
+}
+p{
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
+    text-align: center;
+    font-size: x-large;
+}
+#editYourProfile{
+    display: flex;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: center;
+    justify-items: center;
+    width: 800px;
+    height: auto;
+}
+
+.details {
+    position: center;
+    box-shadow: 6px 6px 20px #464a4e62, -6px -6px 20px #464a4e62;
+    /*width: 900px;*/
+    size: auto;
+    text-align: center;
+    border: 1px solid aqua;
+    background: #2A2A2A;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;;
+    padding: 20px 3px;
+    border-radius: 40px;
+}
+.yourProfile {
+    padding-left: 10px;
+    padding-top: -10px;
+}
+.stylePageName{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 40px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color:aqua;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    font-variant-position: normal;
+}
+.divStyle1 {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+.styleDescription{
+    margin-left: 40%;
+    margin-right: 40%;
+    font-size: 22px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
+    margin-bottom: 10px;
+}
+.lebStyle{
+    margin: auto;
+    color: white;
+    font-size: 22px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+#jobLevel{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+#jobCategory{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+.styleInputSmall{
+    background-color: lightcyan;
+    border-radius: 4px;
+    font-size: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    width: 240px;
+    height: 50px;
+    padding-left: 2%;
+    border: 10px darkgrey;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+.styleTextArea{
+    background-color: lightcyan;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+    margin: auto;
+    font-size: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.styleButton{
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.styleButton:hover {
+    background-color: lightcyan;
+    color: black;
+}
+.styleButton:active {
+    background-color: darkcyan;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+.actionBtnsContainer {
+    display: flex;
+}

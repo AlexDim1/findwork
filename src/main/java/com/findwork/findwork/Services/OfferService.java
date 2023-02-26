@@ -2,29 +2,36 @@ package com.findwork.findwork.Services;
 
 import com.findwork.findwork.Entities.JobApplication;
 import com.findwork.findwork.Entities.JobOffer;
+import com.findwork.findwork.Entities.UserSavedOffer;
 import com.findwork.findwork.Entities.Users.UserCompany;
 import com.findwork.findwork.Entities.Users.UserPerson;
 import com.findwork.findwork.Enums.Category;
 import com.findwork.findwork.Enums.JobLevel;
 import com.findwork.findwork.Repositories.JobApplicationRepository;
 import com.findwork.findwork.Repositories.JobOfferRepository;
-import com.findwork.findwork.Repositories.UserCompanyRepository;
-import com.findwork.findwork.Repositories.UserPersonRepository;
+import com.findwork.findwork.Repositories.UserSavedOfferRepository;
 import com.findwork.findwork.Requests.CreateJobOfferRequest;
 import com.findwork.findwork.Requests.EditJobOfferRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class OfferService {
     private final JobOfferRepository jobRepo;
-    private final UserCompanyRepository companyRepo;
     private final JobApplicationRepository applicationRepo;
-    private final UserPersonRepository userRepo;
+    private final UserSavedOfferRepository savedOffersRepo;
+    private final EntityManager entityManager;
 
     public JobOffer loadOfferById(UUID id) {
         return jobRepo.findJobOfferById(id);
@@ -36,24 +43,63 @@ public class OfferService {
         return offer;
     }
 
-    public List<JobOffer> getAllOffers() {
-        List<JobOffer> offers = jobRepo.findAll();
-        return offers;
-    }
+    public List<JobOffer> getOffers(String search, String category, String level) {
+        if (search == null && category == null && level == null)
+            return jobRepo.findAll();
 
-    public List<JobOffer> getCompanyOffers(UUID id) throws Exception {
-        UserCompany questionableCompany = companyRepo.findUserCompanyById(id);
-        if (questionableCompany == null)
-            throw new Exception("Such company does not exist.");
-        List<JobOffer> offers = jobRepo.findJobOfferByCompany(questionableCompany);
-        return offers;
+        Category jobCategory = null;
+        JobLevel jobLevel = null;
+
+        if (category != null && !category.equals("--Any--"))
+            jobCategory = Category.valueOf(category);
+        if (level != null && !level.equals("--Any--"))
+            jobLevel = JobLevel.valueOf(level);
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<JobOffer> cq = cb.createQuery(JobOffer.class);
+        Root<JobOffer> offer = cq.from(JobOffer.class);
+        cq.select(offer);
+
+        Predicate currentPredicate = null;
+        Predicate newPredicate;
+        if (search != null) {
+            newPredicate = cb.like(cb.upper(offer.get("title")), "%" + search.toUpperCase() + "%");
+            currentPredicate = newPredicate;
+        }
+
+        if (jobCategory != null) {
+            newPredicate = cb.equal(offer.get("jobCategory"), jobCategory);
+
+            if (currentPredicate != null)
+                currentPredicate = cb.and(currentPredicate, newPredicate);
+            else {
+                currentPredicate = newPredicate;
+            }
+        }
+
+        if (jobLevel != null) {
+            newPredicate = cb.equal(offer.get("jobLevel"), jobLevel);
+
+            if (currentPredicate != null)
+                currentPredicate = cb.and(currentPredicate, newPredicate);
+            else {
+                currentPredicate = newPredicate;
+            }
+        }
+
+        cq.where(currentPredicate);
+        Query query = entityManager.createQuery(cq);
+
+        return query.getResultList();
     }
 
     public void removeOffer(UUID id) throws Exception {
         JobOffer questionableOffer = jobRepo.findJobOfferById(id);
+
         if (questionableOffer == null)
             throw new Exception("The job offer you are referring to is not existent.");
         jobRepo.delete(questionableOffer);
+        System.out.println(questionableOffer.getTitle());
     }
 
     public void editOffer(UUID id, EditJobOfferRequest r) throws Exception {
@@ -81,46 +127,68 @@ public class OfferService {
         jobRepo.save(questionableOffer);
     }
 
+    public List<JobApplication> getOfferApplications(UUID id) {
+        JobOffer offer = jobRepo.findJobOfferById(id);
+        return applicationRepo.findAllByOffer(offer);
+    }
+
     public void createApplication(UserPerson user, UUID offerId) throws Exception {
         JobOffer offer = jobRepo.findJobOfferById(offerId);
-        JobApplication existingApplication = applicationRepo.findJobApplicationByApplicantAndOffer(user, offer);
-
-        if (existingApplication != null)
+        if (applicationRepo.findJobApplicationByUserAndOffer(user, offer) != null)
             throw new Exception("You have already applied for this position!");
 
-        applicationRepo.save(new JobApplication(user, offer));
+        JobApplication application = new JobApplication(user, offer);
+        applicationRepo.save(application);
     }
 
-    public void deleteApplication(UserPerson user, UUID offerId) {
+    public void deleteApplication(UserPerson user, UUID offerId) throws Exception {
         JobOffer offer = jobRepo.findJobOfferById(offerId);
-        JobApplication application = findUserApplication(user, offer);
+        if (applicationRepo.findJobApplicationByUserAndOffer(user, offer) == null)
+            throw new Exception("No application found!");
 
-        applicationRepo.delete(application);
+        JobApplication toDelete = applicationRepo.findJobApplicationByUserAndOffer(user, offer);
+        applicationRepo.delete(toDelete);
     }
 
-    public JobApplication findUserApplication(UserPerson user, JobOffer offer) {
-        return applicationRepo.findJobApplicationByApplicantAndOffer(user, offer);
+    public boolean checkApplied(UserPerson user, UUID offerId) {
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        JobApplication applied = applicationRepo.findJobApplicationByUserAndOffer(user, offer);
+
+        return applied != null;
     }
 
     public void saveOffer(UserPerson user, UUID offerId) throws Exception {
-        if (user.getSavedOffers().stream().anyMatch(offer -> offer.getId().equals(offerId)))
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        if (savedOffersRepo.findUserSavedOfferByUserAndOffer(user, offer) != null)
             throw new Exception("Offer already saved!");
 
-        JobOffer offer = jobRepo.findJobOfferById(offerId);
-        user.getSavedOffers().add(offer);
-        userRepo.save(user);
+        UserSavedOffer newSave = new UserSavedOffer(user, offer);
+        savedOffersRepo.save(newSave);
     }
 
     public void unsaveOffer(UserPerson user, UUID offerId) throws Exception {
-        if (user.getSavedOffers().stream().noneMatch(offer -> offer.getId().equals(offerId)))
-            throw new Exception("This offer has not been saved!");
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        if (savedOffersRepo.findUserSavedOfferByUserAndOffer(user, offer) == null)
+            throw new Exception("Offer had not been saved!");
 
-        JobOffer offerToDelete = user.getSavedOffers().stream().filter(offer -> offer.getId().equals(offerId)).findFirst().get();
-        user.getSavedOffers().remove(offerToDelete);
-        userRepo.save(user);
+        UserSavedOffer toDelete = savedOffersRepo.findUserSavedOfferByUserAndOffer(user, offer);
+        savedOffersRepo.delete(toDelete);
     }
 
     public boolean checkSaved(UserPerson user, UUID offerId) {
-        return user.getSavedOffers().stream().anyMatch(offer -> offer.getId().equals(offerId));
+        JobOffer offer = jobRepo.findJobOfferById(offerId);
+        UserSavedOffer saved = savedOffersRepo.findUserSavedOfferByUserAndOffer(user, offer);
+
+        return saved != null;
+    }
+
+    public void testUsersDeleteSavedAndApplied(UserPerson testPerson)
+    {
+        Set<JobApplication> applicationsToDelete = applicationRepo.findAllByUser(testPerson);
+        Set<UserSavedOffer> savedOffersToDelete = savedOffersRepo.findAllByUser(testPerson);
+        for(int i = 0; i<applicationsToDelete.size(); i++)
+            applicationRepo.deleteAll(applicationsToDelete);
+        for(int i = 0; i<savedOffersToDelete.size(); i++)
+            savedOffersRepo.deleteAll(savedOffersToDelete);
     }
 }

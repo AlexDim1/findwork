@@ -1,0 +1,164 @@
+body{
+    margin: 0;
+    font-family: system-ui;
+    background-image: url("img_4.png");
+}
+p{
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
+    text-align: center;
+    font-size: x-large;
+}
+#createPage{
+    display: flex;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: center;
+    justify-items: center;
+}
+
+.details {
+    position: center;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 6px 6px 20px #464a4e62, -6px -6px 20px #464a4e62;
+    size: auto;
+    text-align: center;
+    border: 1px solid aqua;
+    background: #2A2A2A;
+    padding: 20px 3px;
+    border-radius: 40px;
+    size: auto;
+}
+.createInfo {
+    padding-left: 10px;
+    padding-top: -10px;
+}
+.stylePageName{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 40px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color:aqua;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    font-variant-position: normal;
+}
+.divStyle{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    size: auto;
+}
+.lebStyle{
+    margin: auto;
+    color: white;
+}
+.styleInputSmall{
+    background-color: lightcyan;
+    border-radius: 4px;
+    width: 220px;
+    height: 50px;
+    padding-left: 2%;
+    border: 10px darkgrey;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-right: 0%;
+    margin-left: 45px;
+    margin-right: 45px;
+}
+.firstLabelStyle{
+    margin-right: 10%;
+    margin-left: 10%;
+    width: 85px;
+    height: 30px;
+}
+.secondLabelStyle{
+    margin-right: 20%;
+    margin-left: 20%;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 22px;
+    color: white;
+}
+.styleTextArea{
+    background-color: lightcyan;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+    margin: auto;
+}
+/*.actionBtn {*/
+/*    margin: auto;*/
+/*    !*margin-top: 10px;*!*/
+/*    !*margin-bottom: 20px;*!*/
+/*    display: inline;*/
+/*    background-color: white;*/
+/*    border: 2px solid #e7e7e7;*/
+/*    border-radius: 30px;*/
+/*    box-shadow: 0 9px #999;*/
+/*    color: black;*/
+/*    cursor: pointer;*/
+/*    font-size: 15px;*/
+/*    padding: 5px;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    outline: none;*/
+/*    size: 20px 10px;*/
+/*}*/
+/*.actionBtn:hover {*/
+/*    background-color: aqua;*/
+/*    color: black;*/
+/*}*/
+/*.actionBtn:active {*/
+/*    box-shadow: #2A2A2A 2px 2px 0 0;*/
+/*    transform: translate(2px, 2px);*/
+/*}*/
+.styleButton{
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.styleButton:hover {
+    background-color: lightcyan;
+    color: black;
+}
+.styleButton:active {
+    background-color: darkcyan;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

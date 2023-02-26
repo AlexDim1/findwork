@@ -1,0 +1,155 @@
+
+body{
+    margin: 0;
+    font-family: system-ui;
+    background-image: url("img.png");
+    display: flex;
+    flex-direction: column;
+}
+.first{
+    margin: auto;
+    margin-top: 40px;
+}
+
+.title{
+    margin: auto;
+    margin-top: 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: #FFFFFF;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    font-variant-position: normal;
+}
+
+.styleLogo{
+    width: 100px;
+    height: 80px;
+}
+.styleDivLogo{
+    margin-left: 45%;
+    margin-right: 50%;
+}
+
+/*.decorBTNItem{*/
+/*    display: inline-block;*/
+/*    padding: 15px 25px;*/
+/*    font-size: 16px;*/
+/*    cursor: pointer;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    outline: none;*/
+/*    color: black;*/
+/*    width: 180px;*/
+/*    background-color: white;*/
+/*    border: 2px solid #e7e7e7;*/
+/*    border-radius: 15px;*/
+/*    box-shadow: 0 9px #999;*/
+/*}*/
+/*.decorBTNItem:hover {background-color: aqua;  color: black}*/
+/*.decorBTNItem:active {*/
+/*    color: black;*/
+/*    background-color: aqua;*/
+/*    box-shadow: 0 5px #666;*/
+/*    transform: translateY(4px);*/
+/*}*/
+
+/*.decorBTNItem {*/
+/*    background-color: white;*/
+/*    color: black;*/
+/*    border: 2px solid #e7e7e7;*/
+/*}*/
+/*.decorBTNItem:hover {background-color: aqua;}*/
+
+.item1{
+    margin: auto;
+    margin-top: 10px;
+    /*margin-left: 20%;*/
+    /*margin-right: 20%;*/
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+.item2{
+    margin: auto;
+    margin-top: 10px;
+    /*margin-left: 35%;*/
+    /*margin-right: 35%;*/
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+.or{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.item3{
+    margin: auto;
+    margin-top: 20px;
+    /*margin-left: 35%;*/
+    /*margin-right: 35%;*/
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+.btn{
+    color: aqua;
+}
+.styleButton{
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: white;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin-top: 5px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.styleButton:hover {
+    background-color: lightcyan;
+    color: black;
+}
+.styleButton:active {
+    background-color: darkcyan;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
